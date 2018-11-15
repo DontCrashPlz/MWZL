@@ -1,0 +1,47 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext{
+    // Sdk and tools
+    // Support library and architecture components support minSdk 14 and above.
+    compileSdkVersion = 28
+    buildToolsVersion = '26.0.2'
+    minSdkVersion = 23
+    targetSdkVersion = 28
+
+    // App dependencies
+    supportLibraryVersion = '28.0.0'
+    junitVersion = '4.12'
+    cymChadVersion = '2.9.34'// https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    glideVersion = '4.8.0'// https://github.com/bumptech/glide
+    retrofitVersion = '2.4.0'// https://github.com/square/retrofit
+    rxjava2Version = '2.2.3'// https://github.com/ReactiveX/RxJava
+    rxAndroidVersion = '2.1.0'// https://github.com/ReactiveX/RxAndroid
+    okhttpInterceptorVersion = '3.11.0'// https://github.com/square/okhttp
+    butterknifeVersion = '9.0.0-rc1'// https://github.com/JakeWharton/butterknife
+}
