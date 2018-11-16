@@ -35,7 +35,7 @@ public abstract class BaseActivity <T extends BasePresenter> extends AppCompatAc
             compositeDisposable = new CompositeDisposable();
         }
 
-        setContentView(getContentViewRes());
+        if (getContentViewRes() > 0) setContentView(getContentViewRes());
         ButterKnife.bind(this);
         initToolbar();
         initUI();

@@ -1,17 +1,15 @@
-package com.pokong.mwzl;
+package com.pokong.mwzl.notice.list;
 
 import android.content.Context;
 
 import com.pokong.library.base.BaseActivity;
-import com.pokong.library.base.BasePresenter;
 
 /**
- * Created on 2018/11/15 14:09
+ * Created on 2018/11/16 9:48
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class HomeActivity extends BaseActivity<HomePresenter> {
-
+public class NoticeListActivity extends BaseActivity<NoticeListPresenter> {
     @Override
     public Context getRealContext() {
         return null;
@@ -24,14 +22,16 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
 
     @Override
     public void initToolbar() {
+
     }
 
     @Override
     public void initUI() {
+
     }
 
     @Override
-    protected HomePresenter getRealPresenter() {
+    protected NoticeListPresenter getRealPresenter() {
         return null;
     }
 }
