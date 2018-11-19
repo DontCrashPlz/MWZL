@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    
+    <color name="text_color_black">#333333</color>
+    <color name="devide_color_gary">#f6f6f6</color>
+
+    <color name="button_background_gary">#898989</color>
+    <color name="button_background_orange">#ED6216</color>
+
 </resources>

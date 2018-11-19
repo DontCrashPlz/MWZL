@@ -11,6 +11,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * 全局工具类
@@ -55,13 +57,50 @@ public class Tools {
         window.setAttributes(params);
     }
 
-    public static String formatFloat(float f){
-        BigDecimal b = new BigDecimal(f);
-//        LogUtil.d("formatFloat before", "" + f );
-        //  b.setScale(2,  BigDecimal.ROUND_HALF_UP)  表明四舍五入，保留两位小数
-        f = b.setScale(2,  BigDecimal.ROUND_HALF_UP).floatValue();
-//        LogUtil.d("formatFloat after", "" + f );
-        return "" + f;
+    /**
+     * 格式化float数值
+     * @param floatNum 要格式化的float
+     * @param scaleNum 要保留几位小数，默认2位
+     * @return
+     */
+    public static String formatFloat(float floatNum, int scaleNum){
+        LogUtils.d("formatFloat before", String.valueOf(floatNum));
+        int realScaleNum = 2;
+        if (scaleNum > 0) realScaleNum = scaleNum;
+        BigDecimal b = new BigDecimal(floatNum);
+        //表明四舍五入，保留两位小数
+        floatNum = b.setScale(realScaleNum,  BigDecimal.ROUND_HALF_UP).floatValue();
+        LogUtils.d("formatFloat after", String.valueOf(floatNum));
+        return String.valueOf(floatNum);
+    }
+
+    /**
+     * 判断参数是否为Null或者""、"  ",如果为数字将判断其是否为0
+     *
+     * @param object
+     *            ,可以是常用的Collection、Set、Map、String、Long、Integer类型，其他的类型会直接返回true;
+     * @return true/false
+     */
+    public static boolean isBlank(Object object) {
+        if (object == null) {
+            return true;
+        }
+        if (object instanceof Collection) {
+            return ((Collection<?>) object).size() == 0;
+        }
+        if (object instanceof Map) {
+            return ((Map<?,?>) object).size() == 0;
+        }
+        if (object instanceof String) {
+            return "".equals(((String) object).trim());
+        }
+        if (object instanceof Integer) {
+            return (Integer) object == 0;
+        }
+        if (object instanceof Long) {
+            return (Long) object == 0;
+        }
+        return false;
     }
 
 }

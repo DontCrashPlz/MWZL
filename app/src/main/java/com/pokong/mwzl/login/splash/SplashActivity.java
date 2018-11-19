@@ -1,13 +1,34 @@
 package com.pokong.mwzl.login.splash;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.pokong.library.base.BaseActivity;
+import com.pokong.library.util.LogUtils;
+import com.pokong.library.util.ScreenUtils;
 import com.pokong.library.util.ToastUtils;
+import com.pokong.library.util.Tools;
+import com.pokong.library.util.UpdateUtils;
+import com.pokong.mwzl.HomeActivity;
+import com.pokong.mwzl.R;
+import com.pokong.mwzl.data.bean.UpdateInfoEntity;
+import com.pokong.mwzl.login.login.LoginActivity;
 
 /**
  * Created on 2018/11/15 16:16
@@ -17,8 +38,10 @@ import com.pokong.library.util.ToastUtils;
 public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View {
 
     //private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;//照相机权限申请码
-    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;//从内存卡读取数据权限申请码
-    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 2;//向内存卡写入数据权限申请码
+    //private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;//从内存卡读取数据权限申请码
+    //private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 2;//向内存卡写入数据权限申请码
+
+    private ImageView mLogoImageView;
 
     @Override
     public Context getRealContext() {
@@ -27,7 +50,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     public int getContentViewRes() {
-        return 0;
+        return R.layout.activity_splash;
     }
 
     @Override
@@ -56,26 +79,57 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     100);
-        } else {
-
+        } else {//如果有权限，检查更新
+            mPresenter.checkUpdate();
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 100) {
-
+            mPresenter.checkUpdate();
         }
 
     }
 
     @Override
-    public void gotoLogin() {
-
+    public void skipToLogin() {
+        Intent intent = new Intent(getRealContext(), LoginActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     @Override
-    public void autoLogin() {
-
+    public void skipToHome() {
+        Intent intent = new Intent(getRealContext(), HomeActivity.class);
+        startActivity(intent);
+        this.finish();
     }
+
+    @Override
+    public void showUpdateDialog(UpdateInfoEntity updateInfoEntity) {
+        View view = LayoutInflater.from(getRealContext()).inflate(R.layout.layout_dialog_update, null);
+        // 设置style 控制默认dialog带来的边距问题
+        AlertDialog.Builder builder = new AlertDialog.Builder(getRealContext(),R.style.custom_dialog_no_titlebar);
+        builder.setView(view).setCancelable(false);
+        AlertDialog dialog = builder.create();
+
+        TextView descriptionText = view.findViewById(R.id.dialog_update_text_description);
+        TextView cancelBtn = view.findViewById(R.id.dialog_update_button_cancel);
+        TextView updateBtn = view.findViewById(R.id.dialog_update_button_update);
+
+        if (Tools.isBlank(updateInfoEntity.getDescription()))
+            descriptionText.setText(updateInfoEntity.getDescription());
+        cancelBtn.setOnClickListener(v -> {
+            dialog.dismiss();
+            mPresenter.checkAutoLogin();
+        });
+        updateBtn.setOnClickListener(v -> {
+            dialog.dismiss();
+            UpdateUtils.downLoadApk(getRealContext(), updateInfoEntity.getUrl());
+        });
+
+        dialog.show();
+    }
+
 }

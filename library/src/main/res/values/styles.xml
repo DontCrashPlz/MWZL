@@ -1,7 +1,7 @@
 <resources>
 
     <style name="Theme.AppLauncher" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/ic_launcher</item>
+        <item name="android:windowBackground">@drawable/splash</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
@@ -24,6 +24,8 @@
     <style name="custom_dialog_no_titlebar" parent="android:style/Theme.Dialog">
         <!--是否去除标题 -->
         <item name="android:windowNoTitle">true</item>
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 </resources>
