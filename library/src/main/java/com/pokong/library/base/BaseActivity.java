@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.pokong.library.app.ActivityManager;
 import com.pokong.library.util.LogUtils;
 
-import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -36,7 +35,7 @@ public abstract class BaseActivity <T extends BasePresenter> extends AppCompatAc
         }
 
         if (getContentViewRes() != 0) setContentView(getContentViewRes());
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
 
         mPresenter = getRealPresenter();
         if (mPresenter != null) mPresenter.attachView(this);

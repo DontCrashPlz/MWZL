@@ -31,7 +31,9 @@ android {
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
         api "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2Version"
-        api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
-        annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+        //api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+        //annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+
+        api "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
     }
 }

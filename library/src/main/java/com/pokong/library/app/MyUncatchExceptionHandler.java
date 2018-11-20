@@ -169,7 +169,7 @@ public class MyUncatchExceptionHandler<T extends BaseApplication> implements Thr
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            FileOutputStream fos = new FileOutputStream(mSavePath + "/" + fileName);
+            FileOutputStream fos = new FileOutputStream(mSavePath + fileName);
             fos.write(sb.toString().getBytes());
             fos.close();
             return fileName;

@@ -12,9 +12,10 @@ import com.pokong.mwzl.data.bean.UpdateInfoEntity;
  */
 public class SplashPresenter extends BasePresenter<SplashActivity> implements SplashContract.Presenter {
 
-    public static final String SP_KEY_AUTOLOGIN = "auto_login";
-    public static final String SP_KEY_USERNAME = "username";
-    public static final String SP_KEY_LOGINPASS = "login_pass";
+    public static final String SP_KEY_AUTOLOGIN = "auto_login";//sharepreference key --- 自动登录
+    public static final String SP_KEY_ISREMEMBER = "remember_password";//sharepreference key --- 记住密码
+    public static final String SP_KEY_USERNAME = "username";//sharepreference key --- 帐号
+    public static final String SP_KEY_LOGINPASS = "login_pass";//sharepreference key --- 密码
 
     @Override
     public void checkUpdate() {

@@ -23,7 +23,7 @@ public class AppConstants {
             ToastUtils.showShortToast(context, "获取文件储存路径失败");
             return null;
         }
-        return fileSaveFile.getAbsolutePath() + "/myFile";
+        return fileSaveFile.getAbsolutePath() + "/myFile/";
     }
 
     /**
@@ -35,7 +35,7 @@ public class AppConstants {
             ToastUtils.showShortToast(context, "获取缓存储存路径失败");
             return null;
         }
-        return cacheSaveFile.getAbsolutePath() + "/myCache";
+        return cacheSaveFile.getAbsolutePath() + "/myCache/";
     }
 
     /**
@@ -47,7 +47,7 @@ public class AppConstants {
             ToastUtils.showShortToast(context, "获取文件储存路径失败");
             return null;
         }
-        return crashSaveFile.getAbsolutePath() + "/myCrash";
+        return crashSaveFile.getAbsolutePath() + "/myCrash/";
     }
 
 }
