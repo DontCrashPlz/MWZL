@@ -21,10 +21,17 @@ public abstract class LazyLoadFragment <T extends BasePresenter> extends BaseFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(getContentView(), container, false);
-        init();
+        init(rootView);
         isInitView = true;//页面初始化完成
         tryToLoad();
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        isInitView = false;
+        isLoadedOnce = false;
     }
 
     @Override
@@ -60,7 +67,7 @@ public abstract class LazyLoadFragment <T extends BasePresenter> extends BaseFra
     /**
      * 让布局中的view与fragment中的变量建立起映射
      */
-    protected abstract void init();
+    protected abstract void init(View rootView);
 
     /**
      * 加载要显示的数据

@@ -7,8 +7,9 @@ package com.pokong.mwzl.app;
 public class NetConstants {
 
     /**
-     * 文件储存地址
+     * 主机地址
      */
-    public static final String BASEURL = "http://www.base.com/";
+    //public static final String BASEURL = "http://www.base.com/";
+    public static final String BASEURL = "http://192.168.31.20:80/";
 
 }

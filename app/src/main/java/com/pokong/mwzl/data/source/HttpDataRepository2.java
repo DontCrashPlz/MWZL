@@ -6,6 +6,7 @@ import com.pokong.mwzl.data.BaseResponseBean;
 import com.pokong.mwzl.data.DataExecutor;
 import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataUtils;
 import com.pokong.mwzl.http.ApiService;
 import com.pokong.mwzl.app.NetConstants;
 import com.pokong.mwzl.http.ResponseTransformer;
@@ -80,7 +81,7 @@ public class HttpDataRepository2 implements HttpDataSource2 {
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
                 .subscribe(baseResponseBeanDataResponseEntity -> {
-                    if (baseResponseBeanDataResponseEntity.isSuccess()){
+                    if (DataUtils.isDataRequestSuccess(baseResponseBeanDataResponseEntity)){
                         BaseResponseBean responseBean = baseResponseBeanDataResponseEntity.getData();
                         callback.onSuccessed((T) responseBean);
                     }else {

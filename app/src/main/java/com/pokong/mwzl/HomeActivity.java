@@ -8,6 +8,9 @@ import android.widget.RadioButton;
 
 import com.pokong.library.base.BaseActivity;
 import com.pokong.library.base.BasePresenter;
+import com.pokong.mwzl.order.OrderFragment;
+import com.pokong.mwzl.setting.SettingFragment;
+import com.pokong.mwzl.shop.ShopManageFragment;
 
 /**
  * Created on 2018/11/15 14:09
@@ -48,6 +51,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
         mSettingRbtn = findViewById(R.id.home_rbtn_setting);
         mSettingRbtn.setOnCheckedChangeListener(this);
 
+        //默认选中订单管理页
         mOrderRbtn.setChecked(true);
     }
 
@@ -62,25 +66,25 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
         switch (vId){
             case R.id.home_rbtn_order:{
                 if (isChecked){
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.home_fly_fragment, HomePageFragment.newInstance(""))
-//                            .commit();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.home_fly_fragment, OrderFragment.newInstance(0))
+                            .commit();
                 }
                 break;
             }
             case R.id.home_rbtn_shop:{
                 if (isChecked){
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.home_fly_fragment, HomePageFragment.newInstance(""))
-//                            .commit();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.home_fly_fragment, ShopManageFragment.newInstance(0))
+                            .commit();
                 }
                 break;
             }
             case R.id.home_rbtn_setting:{
                 if (isChecked){
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.home_fly_fragment, HomePageFragment.newInstance(""))
-//                            .commit();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.home_fly_fragment, SettingFragment.newInstance(0))
+                            .commit();
                 }
                 break;
             }

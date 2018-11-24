@@ -1,4 +1,4 @@
-package com.pokong.mwzl.shop;
+package com.pokong.mwzl.setting;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,16 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pokong.library.base.BaseFragment;
+import com.pokong.mwzl.order.OrderPresenter;
 
 /**
- * Created on 2018/11/16 15:56
+ * Created on 2018/11/16 15:53
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class ShopManageFragment extends BaseFragment<ShopManagePresenter> {
+public class SettingFragment extends BaseFragment<SettingPresenter> {
 
-    public static ShopManageFragment newInstance(int tag){
-        ShopManageFragment instance = new ShopManageFragment();
+    public static SettingFragment newInstance(int tag){
+        SettingFragment instance = new SettingFragment();
         Bundle args = new Bundle();
         args.putInt("tag", tag);
         instance.setArguments(args);
@@ -31,7 +32,7 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> {
     }
 
     @Override
-    protected ShopManagePresenter getRealPresenter() {
+    protected SettingPresenter getRealPresenter() {
         return null;
     }
 }

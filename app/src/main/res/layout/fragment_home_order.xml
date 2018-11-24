@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background_gary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/page_background_black"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/homeorder_tv_shopname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="美味滋乐"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <ImageView
+            android:id="@+id/homeorder_iv_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/toolbar_scan"
+            android:padding="15dp"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:id="@+id/homeorder_iv_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/toolbar_notice"
+            android:padding="15dp"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:id="@+id/homeorder_iv_bluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/toolbar_bluetooth"
+            android:padding="15dp"
+            android:layout_marginRight="5dp"/>
+
+    </LinearLayout>
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/homeorder_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@color/page_background_black"
+        app:tl_tab_space_equal="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:tl_textSelectColor="@color/text_color_black"
+        app:tl_textUnselectColor="@android:color/white"
+        app:tl_textsize="19sp"
+        app:tl_indicator_color="@color/page_background_gary"
+        app:tl_indicator_height="53dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/homeorder_vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/page_background_gary"/>
+
+</LinearLayout>

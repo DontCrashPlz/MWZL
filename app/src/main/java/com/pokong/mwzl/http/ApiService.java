@@ -1,6 +1,12 @@
 package com.pokong.mwzl.http;
 
 import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.bean.business.OrderDetailResponseBean;
+import com.pokong.mwzl.data.bean.business.OrderListResponseBean;
+import com.pokong.mwzl.data.bean.business.OrderReadyResponseBean;
+import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
+import com.pokong.mwzl.data.bean.mwzl.LocationResponseBean;
+import com.pokong.mwzl.data.bean.mwzl.PickConfirmResponseBean;
 import com.pokong.mwzl.data.bean.personal.LoginResponseBean;
 
 import java.util.Map;
@@ -15,7 +21,25 @@ import retrofit2.http.QueryMap;
 
 public interface ApiService {
 
-    @GET("/index.php")
+    @GET("/api/store/login/api/store/login")
     Observable<DataResponseEntity<LoginResponseBean>> doLogin(@QueryMap Map<String, String> params);
+
+    @GET("/api/store/info")
+    Observable<DataResponseEntity<ShopInfoResponseBean>> getShopInfo(@QueryMap Map<String, String> params);
+
+    @GET("/api/store/order/query")
+    Observable<DataResponseEntity<OrderListResponseBean>> getOrderList(@QueryMap Map<String, String> params);
+
+    @GET("/api/store/order/detail")
+    Observable<DataResponseEntity<OrderDetailResponseBean>> getOrderDetail(@QueryMap Map<String, String> params);
+
+    @GET("/api/store/order/stockUp")
+    Observable<DataResponseEntity<OrderReadyResponseBean>> orderReady(@QueryMap Map<String, String> params);
+
+    @GET("/api/store/order/pickUp")
+    Observable<DataResponseEntity<PickConfirmResponseBean>> pickConfirm(@QueryMap Map<String, String> params);
+
+    @GET("/api/storesetLocaltion")
+    Observable<DataResponseEntity<LocationResponseBean>> uploadLocation(@QueryMap Map<String, String> params);
 
 }

@@ -41,7 +41,7 @@ class CustomExceptionConverter {
      */
     static <T extends BaseResponseBean> DataResponseEntity<T> convertException(Throwable e) {
         DataResponseEntity<T> entity = new DataResponseEntity<>();
-        entity.setSuccess(false);
+        entity.setStatus("error");
         if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {

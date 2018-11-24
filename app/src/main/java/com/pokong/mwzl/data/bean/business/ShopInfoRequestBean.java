@@ -8,4 +8,21 @@ import com.pokong.mwzl.data.BaseRequestBean;
  * E-mail: zhengCH12138@163.com
  */
 public class ShopInfoRequestBean implements BaseRequestBean {
+
+    private String appToken;
+
+    public String getAppToken() {
+        return appToken;
+    }
+
+    public void setAppToken(String appToken) {
+        this.appToken = appToken;
+    }
+
+    @Override
+    public String toString() {
+        return "ShopInfoRequestBean{" +
+                "appToken='" + appToken + '\'' +
+                '}';
+    }
 }

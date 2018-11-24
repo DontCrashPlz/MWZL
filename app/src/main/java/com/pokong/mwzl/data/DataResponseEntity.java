@@ -9,7 +9,7 @@ public class DataResponseEntity<T extends BaseResponseBean> {
     private T data = null;//真实数据
     private String description;//错误描述，isSuccess = false时有效
     private String errorCode;//错误代码，isSuccess = false时有效
-    private boolean isSuccess = false;//获取数据是否成功
+    private String status;//获取数据是否成功
 
     public T getData() {
         return data;
@@ -35,12 +35,12 @@ public class DataResponseEntity<T extends BaseResponseBean> {
         this.errorCode = errorCode;
     }
 
-    public boolean isSuccess() {
-        return isSuccess;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class DataResponseEntity<T extends BaseResponseBean> {
                 "data=" + data +
                 ", description='" + description + '\'' +
                 ", errorCode='" + errorCode + '\'' +
-                ", isSuccess='" + isSuccess + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
