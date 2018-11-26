@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class MultiPageListEntity <T> {
+public class MultiPageListEntity <T> implements BaseResponseBean {
     private int totalRow;
     private int pageNumber;
     private boolean last;

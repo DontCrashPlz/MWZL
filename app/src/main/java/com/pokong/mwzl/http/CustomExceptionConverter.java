@@ -40,31 +40,17 @@ class CustomExceptionConverter {
      * @return
      */
     static <T extends BaseResponseBean> DataResponseEntity<T> convertException(Throwable e) {
-        DataResponseEntity<T> entity = new DataResponseEntity<>();
-        entity.setStatus("error");
         if (e instanceof JsonParseException
                 || e instanceof JSONException
-                || e instanceof ParseException) {
-            //解析错误
-            entity.setErrorCode(Integer.toString(PARSE_ERROR));
-            entity.setDescription("数据解析失败");
-            return entity;
-        } else if (e instanceof ConnectException) {
-            //网络错误
-            entity.setErrorCode(Integer.toString(NETWORK_ERROR));
-            entity.setDescription("网络连接失败，请检查网络");
-            return entity;
+                || e instanceof ParseException) {//解析错误
+            return ErrorDataResponseFactory.create(Integer.toString(PARSE_ERROR), "数据解析失败");
+        } else if (e instanceof ConnectException) {//网络错误
+            return ErrorDataResponseFactory.create(Integer.toString(NETWORK_ERROR), "网络连接失败，请检查网络");
         } else if (e instanceof UnknownHostException
-                || e instanceof SocketTimeoutException) {
-            //连接错误
-            entity.setErrorCode(Integer.toString(NETWORK_ERROR));
-            entity.setDescription("网络连接失败，请检查网络");
-            return entity;
-        } else {
-            //未知错误
-            entity.setErrorCode(Integer.toString(UNKNOWN));
-            entity.setDescription(e.getMessage());
-            return entity;
+                || e instanceof SocketTimeoutException) {//连接错误
+            return ErrorDataResponseFactory.create(Integer.toString(NETWORK_ERROR), "网络连接失败，请检查网络");
+        } else {//未知错误
+            return ErrorDataResponseFactory.create(Integer.toString(UNKNOWN), e.getMessage());
         }
     }
 }

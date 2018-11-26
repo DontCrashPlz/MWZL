@@ -1,5 +1,6 @@
 package com.pokong.mwzl.data.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,10 +9,12 @@ import java.util.ArrayList;
  * E-mail: zhengCH12138@163.com
  * 订单列表条目数据实体
  */
-public class OrderListItemEntity {
+public class OrderListItemEntity implements Serializable {
+
     private String create_time;//下单时间
     private ArrayList<GoodsEntity> goodlist;//订单商品列表
-    private int goods_amount;//订单的商品数量
+    private int goods_count;//订单的商品数量
+    private long id;//ID
     private String msg;//订单备注信息
     private String order_id;//订单编号
     private int store_id;//店铺id
@@ -38,11 +41,19 @@ public class OrderListItemEntity {
     }
 
     public int getGoods_amount() {
-        return goods_amount;
+        return goods_count;
     }
 
     public void setGoods_amount(int goods_amount) {
-        this.goods_amount = goods_amount;
+        this.goods_count = goods_amount;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getMsg() {
@@ -106,7 +117,8 @@ public class OrderListItemEntity {
         return "OrderListItemEntity{" +
                 "create_time='" + create_time + '\'' +
                 ", goodlist=" + goodlist +
-                ", goods_amount=" + goods_amount +
+                ", goods_count=" + goods_count +
+                ", id=" + id +
                 ", msg='" + msg + '\'' +
                 ", order_id='" + order_id + '\'' +
                 ", store_id=" + store_id +

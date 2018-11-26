@@ -9,16 +9,35 @@ import com.pokong.mwzl.data.BaseResponseBean;
  * 登录响应实体类
  */
 public class ShopInfoResponseBean implements BaseResponseBean {
+    private String area_full_name;//店铺所在区域全名
+    private int area_id;
     private String contact;//联系人
     private int favorite_count;//收藏数
-    private int id;//id
+    private int id;//ID
+    private String imgurl;
     private int status;//店铺状态
     private String store_address;//店铺地址
-    private String area_full_name;//店铺所在区域全名
     private String store_info;//店铺信息
     private String store_name;//店铺名称
     private String store_qq;//店铺QQ
     private String store_telephone;//店铺联系电话
+    private int user_id;
+
+    public String getArea_full_name() {
+        return area_full_name;
+    }
+
+    public void setArea_full_name(String area_full_name) {
+        this.area_full_name = area_full_name;
+    }
+
+    public int getArea_id() {
+        return area_id;
+    }
+
+    public void setArea_id(int area_id) {
+        this.area_id = area_id;
+    }
 
     public String getContact() {
         return contact;
@@ -44,6 +63,14 @@ public class ShopInfoResponseBean implements BaseResponseBean {
         this.id = id;
     }
 
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -58,14 +85,6 @@ public class ShopInfoResponseBean implements BaseResponseBean {
 
     public void setStore_address(String store_address) {
         this.store_address = store_address;
-    }
-
-    public String getArea_full_name() {
-        return area_full_name;
-    }
-
-    public void setArea_full_name(String area_full_name) {
-        this.area_full_name = area_full_name;
     }
 
     public String getStore_info() {
@@ -100,31 +119,40 @@ public class ShopInfoResponseBean implements BaseResponseBean {
         this.store_telephone = store_telephone;
     }
 
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     @Override
     public String toString() {
         return "ShopInfoResponseBean{" +
-                "contact='" + contact + '\'' +
+                "area_full_name='" + area_full_name + '\'' +
+                ", area_id=" + area_id +
+                ", contact='" + contact + '\'' +
                 ", favorite_count=" + favorite_count +
                 ", id=" + id +
+                ", imgurl='" + imgurl + '\'' +
                 ", status=" + status +
                 ", store_address='" + store_address + '\'' +
-                ", area_full_name='" + area_full_name + '\'' +
                 ", store_info='" + store_info + '\'' +
                 ", store_name='" + store_name + '\'' +
                 ", store_qq='" + store_qq + '\'' +
                 ", store_telephone='" + store_telephone + '\'' +
+                ", user_id=" + user_id +
                 '}';
     }
 
 }
-//"data":{
 //        "area_full_name":"河南省郑州市",
 //        "area_id":4523656,
 //        "contact":"赵三",
 //        "favorite_count":0,
 //        "id":2,
-//        "imgname":null,
-//        "imgpath":null,
+//        "imgurl":"",
 //        "status":1,
 //        "store_address":null,
 //        "store_info":null,
@@ -134,5 +162,4 @@ public class ShopInfoResponseBean implements BaseResponseBean {
 //        "store_telephone":"0374-3568987",
 //        "template":null,
 //        "user_id":35
-//        }
 

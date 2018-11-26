@@ -24,7 +24,7 @@
                 android:id="@+id/ordercard_tv_serial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1号"
+                android:text="0001"
                 android:textSize="28sp"
                 android:textColor="@color/order_status_green"
                 android:layout_centerVertical="true"
@@ -83,21 +83,42 @@
             android:orientation="vertical"
             android:layout_marginTop="5dp"
             android:visibility="gone">
-
-            <TextView
-                android:id="@+id/ordercard_tv_ordernum"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="订单编号：1321213132132"
-                android:textSize="15sp"
-                android:textColor="@color/text_color_black"/>
-            <TextView
-                android:id="@+id/ordercard_tv_phone"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单编号："
+                    android:textSize="15sp"
+                    android:textColor="@color/text_color_black"/>
+                <TextView
+                    android:id="@+id/ordercard_tv_ordernum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="000000000000000"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_color_black"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系电话：130-0000-0000"
-                android:textSize="15sp"
-                android:textColor="@color/text_color_black"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系电话："
+                    android:textSize="15sp"
+                    android:textColor="@color/text_color_black"/>
+                <TextView
+                    android:id="@+id/ordercard_tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="130-0000-0000"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="15sp"/>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

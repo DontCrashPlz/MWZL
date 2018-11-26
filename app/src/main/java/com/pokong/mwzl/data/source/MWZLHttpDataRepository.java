@@ -5,20 +5,14 @@ import com.pokong.mwzl.data.DataExecutor;
 import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.DataResponseEntity;
 import com.pokong.mwzl.data.DataUtils;
-import com.pokong.mwzl.data.bean.business.CommentGoodsListRequestBean;
-import com.pokong.mwzl.data.bean.business.CommentGoodsListResponseBean;
-import com.pokong.mwzl.data.bean.business.CustomCakeRequestBean;
-import com.pokong.mwzl.data.bean.business.CustomCakeResponseBean;
-import com.pokong.mwzl.data.bean.business.GoodsCommentListRequestBean;
-import com.pokong.mwzl.data.bean.business.GoodsCommentListResponseBean;
+import com.pokong.mwzl.data.MultiPageListEntity;
+import com.pokong.mwzl.data.bean.OrderListItemEntity;
 import com.pokong.mwzl.data.bean.business.OrderDetailRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderDetailResponseBean;
 import com.pokong.mwzl.data.bean.business.OrderListRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderListResponseBean;
 import com.pokong.mwzl.data.bean.business.OrderReadyRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderReadyResponseBean;
-import com.pokong.mwzl.data.bean.business.QueryOrderRequestBean;
-import com.pokong.mwzl.data.bean.business.QueryOrderResponseBean;
 import com.pokong.mwzl.data.bean.business.ShopInfoRequestBean;
 import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 import com.pokong.mwzl.data.bean.mwzl.LocationRequestBean;
@@ -27,23 +21,13 @@ import com.pokong.mwzl.data.bean.mwzl.PickConfirmRequestBean;
 import com.pokong.mwzl.data.bean.mwzl.PickConfirmResponseBean;
 import com.pokong.mwzl.data.bean.personal.LoginRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginResponseBean;
-import com.pokong.mwzl.data.bean.personal.NoticeDetailRequestBean;
-import com.pokong.mwzl.data.bean.personal.NoticeDetailResponseBean;
-import com.pokong.mwzl.data.bean.personal.NoticeListRequestBean;
-import com.pokong.mwzl.data.bean.personal.NoticeListResponseBean;
-import com.pokong.mwzl.data.executor.business.CommentGoodsListExecutor;
-import com.pokong.mwzl.data.executor.business.CustomCakeExecutor;
-import com.pokong.mwzl.data.executor.business.GoodsCommentListExecutor;
 import com.pokong.mwzl.data.executor.business.OrderDetailExecutor;
 import com.pokong.mwzl.data.executor.business.OrderListExecutor;
 import com.pokong.mwzl.data.executor.business.OrderReadyExecutor;
-import com.pokong.mwzl.data.executor.business.QueryOrderExecutor;
 import com.pokong.mwzl.data.executor.business.ShopInfoExecutor;
 import com.pokong.mwzl.data.executor.mwzl.LocationExecutor;
 import com.pokong.mwzl.data.executor.mwzl.PickConfirmExecutor;
 import com.pokong.mwzl.data.executor.personal.LoginExecutor;
-import com.pokong.mwzl.data.executor.personal.NoticeDetailExecutor;
-import com.pokong.mwzl.data.executor.personal.NoticeListExecutor;
 import com.pokong.mwzl.http.ApiService;
 import com.pokong.mwzl.http.ResponseTransformer;
 
@@ -154,9 +138,9 @@ public class MWZLHttpDataRepository implements MWZLDataSource {
     }
 
     @Override
-    public Disposable getOrderList(OrderListRequestBean paramsBean, DataRequestCallback<OrderListResponseBean> callback) {
-        DataExecutor<OrderListResponseBean> executor = new OrderListExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<OrderListResponseBean>> observable = executor.execute();
+    public Disposable getOrderList(OrderListRequestBean paramsBean, DataRequestCallback<MultiPageListEntity<OrderListItemEntity>> callback) {
+        DataExecutor<MultiPageListEntity<OrderListItemEntity>> executor = new OrderListExecutor(apiService, paramsBean);
+        Observable<DataResponseEntity<MultiPageListEntity<OrderListItemEntity>>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
                 .subscribe(orderListResponseBeanDataResponseEntity -> {

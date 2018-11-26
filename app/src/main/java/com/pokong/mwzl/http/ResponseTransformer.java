@@ -35,7 +35,7 @@ public class ResponseTransformer {
      * 处理网络请求错误，当网络请求发生异常时，返回一个特殊数据并中止网络请求
      */
     public static <T extends BaseResponseBean> ObservableTransformer<DataResponseEntity<T>, DataResponseEntity<T>> handleResult() {
-        return upstream -> upstream.onErrorReturn(new ErrorReturnFunction<>());
+        return upstream -> upstream.onErrorReturn(new ErrorReturnFunction<T>());
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.pokong.mwzl.data.source;
 
 import com.pokong.mwzl.data.DataRequestCallback;
+import com.pokong.mwzl.data.MultiPageListEntity;
+import com.pokong.mwzl.data.bean.OrderListItemEntity;
 import com.pokong.mwzl.data.bean.business.OrderDetailRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderDetailResponseBean;
 import com.pokong.mwzl.data.bean.business.OrderListRequestBean;
@@ -39,7 +41,7 @@ public interface MWZLDataSource {
 
     /** 获取订单列表 */
     Disposable getOrderList(OrderListRequestBean paramsBean,
-                            DataRequestCallback<OrderListResponseBean> callback);
+                            DataRequestCallback<MultiPageListEntity<OrderListItemEntity>> callback);
 
     /** 获取订单详情 */
     Disposable getOrderDetail(OrderDetailRequestBean paramsBean,

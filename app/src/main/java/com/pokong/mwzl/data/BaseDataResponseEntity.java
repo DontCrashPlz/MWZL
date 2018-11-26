@@ -1,11 +1,11 @@
 package com.pokong.mwzl.data;
 
 /**
- * 所有JsonObject数据请求响应数据实体的基类
+ * 所有数据请求响应数据实体的基类
  * Created by Zheng on 2018/5/6.
  */
 
-public class DataResponseEntity<T extends BaseResponseBean> extends BaseDataResponseEntity<T> {
+public class BaseDataResponseEntity<T> {
 
     private T data = null;//真实数据
     private String description;//错误描述，isSuccess = false时有效

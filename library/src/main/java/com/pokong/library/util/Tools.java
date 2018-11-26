@@ -185,10 +185,22 @@ public class Tools {
             }
         }
         if (object instanceof Integer){
-
+            int money = (int) object;
+            return "￥" + money + ".00";
+        }
+        if (object instanceof Float){
+            float money = (float) object;
+            BigDecimal b = new BigDecimal(money);
+            //表明四舍五入，保留两位小数
+            money = b.setScale(2,  BigDecimal.ROUND_HALF_UP).floatValue();
+            return "￥" + money;
         }
         if (object instanceof Double){
-
+            double money = (double) object;
+            BigDecimal b = new BigDecimal(money);
+            //表明四舍五入，保留两位小数
+            money = b.setScale(2,  BigDecimal.ROUND_HALF_UP).doubleValue();
+            return "￥" + money;
         }
         return "￥0.00";
     }

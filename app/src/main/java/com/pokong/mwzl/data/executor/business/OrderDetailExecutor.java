@@ -1,10 +1,12 @@
 package com.pokong.mwzl.data.executor.business;
 
+import com.pokong.library.util.Tools;
 import com.pokong.mwzl.data.DataResponseEntity;
 import com.pokong.mwzl.data.bean.business.OrderDetailRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderDetailResponseBean;
 import com.pokong.mwzl.data.BaseExecutor;
 import com.pokong.mwzl.http.ApiService;
+import com.pokong.mwzl.http.ErrorDataResponseFactory;
 
 import io.reactivex.Observable;
 
@@ -22,6 +24,16 @@ public class OrderDetailExecutor extends BaseExecutor<OrderDetailRequestBean, Or
 
     @Override
     public Observable<DataResponseEntity<OrderDetailResponseBean>> execute() {
-        return null;
+        String appToken = paramsBean.getAppToken();
+        if (Tools.isBlank(appToken)){
+            return Observable.create(emitter -> emitter.onNext(ErrorDataResponseFactory.create("appToken无效")));
+        }
+
+        long orderId = paramsBean.getOrderId();
+        if (orderId == 0){
+            return Observable.create(emitter -> emitter.onNext(ErrorDataResponseFactory.create("orderId无效")));
+        }
+
+        return apiService.getOrderDetail(appToken, String.valueOf(orderId));
     }
 }
