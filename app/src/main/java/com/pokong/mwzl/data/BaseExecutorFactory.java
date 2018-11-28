@@ -31,7 +31,7 @@ import com.pokong.mwzl.http.ApiService;
  */
 public class BaseExecutorFactory {
 
-    public static DataExecutor<BaseResponseBean> create(ApiService apiService, BaseRequestBean paramsBean){
+    public static <T> DataExecutor create(ApiService apiService, T paramsBean){
         DataExecutor executor = null;
         if (paramsBean instanceof LoginRequestBean){
             executor = new LoginExecutor(apiService, (LoginRequestBean) paramsBean);

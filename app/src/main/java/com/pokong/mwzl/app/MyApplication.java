@@ -15,6 +15,16 @@ public class MyApplication extends BaseApplication {
         return mSingleInstance;
     }
 
+    private String appToken;
+
+    public String getAppToken() {
+        return appToken;
+    }
+
+    public void setAppToken(String appToken) {
+        this.appToken = appToken;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

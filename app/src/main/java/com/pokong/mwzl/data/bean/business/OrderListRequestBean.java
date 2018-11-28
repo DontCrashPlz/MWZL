@@ -1,13 +1,13 @@
 package com.pokong.mwzl.data.bean.business;
 
-import com.pokong.mwzl.data.BaseRequestBean;
+import java.io.Serializable;
 
 /**
  * Created on 2018/11/7 13:40
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class OrderListRequestBean implements BaseRequestBean {
+public class OrderListRequestBean implements Serializable {
 
     private String appToken;//appToken
     private String orderColunm = "o.addTime";//排序依据，默认根据订单生成时间排序

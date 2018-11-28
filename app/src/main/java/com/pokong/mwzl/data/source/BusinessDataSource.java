@@ -37,7 +37,7 @@ public interface BusinessDataSource {
 
     /** 订单备货完成 */
     Disposable orderReady(OrderReadyRequestBean paramsBean,
-                          DataRequestCallback<OrderReadyResponseBean> callback);
+                          DataRequestCallback<String> callback);
 
     /** 店铺数据统计信息 */
     Disposable getShopInfoList(ShopInfoRequestBean paramsBean,

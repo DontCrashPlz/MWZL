@@ -1,7 +1,7 @@
 package com.pokong.mwzl.data.executor.personal;
 
 import com.pokong.library.util.Tools;
-import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.bean.personal.LoginRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginResponseBean;
 import com.pokong.mwzl.data.BaseExecutor;
@@ -9,11 +9,8 @@ import com.pokong.mwzl.http.ApiService;
 import com.pokong.mwzl.http.ErrorDataResponseFactory;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 
 /**
  * Created by Zheng on 2018/10/19.
@@ -36,7 +33,7 @@ public class LoginExecutor extends BaseExecutor<LoginRequestBean, LoginResponseB
     }
 
     @Override
-    public Observable<DataResponseEntity<LoginResponseBean>> execute() {
+    public Observable<DataResponseBean<LoginResponseBean>> execute() {
         String userName = paramsBean.getUserName();
         if (Tools.isBlank(userName)){
             return Observable.create(emitter -> emitter.onNext(ErrorDataResponseFactory.create("用户名无效")));

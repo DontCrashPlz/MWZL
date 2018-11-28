@@ -1,6 +1,6 @@
 package com.pokong.mwzl.data.executor.personal;
 
-import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.bean.personal.NoticeDetailRequestBean;
 import com.pokong.mwzl.data.bean.personal.NoticeDetailResponseBean;
 import com.pokong.mwzl.data.BaseExecutor;
@@ -21,7 +21,7 @@ public class NoticeDetailExecutor extends BaseExecutor<NoticeDetailRequestBean, 
     }
 
     @Override
-    public Observable<DataResponseEntity<NoticeDetailResponseBean>> execute() {
+    public Observable<DataResponseBean<NoticeDetailResponseBean>> execute() {
         return null;
     }
 }

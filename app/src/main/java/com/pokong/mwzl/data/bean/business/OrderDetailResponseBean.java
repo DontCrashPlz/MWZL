@@ -1,8 +1,8 @@
 package com.pokong.mwzl.data.bean.business;
 
-import com.pokong.mwzl.data.BaseResponseBean;
 import com.pokong.mwzl.data.bean.GoodsEntity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class OrderDetailResponseBean implements BaseResponseBean {
+public class OrderDetailResponseBean implements Serializable {
     private String create_time;//下单时间
     private String finishtime;//订单完成时间
     private ArrayList<GoodsEntity> goodlist;

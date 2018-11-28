@@ -1,11 +1,10 @@
 package com.pokong.mwzl.data.executor.business;
 
 import com.pokong.library.util.Tools;
-import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.MultiPageListEntity;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
 import com.pokong.mwzl.data.bean.business.OrderListRequestBean;
-import com.pokong.mwzl.data.bean.business.OrderListResponseBean;
 import com.pokong.mwzl.data.BaseExecutor;
 import com.pokong.mwzl.http.ApiService;
 import com.pokong.mwzl.http.ErrorDataResponseFactory;
@@ -27,9 +26,9 @@ public class OrderListExecutor extends BaseExecutor<OrderListRequestBean, MultiP
     private final String PARAMKEY_ORDERMODE = "orderMode";
     private final String PARAMKEY_PAGESIZE = "pageSize";
     private final String PARAMKEY_PAGENUMBER = "pageNumber";
-    private final String PARAMKEY_STARTID = "startId";
+    private final String PARAMKEY_STARTID = "_query.startId";
     private final String PARAMKEY_SPLITPAGE = "splitpage";
-    private final String PARAMKEY_ORDERSTATUS = "order_status";
+    private final String PARAMKEY_ORDERSTATUS = "_query.order_status";
 
     private HashMap<String, String> paramsMap;
 
@@ -39,7 +38,7 @@ public class OrderListExecutor extends BaseExecutor<OrderListRequestBean, MultiP
     }
 
     @Override
-    public Observable<DataResponseEntity<MultiPageListEntity<OrderListItemEntity>>> execute() {
+    public Observable<DataResponseBean<MultiPageListEntity<OrderListItemEntity>>> execute() {
         String appToken = paramsBean.getAppToken();
         if (Tools.isBlank(appToken)){
             return Observable.create(emitter -> emitter.onNext(ErrorDataResponseFactory.create("appToken无效")));

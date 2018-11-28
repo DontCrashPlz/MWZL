@@ -2,8 +2,7 @@ package com.pokong.mwzl.data.source;
 
 import com.pokong.mwzl.data.DataExecutor;
 import com.pokong.mwzl.data.DataRequestCallback;
-import com.pokong.mwzl.data.DataResponseEntity;
-import com.pokong.mwzl.data.DataUtils;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.bean.business.CommentGoodsListRequestBean;
 import com.pokong.mwzl.data.bean.business.CommentGoodsListResponseBean;
 import com.pokong.mwzl.data.bean.business.CustomCakeRequestBean;
@@ -30,7 +29,6 @@ import com.pokong.mwzl.data.executor.business.CommentGoodsListExecutor;
 import com.pokong.mwzl.data.executor.business.CustomCakeExecutor;
 import com.pokong.mwzl.data.executor.business.GoodsCommentListExecutor;
 import com.pokong.mwzl.data.executor.business.OrderDetailExecutor;
-import com.pokong.mwzl.data.executor.business.OrderListExecutor;
 import com.pokong.mwzl.data.executor.business.OrderReadyExecutor;
 import com.pokong.mwzl.data.executor.business.QueryOrderExecutor;
 import com.pokong.mwzl.data.executor.business.ShopInfoExecutor;
@@ -104,14 +102,14 @@ public class HttpDataRepository implements HttpDataSource {
     @Override
     public Disposable doLogin(LoginRequestBean paramsBean, DataRequestCallback<LoginResponseBean> callback) {
         DataExecutor<LoginResponseBean> executor = new LoginExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<LoginResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<LoginResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(loginResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(loginResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(loginResponseBeanDataResponseEntity.getData());
+                .subscribe(loginResponseBeanDataResponseBean -> {
+                    if (loginResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(loginResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(loginResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(loginResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
@@ -119,14 +117,14 @@ public class HttpDataRepository implements HttpDataSource {
     @Override
     public Disposable getSystemNoticeList(NoticeListRequestBean paramsBean, DataRequestCallback<NoticeListResponseBean> callback) {
         DataExecutor<NoticeListResponseBean> executor = new NoticeListExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<NoticeListResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<NoticeListResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(noticeListResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(noticeListResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(noticeListResponseBeanDataResponseEntity.getData());
+                .subscribe(noticeListResponseBeanDataResponseBean -> {
+                    if (noticeListResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(noticeListResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(noticeListResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(noticeListResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
@@ -134,59 +132,60 @@ public class HttpDataRepository implements HttpDataSource {
     @Override
     public Disposable getSystemNoticeDetail(NoticeDetailRequestBean paramsBean, DataRequestCallback<NoticeDetailResponseBean> callback) {
         DataExecutor<NoticeDetailResponseBean> executor = new NoticeDetailExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<NoticeDetailResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<NoticeDetailResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(noticeDetailResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(noticeDetailResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(noticeDetailResponseBeanDataResponseEntity.getData());
+                .subscribe(noticeDetailResponseBeanDataResponseBean -> {
+                    if (noticeDetailResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(noticeDetailResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(noticeDetailResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(noticeDetailResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
 
     @Override
     public Disposable getOrderList(OrderListRequestBean paramsBean, DataRequestCallback<OrderListResponseBean> callback) {
-        DataExecutor<OrderListResponseBean> executor = new OrderListExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<OrderListResponseBean>> observable = executor.execute();
-        return observable.compose(ResponseTransformer.changeThread())
-                .compose(ResponseTransformer.handleResult())
-                .subscribe(orderListResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(orderListResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(orderListResponseBeanDataResponseEntity.getData());
-                    }else {
-                        callback.onFailed(orderListResponseBeanDataResponseEntity.getDescription());
-                    }
-                },throwable -> callback.onFailed(throwable.getMessage()));
+//        DataExecutor<OrderListResponseBean> executor = new OrderListExecutor(apiService, paramsBean);
+//        Observable<DataResponseBean<OrderListResponseBean>> observable = executor.execute();
+//        return observable.compose(ResponseTransformer.changeThread())
+//                .compose(ResponseTransformer.handleResult())
+//                .subscribe(orderListResponseBeanDataResponseBean -> {
+//                    if (orderListResponseBeanDataResponseBean.isSuccess()){
+//                        callback.onSuccessed(orderListResponseBeanDataResponseBean.getData());
+//                    }else {
+//                        callback.onFailed(orderListResponseBeanDataResponseBean.getDescription());
+//                    }
+//                },throwable -> callback.onFailed(throwable.getMessage()));
+        return null;
     }
 
     @Override
     public Disposable getOrderDetail(OrderDetailRequestBean paramsBean, DataRequestCallback<OrderDetailResponseBean> callback) {
         DataExecutor<OrderDetailResponseBean> executor = new OrderDetailExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<OrderDetailResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<OrderDetailResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(orderDetailResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(orderDetailResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(orderDetailResponseBeanDataResponseEntity.getData());
+                .subscribe(orderDetailResponseBeanDataResponseBean -> {
+                    if (orderDetailResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(orderDetailResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(orderDetailResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(orderDetailResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
 
     @Override
-    public Disposable orderReady(OrderReadyRequestBean paramsBean, DataRequestCallback<OrderReadyResponseBean> callback) {
-        DataExecutor<OrderReadyResponseBean> executor = new OrderReadyExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<OrderReadyResponseBean>> observable = executor.execute();
+    public Disposable orderReady(OrderReadyRequestBean paramsBean, DataRequestCallback<String> callback) {
+        DataExecutor<String> executor = new OrderReadyExecutor(apiService, paramsBean);
+        Observable<DataResponseBean<String>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(orderReadyResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(orderReadyResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(orderReadyResponseBeanDataResponseEntity.getData());
+                .subscribe(orderReadyResponseBeanDataResponseBean -> {
+                    if (orderReadyResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(orderReadyResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(orderReadyResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(orderReadyResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
@@ -194,14 +193,14 @@ public class HttpDataRepository implements HttpDataSource {
     @Override
     public Disposable getShopInfoList(ShopInfoRequestBean paramsBean, DataRequestCallback<ShopInfoResponseBean> callback) {
         DataExecutor<ShopInfoResponseBean> executor = new ShopInfoExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<ShopInfoResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<ShopInfoResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(shopInfoResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(shopInfoResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(shopInfoResponseBeanDataResponseEntity.getData());
+                .subscribe(shopInfoResponseBeanDataResponseBean -> {
+                    if (shopInfoResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(shopInfoResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(shopInfoResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(shopInfoResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
@@ -209,14 +208,14 @@ public class HttpDataRepository implements HttpDataSource {
     @Override
     public Disposable queryOrderById(QueryOrderRequestBean paramsBean, DataRequestCallback<QueryOrderResponseBean> callback) {
         DataExecutor<QueryOrderResponseBean> executor = new QueryOrderExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<QueryOrderResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<QueryOrderResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(queryOrderResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(queryOrderResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(queryOrderResponseBeanDataResponseEntity.getData());
+                .subscribe(queryOrderResponseBeanDataResponseBean -> {
+                    if (queryOrderResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(queryOrderResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(queryOrderResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(queryOrderResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
@@ -224,14 +223,14 @@ public class HttpDataRepository implements HttpDataSource {
     @Override
     public Disposable getCommentGoodsList(CommentGoodsListRequestBean paramsBean, DataRequestCallback<CommentGoodsListResponseBean> callback) {
         DataExecutor<CommentGoodsListResponseBean> executor = new CommentGoodsListExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<CommentGoodsListResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<CommentGoodsListResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(commentGoodsListResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(commentGoodsListResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(commentGoodsListResponseBeanDataResponseEntity.getData());
+                .subscribe(commentGoodsListResponseBeanDataResponseBean -> {
+                    if (commentGoodsListResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(commentGoodsListResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(commentGoodsListResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(commentGoodsListResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
@@ -239,14 +238,14 @@ public class HttpDataRepository implements HttpDataSource {
     @Override
     public Disposable getCommentListByGoodsId(GoodsCommentListRequestBean paramsBean, DataRequestCallback<GoodsCommentListResponseBean> callback) {
         DataExecutor<GoodsCommentListResponseBean> executor = new GoodsCommentListExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<GoodsCommentListResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<GoodsCommentListResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(goodsCommentListResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(goodsCommentListResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(goodsCommentListResponseBeanDataResponseEntity.getData());
+                .subscribe(goodsCommentListResponseBeanDataResponseBean -> {
+                    if (goodsCommentListResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(goodsCommentListResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(goodsCommentListResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(goodsCommentListResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
@@ -254,14 +253,14 @@ public class HttpDataRepository implements HttpDataSource {
     @Override
     public Disposable customCake(CustomCakeRequestBean paramsBean, DataRequestCallback<CustomCakeResponseBean> callback) {
         DataExecutor<CustomCakeResponseBean> executor = new CustomCakeExecutor(apiService, paramsBean);
-        Observable<DataResponseEntity<CustomCakeResponseBean>> observable = executor.execute();
+        Observable<DataResponseBean<CustomCakeResponseBean>> observable = executor.execute();
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(customCakeResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(customCakeResponseBeanDataResponseEntity)){
-                        callback.onSuccessed(customCakeResponseBeanDataResponseEntity.getData());
+                .subscribe(customCakeResponseBeanDataResponseBean -> {
+                    if (customCakeResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(customCakeResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(customCakeResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(customCakeResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }

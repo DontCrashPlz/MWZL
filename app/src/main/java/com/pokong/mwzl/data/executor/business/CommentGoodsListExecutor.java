@@ -1,6 +1,6 @@
 package com.pokong.mwzl.data.executor.business;
 
-import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.bean.business.CommentGoodsListRequestBean;
 import com.pokong.mwzl.data.bean.business.CommentGoodsListResponseBean;
 import com.pokong.mwzl.data.BaseExecutor;
@@ -21,7 +21,7 @@ public class CommentGoodsListExecutor extends BaseExecutor<CommentGoodsListReque
     }
 
     @Override
-    public Observable<DataResponseEntity<CommentGoodsListResponseBean>> execute() {
+    public Observable<DataResponseBean<CommentGoodsListResponseBean>> execute() {
         return null;
     }
 }

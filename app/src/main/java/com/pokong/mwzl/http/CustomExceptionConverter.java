@@ -1,8 +1,7 @@
 package com.pokong.mwzl.http;
 
 import com.google.gson.JsonParseException;
-import com.pokong.mwzl.data.BaseResponseBean;
-import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataResponseBean;
 
 import org.json.JSONException;
 
@@ -39,7 +38,7 @@ class CustomExceptionConverter {
      * @param <T>
      * @return
      */
-    static <T extends BaseResponseBean> DataResponseEntity<T> convertException(Throwable e) {
+    static <T> DataResponseBean<T> convertException(Throwable e) {
         if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {//解析错误

@@ -1,6 +1,6 @@
 package com.pokong.mwzl.data.bean.business;
 
-import com.pokong.mwzl.data.BaseResponseBean;
+import java.io.Serializable;
 
 /**
  * Created on 2018/11/7 13:41
@@ -9,7 +9,7 @@ import com.pokong.mwzl.data.BaseResponseBean;
  * @Deprecated -> OrderListItemEntity
  */
 @Deprecated
-public class OrderListResponseBean implements BaseResponseBean {
+public class OrderListResponseBean implements Serializable {
 
 }
 //        "addr_id":32777,

@@ -1,12 +1,9 @@
 package com.pokong.mwzl.data.source;
 
 import com.pokong.mwzl.data.BaseExecutorFactory;
-import com.pokong.mwzl.data.BaseRequestBean;
-import com.pokong.mwzl.data.BaseResponseBean;
 import com.pokong.mwzl.data.DataExecutor;
 import com.pokong.mwzl.data.DataRequestCallback;
-import com.pokong.mwzl.data.DataResponseEntity;
-import com.pokong.mwzl.data.DataUtils;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.http.ApiService;
 import com.pokong.mwzl.app.NetConstants;
 import com.pokong.mwzl.http.ResponseTransformer;
@@ -73,21 +70,19 @@ public class HttpDataRepository2 implements HttpDataSource2 {
 
 
     @Override
-    public <T extends BaseResponseBean> Disposable requestHttpData(BaseRequestBean paramsBean, DataRequestCallback<T> callback) {
+    public <T,R> Disposable requestHttpData(T paramsBean, DataRequestCallback<R> callback) {
 
-        DataExecutor<BaseResponseBean> executor = BaseExecutorFactory.create(apiService, paramsBean);
-        Observable<DataResponseEntity<BaseResponseBean>> observable = executor.execute();
+        DataExecutor<R> executor = BaseExecutorFactory.create(apiService, paramsBean);
+        Observable<DataResponseBean<R>> observable = executor.execute();
 
         return observable.compose(ResponseTransformer.changeThread())
                 .compose(ResponseTransformer.handleResult())
-                .subscribe(baseResponseBeanDataResponseEntity -> {
-                    if (DataUtils.isDataRequestSuccess(baseResponseBeanDataResponseEntity)){
-                        BaseResponseBean responseBean = baseResponseBeanDataResponseEntity.getData();
-                        callback.onSuccessed((T) responseBean);
+                .subscribe(baseResponseBeanDataResponseBean -> {
+                    if (baseResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(baseResponseBeanDataResponseBean.getData());
                     }else {
-                        callback.onFailed(baseResponseBeanDataResponseEntity.getDescription());
+                        callback.onFailed(baseResponseBeanDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
-
     }
 }

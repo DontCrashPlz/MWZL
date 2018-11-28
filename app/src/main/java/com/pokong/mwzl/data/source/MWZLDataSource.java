@@ -37,7 +37,7 @@ public interface MWZLDataSource {
 
     /** 获取店铺信息 */
     Disposable uploadLocation(LocationRequestBean paramsBean,
-                           DataRequestCallback<LocationResponseBean> callback);
+                           DataRequestCallback<String> callback);
 
     /** 获取订单列表 */
     Disposable getOrderList(OrderListRequestBean paramsBean,
@@ -49,10 +49,10 @@ public interface MWZLDataSource {
 
     /** 订单备货完成 */
     Disposable orderReady(OrderReadyRequestBean paramsBean,
-                          DataRequestCallback<OrderReadyResponseBean> callback);
+                          DataRequestCallback<String> callback);
 
     /** 订单已取货 */
     Disposable pickConfirm(PickConfirmRequestBean paramsBean,
-                          DataRequestCallback<PickConfirmResponseBean> callback);
+                          DataRequestCallback<String> callback);
 
 }

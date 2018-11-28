@@ -23,7 +23,7 @@ public class SplashPresenter extends BasePresenter<SplashActivity> implements Sp
         //todo 获取远程版本号
         UpdateInfoEntity entity = new UpdateInfoEntity();
         entity.setUrl("www.update.com");
-        entity.setVersion("1.1.0");
+        entity.setVersion("1.0");
         String remoteVersionName = entity.getVersion();
 
         if (Tools.isBlank(currentVersionName)//不需要更新

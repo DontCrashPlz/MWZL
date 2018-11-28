@@ -1,13 +1,13 @@
 package com.pokong.mwzl.data.bean.business;
 
-import com.pokong.mwzl.data.BaseRequestBean;
+import java.io.Serializable;
 
 /**
  * Created on 2018/11/7 13:41
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class OrderDetailRequestBean implements BaseRequestBean {
+public class OrderDetailRequestBean implements Serializable {
 
     private String appToken;
     private long orderId;

@@ -22,7 +22,7 @@
 
     <color name="order_status_gary">#898989</color>
     <color name="order_status_green">#28B9A6</color>
-    <color name="order_status_yellow">#E7A135</color>
+    <color name="order_status_yellow">#FFAB00</color>
 
     <color name="order_item_gary">#8A000000</color>
     <color name="order_item_pressed_gary">#4A000000</color>

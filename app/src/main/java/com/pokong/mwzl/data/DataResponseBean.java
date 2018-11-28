@@ -1,11 +1,15 @@
 package com.pokong.mwzl.data;
 
+import com.pokong.library.util.Tools;
+
+import java.io.Serializable;
+
 /**
- * 所有数据请求响应数据实体的基类
+ * 所有JsonObject数据请求响应数据实体的基类
  * Created by Zheng on 2018/5/6.
  */
 
-public class BaseDataResponseEntity<T> {
+public class DataResponseBean<T> implements Serializable {
 
     private T data = null;//真实数据
     private String description;//错误描述，isSuccess = false时有效
@@ -46,11 +50,22 @@ public class BaseDataResponseEntity<T> {
 
     @Override
     public String toString() {
-        return "DataResponseEntity{" +
+        return "DataResponseBean{" +
                 "data=" + data +
                 ", description='" + description + '\'' +
                 ", errorCode='" + errorCode + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }
+
+    /**
+     * 判断数据请求是否成功
+     * @return
+     */
+    public boolean isSuccess(){
+        if (Tools.isBlank(getStatus())) return false;
+        if ("success".equals(getStatus())) return true;
+        return false;
+    }
+
 }

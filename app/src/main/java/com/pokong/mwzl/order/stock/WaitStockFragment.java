@@ -13,11 +13,13 @@ import android.widget.ProgressBar;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.pokong.library.base.LazyLoadFragment;
 import com.pokong.library.util.LogUtils;
+import com.pokong.library.util.ToastUtils;
 import com.pokong.mwzl.R;
 import com.pokong.mwzl.adapter.OrderListAdapter;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 2018/11/16 15:24
@@ -30,8 +32,6 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
     private RecyclerView recyclerView;
     private OrderListAdapter adapter;
     private ProgressBar progressBar;
-
-    private ArrayList<OrderListItemEntity> orderList;
 
     public static WaitStockFragment newInstance(int tag){
         WaitStockFragment instance = new WaitStockFragment();
@@ -58,7 +58,7 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new OrderListAdapter(R.layout.layout_cardview_order_list);
         adapter.setOnItemClickListener((adapter, view, position) -> {
-            OrderListItemEntity currentItemEntity = orderList.get(position);
+            OrderListItemEntity currentItemEntity = (OrderListItemEntity) adapter.getData().get(position);
             boolean isItemOpend = currentItemEntity.isOpend();
             if (isItemOpend){
                 currentItemEntity.setOpend(false);
@@ -70,21 +70,16 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
         });
         recyclerView.setAdapter(adapter);
         adapter.setOnLoadMoreListener(this, recyclerView);
+        adapter.setEnableLoadMore(false);
 
         progressBar = rootView.findViewById(R.id.progressBar);
+
+        mPresenter.initParamsBean();
     }
 
     @Override
     protected void lazyLoad() {
-        LogUtils.d("WaitStockFragment lazyLoad", "run");
-        orderList = new ArrayList<>();
-        orderList.add(new OrderListItemEntity());
-        orderList.add(new OrderListItemEntity());
-        orderList.add(new OrderListItemEntity());
-        orderList.add(new OrderListItemEntity());
-        adapter.addData(orderList);
-        progressBar.setVisibility(View.GONE);
-        refreshLayout.setEnabled(true);
+        mPresenter.refreshData();
     }
 
     @Override
@@ -95,32 +90,44 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
     @Override
     public void onRefresh() {
         adapter.setEnableLoadMore(false);
-        new Thread(() -> {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            getActivity().runOnUiThread(() -> {
-                refreshLayout.setRefreshing(false);
-                adapter.setEnableLoadMore(true);
-            });
-        }).start();
+        mPresenter.refreshData();
     }
 
     @Override
     public void onLoadMoreRequested() {
         refreshLayout.setEnabled(false);
-        new Thread(() -> {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            getActivity().runOnUiThread(() -> {
-                adapter.loadMoreFail();
-                refreshLayout.setEnabled(true);
-            });
-        }).start();
+        mPresenter.loadMoreData();
+    }
+
+    @Override
+    public void setNewData(List<OrderListItemEntity> newDataList) {
+        if (progressBar != null && progressBar.isShown()){
+            progressBar.setVisibility(View.GONE);
+            refreshLayout.setEnabled(true);
+        }
+        adapter.setNewData(newDataList);
+        refreshLayout.setRefreshing(false);
+        adapter.setEnableLoadMore(true);
+    }
+
+    @Override
+    public void refreshFailed(String failMsg) {
+        ToastUtils.showShortToast(getContext(), failMsg);
+        refreshLayout.setRefreshing(false);
+        adapter.setEnableLoadMore(true);
+    }
+
+    @Override
+    public void addMoreData(List<OrderListItemEntity> moreDataList) {
+        adapter.addData(moreDataList);
+        adapter.loadMoreComplete();
+        refreshLayout.setEnabled(true);
+    }
+
+    @Override
+    public void loadMoreFailed(String failMsg) {
+        ToastUtils.showShortToast(getContext(), failMsg);
+        adapter.loadMoreFail();
+        refreshLayout.setEnabled(true);
     }
 }

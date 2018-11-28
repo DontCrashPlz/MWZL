@@ -1,7 +1,5 @@
 package com.pokong.mwzl.data.source;
 
-import com.pokong.mwzl.data.BaseRequestBean;
-import com.pokong.mwzl.data.BaseResponseBean;
 import com.pokong.mwzl.data.DataRequestCallback;
 
 import io.reactivex.disposables.Disposable;
@@ -19,6 +17,6 @@ public interface HttpDataSource2 {
      * @param <T>
      * @return
      */
-    <T extends BaseResponseBean> Disposable requestHttpData(BaseRequestBean paramsBean, DataRequestCallback<T> callback);
+    <T,R> Disposable requestHttpData(T paramsBean, DataRequestCallback<R> callback);
 
 }

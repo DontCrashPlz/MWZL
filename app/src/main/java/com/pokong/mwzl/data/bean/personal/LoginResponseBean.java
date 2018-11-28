@@ -1,6 +1,6 @@
 package com.pokong.mwzl.data.bean.personal;
 
-import com.pokong.mwzl.data.BaseResponseBean;
+import java.io.Serializable;
 
 /**
  * Created on 2018/11/7 9:55
@@ -8,7 +8,7 @@ import com.pokong.mwzl.data.BaseResponseBean;
  * E-mail: zhengCH12138@163.com
  * 登录响应实体类
  */
-public class LoginResponseBean implements BaseResponseBean {
+public class LoginResponseBean implements Serializable {
     private String apptoken;
 
     public String getApptoken() {

@@ -7,12 +7,12 @@ import io.reactivex.Observable;
  * Created by Zheng on 2018/10/19.
  */
 
-public interface DataExecutor<T extends BaseResponseBean> {
+public interface DataExecutor<T> {
 
     /**
      * 执行数据请求的方法
      * @return
      */
-    Observable<DataResponseEntity<T>> execute();
+    Observable<DataResponseBean<T>> execute();
 
 }

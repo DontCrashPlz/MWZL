@@ -2,6 +2,7 @@ package com.pokong.mwzl.data.bean.personal;
 
 import com.pokong.mwzl.data.bean.GoodsEntity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class OrderDetailEntity {
+public class OrderDetailEntity implements Serializable {
     private String real_pay_account;//订单实际支付金额
     private double totalprice;//订单总金额
     private double ship_price;//邮费

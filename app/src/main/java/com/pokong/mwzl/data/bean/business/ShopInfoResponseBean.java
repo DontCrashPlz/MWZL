@@ -1,6 +1,6 @@
 package com.pokong.mwzl.data.bean.business;
 
-import com.pokong.mwzl.data.BaseResponseBean;
+import java.io.Serializable;
 
 /**
  * Created on 2018/11/7 9:55
@@ -8,7 +8,7 @@ import com.pokong.mwzl.data.BaseResponseBean;
  * E-mail: zhengCH12138@163.com
  * 登录响应实体类
  */
-public class ShopInfoResponseBean implements BaseResponseBean {
+public class ShopInfoResponseBean implements Serializable {
     private String area_full_name;//店铺所在区域全名
     private int area_id;
     private String contact;//联系人

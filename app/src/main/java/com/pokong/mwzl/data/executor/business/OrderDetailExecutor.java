@@ -1,7 +1,7 @@
 package com.pokong.mwzl.data.executor.business;
 
 import com.pokong.library.util.Tools;
-import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.bean.business.OrderDetailRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderDetailResponseBean;
 import com.pokong.mwzl.data.BaseExecutor;
@@ -23,7 +23,7 @@ public class OrderDetailExecutor extends BaseExecutor<OrderDetailRequestBean, Or
     }
 
     @Override
-    public Observable<DataResponseEntity<OrderDetailResponseBean>> execute() {
+    public Observable<DataResponseBean<OrderDetailResponseBean>> execute() {
         String appToken = paramsBean.getAppToken();
         if (Tools.isBlank(appToken)){
             return Observable.create(emitter -> emitter.onNext(ErrorDataResponseFactory.create("appToken无效")));

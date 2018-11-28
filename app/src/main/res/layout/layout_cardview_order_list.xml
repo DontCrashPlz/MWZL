@@ -41,7 +41,7 @@
                 android:id="@+id/ordercard_tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="下单时间: 2000-01-01"
+                android:text="@string/ordercard_create_time"
                 android:textSize="15sp"
                 android:textColor="@color/order_status_green"
                 android:layout_alignParentBottom="true"
@@ -50,7 +50,7 @@
                 android:id="@+id/ordercard_iv_expand"
                 android:layout_width="8dp"
                 android:layout_height="12dp"
-                android:src="@mipmap/expand"
+                android:src="@mipmap/expand_green"
                 android:scaleType="fitXY"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -70,6 +70,7 @@
         </RelativeLayout>
 
         <View
+            android:id="@+id/ordercard_head_devide"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:background="@color/order_status_green"
@@ -81,8 +82,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:visibility="gone">
+            android:layout_marginTop="5dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,17 +91,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="订单编号："
+                    android:text="买家姓名："
                     android:textSize="15sp"
                     android:textColor="@color/text_color_black"/>
                 <TextView
-                    android:id="@+id/ordercard_tv_ordernum"
+                    android:id="@+id/ordercard_tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="000000000000000"
-                    android:textSize="15sp"
-                    android:textColor="@color/text_color_black"/>
+                    android:text="王先生"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="15sp"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,6 +120,25 @@
                     android:text="130-0000-0000"
                     android:textColor="@android:color/holo_red_light"
                     android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单编号："
+                    android:textSize="15sp"
+                    android:textColor="@color/text_color_black"/>
+                <TextView
+                    android:id="@+id/ordercard_tv_ordernum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="000000000000000"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_color_black"/>
             </LinearLayout>
 
             <View
@@ -180,6 +201,7 @@
                     android:gravity="right"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/ordercard_toolnum_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -206,6 +228,7 @@
                     android:textSize="11sp"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/ordercard_age_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -272,10 +295,10 @@
                     android:text="打印小票"
                     android:textSize="15sp"
                     android:textColor="@color/order_item_gary"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:paddingRight="12dp"
-                    android:paddingLeft="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
                     android:clickable="true"
                     android:layout_marginRight="18dp"/>
                 <TextView
@@ -286,10 +309,10 @@
                     android:text="备货完成"
                     android:textSize="15sp"
                     android:textColor="@color/order_item_gary"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:paddingRight="12dp"
-                    android:paddingLeft="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
                     android:clickable="true"/>
             </LinearLayout>
 

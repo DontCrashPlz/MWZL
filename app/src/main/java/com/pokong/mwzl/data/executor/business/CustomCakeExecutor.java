@@ -1,6 +1,6 @@
 package com.pokong.mwzl.data.executor.business;
 
-import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.bean.business.CustomCakeRequestBean;
 import com.pokong.mwzl.data.bean.business.CustomCakeResponseBean;
 import com.pokong.mwzl.data.BaseExecutor;
@@ -21,7 +21,7 @@ public class CustomCakeExecutor extends BaseExecutor<CustomCakeRequestBean, Cust
     }
 
     @Override
-    public Observable<DataResponseEntity<CustomCakeResponseBean>> execute() {
+    public Observable<DataResponseBean<CustomCakeResponseBean>> execute() {
         return null;
     }
 }

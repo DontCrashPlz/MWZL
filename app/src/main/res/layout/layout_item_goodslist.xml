@@ -3,43 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
 
     <ImageView
+        android:id="@+id/goods_iv_img"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginRight="5dp"
         android:src="@mipmap/logo" />
 
     <TextView
+        android:id="@+id/goods_tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="4"
         android:text="商品名称"
         android:textColor="@color/text_color_black"
         android:textSize="15sp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/goods_tv_count"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginRight="60dp"
         android:text="x1"
         android:textColor="@color/text_color_black"
         android:textSize="15sp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/goods_tv_size"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginRight="60dp"
-        android:text="规格"
         android:textColor="@color/text_color_black"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:gravity="center"
+        android:lines="1"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/goods_tv_price"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="￥100"
         android:textColor="@color/text_color_black"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:gravity="right"/>
 
 </LinearLayout>

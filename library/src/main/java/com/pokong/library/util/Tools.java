@@ -11,7 +11,10 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Collection;
+import java.util.IllegalFormatException;
 import java.util.Map;
 
 /**
@@ -124,6 +127,7 @@ public class Tools {
     }
 
     /**
+     * @Deprecated -> formatRmbStr(Object object)
      * 格式化人民币字符串，也就是转换成“￥”开头的字符串
      * 人民币默认保留两位小数
      * 整数部分：integer part
@@ -134,6 +138,7 @@ public class Tools {
      *               String暂不支持四舍五入
      * @return
      */
+    @Deprecated
     public static String formatRMBStr(Object object){
         if (object == null) return "￥0.00";
         if (object instanceof String){
@@ -192,7 +197,7 @@ public class Tools {
             float money = (float) object;
             BigDecimal b = new BigDecimal(money);
             //表明四舍五入，保留两位小数
-            money = b.setScale(2,  BigDecimal.ROUND_HALF_UP).floatValue();
+            money = b.setScale(2,  RoundingMode.HALF_UP).floatValue();
             return "￥" + money;
         }
         if (object instanceof Double){
@@ -203,6 +208,63 @@ public class Tools {
             return "￥" + money;
         }
         return "￥0.00";
+    }
+
+    /**
+     * 格式化人民币字符串，也就是转换成“￥”开头的字符串
+     * 人民币默认保留两位小数
+     * @param object
+     * @return
+     */
+    public static String formatRmbStr(Object object){
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String rmbStr = "0.00";
+        if (object instanceof String){
+            double objDouble = Double.valueOf((String) object);
+            rmbStr = decimalFormat.format(objDouble);
+        }else {
+            try{
+                rmbStr = decimalFormat.format(object);
+            }catch (IllegalArgumentException exception){
+                exception.printStackTrace();
+            }
+        }
+        return "￥" + rmbStr;
+    }
+
+    /**
+     * 生成订单序号，1000取余，格式化为四位字符串
+     * @param id
+     * @return
+     */
+    public static String formatId(long id){
+        id = id % 1000;
+        DecimalFormat decimalFormat = new DecimalFormat("0000");
+        return decimalFormat.format(id);
+    }
+
+    /**
+     * 验证是否为有效用户名
+     * @param userName
+     * @return
+     */
+    public static boolean isValidUserName(String userName){
+        if (userName == null) return false;
+        if ("".equals(userName)) return false;
+        if (userName.length() < 6) return false;
+        return true;
+    }
+
+    /**
+     * 验证是否为有效密码
+     * @param password
+     * @return
+     */
+    public static boolean isValidPassword(String password){
+        if (password == null) return false;
+        if ("".equals(password)) return false;
+        if (password.length() < 6) return false;
+        return true;
     }
 
 }

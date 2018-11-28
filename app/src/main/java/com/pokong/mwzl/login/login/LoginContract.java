@@ -30,6 +30,16 @@ public interface LoginContract {
          * 跳转到主界面
          */
         void skipToHome();
+
+        /**
+         * 弹出正在网络请求弹窗
+         */
+        void showLoadingDialog();
+
+        /**
+         * 取消正在网络请求弹窗
+         */
+        void dismissLoadingDialog();
     }
     interface Presenter{
         /**

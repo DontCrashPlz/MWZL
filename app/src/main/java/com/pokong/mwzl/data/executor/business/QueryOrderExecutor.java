@@ -1,6 +1,6 @@
 package com.pokong.mwzl.data.executor.business;
 
-import com.pokong.mwzl.data.DataResponseEntity;
+import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.bean.business.QueryOrderRequestBean;
 import com.pokong.mwzl.data.bean.business.QueryOrderResponseBean;
 import com.pokong.mwzl.data.BaseExecutor;
@@ -21,7 +21,7 @@ public class QueryOrderExecutor extends BaseExecutor<QueryOrderRequestBean, Quer
     }
 
     @Override
-    public Observable<DataResponseEntity<QueryOrderResponseBean>> execute() {
+    public Observable<DataResponseBean<QueryOrderResponseBean>> execute() {
         return null;
     }
 }

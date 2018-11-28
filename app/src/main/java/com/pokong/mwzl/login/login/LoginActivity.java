@@ -1,16 +1,22 @@
 package com.pokong.mwzl.login.login;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.pokong.library.base.BaseActivity;
+import com.pokong.library.util.DialogUtils;
+import com.pokong.library.util.LogUtils;
+import com.pokong.library.util.ToastUtils;
 import com.pokong.library.util.Tools;
 import com.pokong.mwzl.HomeActivity;
 import com.pokong.mwzl.R;
@@ -31,6 +37,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private TextView mForgetTv;
 
     private Button mLoginBtn;
+
+    private AlertDialog mLoadingDialog;
+
+    @Override
+    protected void onDestroy() {
+        //页面销毁前销毁LoadingDialog
+        if (mLoadingDialog != null){
+            if (mLoadingDialog.isShowing())
+                mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
+        super.onDestroy();
+    }
 
     @Override
     public Context getRealContext() {
@@ -59,6 +78,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mRememberCb = findViewById(R.id.login_cb_remember);
         mForgetTv = findViewById(R.id.login_tv_forget);
         mLoginBtn = findViewById(R.id.login_btn_login);
+
+        mLoadingDialog = DialogUtils.createLoadingDialog(getRealContext());
+        mLoadingDialog.setCanceledOnTouchOutside(false);
+        mLoadingDialog.setOnDismissListener(dialog -> clearNetWork());
 
         String lastUserName = mPresenter.getSharedUserName();
         if (!Tools.isBlank(lastUserName)){
@@ -119,5 +142,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         Intent intent = new Intent(getRealContext(), HomeActivity.class);
         startActivity(intent);
         this.finish();
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        if (mLoadingDialog != null && !mLoadingDialog.isShowing()){
+            mLoadingDialog.show();
+        }
+    }
+
+    @Override
+    public void dismissLoadingDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()){
+            mLoadingDialog.dismiss();
+        }
     }
 }

@@ -11,7 +11,8 @@ import android.view.ViewGroup;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public abstract class LazyLoadFragment <T extends BasePresenter> extends BaseFragment {
+public abstract class LazyLoadFragment <T extends BasePresenter> extends BaseFragment<T> {
+
     protected View rootView;
     protected boolean isInitView = false;//标识符--页面初始化
     protected boolean isVisible = false;//标识符--页面可见性
@@ -74,10 +75,4 @@ public abstract class LazyLoadFragment <T extends BasePresenter> extends BaseFra
      */
     protected abstract void lazyLoad();
 
-    /**
-     * 设置页面实际的Presenter
-     * @return
-     */
-    @Override
-    protected abstract T getRealPresenter();
 }
