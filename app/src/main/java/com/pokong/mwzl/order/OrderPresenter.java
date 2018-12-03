@@ -7,5 +7,5 @@ import com.pokong.library.base.BasePresenter;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class OrderPresenter extends BasePresenter<OrderFragment> {
+public class OrderPresenter extends BasePresenter<OrderFragment> implements OrderContract.Presenter {
 }

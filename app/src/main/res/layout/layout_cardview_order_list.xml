@@ -175,7 +175,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="x1"
+                    android:text="×0"
                     android:textSize="15sp"
                     android:textColor="@android:color/holo_red_light"
                     android:gravity="right"/>
@@ -195,7 +195,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="￥100"
+                    android:text="￥0"
                     android:textSize="15sp"
                     android:textColor="@android:color/holo_red_light"
                     android:gravity="right"/>
@@ -216,7 +216,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="10"
+                    android:text="0"
                     android:textSize="15sp"
                     android:textColor="@android:color/holo_red_light"
                     android:gravity="right"/>
@@ -225,7 +225,8 @@
                     android:layout_height="wrap_content"
                     android:text="(套)"
                     android:textColor="@color/order_item_gary"
-                    android:textSize="11sp"/>
+                    android:textSize="11sp"
+                    android:visibility="gone"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ordercard_age_panel"
@@ -243,16 +244,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="18"
+                    android:text="0"
                     android:textSize="15sp"
                     android:textColor="@android:color/holo_red_light"
                     android:gravity="right"/>
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:text="(岁)"
                     android:textColor="@color/order_item_gary"
-                    android:textSize="11sp"/>
+                    android:textSize="11sp"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <View
@@ -299,8 +302,8 @@
                     android:paddingBottom="6dp"
                     android:paddingRight="15dp"
                     android:paddingLeft="15dp"
-                    android:clickable="true"
-                    android:layout_marginRight="18dp"/>
+                    android:clickable="true"/>
+
                 <TextView
                     android:id="@+id/ordercard_tv_complete"
                     android:layout_width="wrap_content"
@@ -313,7 +316,24 @@
                     android:paddingBottom="6dp"
                     android:paddingRight="15dp"
                     android:paddingLeft="15dp"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:layout_marginLeft="18dp"/>
+
+                <TextView
+                    android:id="@+id/ordercard_tv_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_background_gary_corner_hollow_selector"
+                    android:text="已收货"
+                    android:textSize="15sp"
+                    android:textColor="@color/order_item_gary"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:clickable="true"
+                    android:layout_marginLeft="18dp"/>
+
             </LinearLayout>
 
         </LinearLayout>

@@ -8,6 +8,20 @@ package com.pokong.mwzl.order;
 public interface OrderContract {
     interface View{
 
+        /**
+         * 点击扫描图标
+         */
+        void clickScanIcon();
+
+        /**
+         * 点击系统通知图标
+         */
+        void clickNoticeIcon();
+
+        /**
+         * 点击蓝牙图标
+         */
+        void clickBluetoothIcon();
     }
 
     interface Presenter{

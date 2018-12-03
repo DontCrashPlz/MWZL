@@ -23,7 +23,7 @@ public class OrderListItemEntity implements Serializable {
     private double totalprice;//订单总金额
     private String real_pay_money;//实际支付金额
     private String order_serial_num = "0000";//订单序号
-    private String delivery_type_name = "提";//订单送货方式(自提="提";配送="送")
+    private String delivery_type = "self_mention";//自提:self_mention,配送:delivery
     private String receiver_name;//收货人姓名
     private String receiver_mobile;//收货人电话
     private String receiver_address;//收货人地址
@@ -137,12 +137,12 @@ public class OrderListItemEntity implements Serializable {
         this.order_serial_num = order_serial_num;
     }
 
-    public String getDelivery_type_name() {
-        return delivery_type_name;
+    public String getDelivery_type() {
+        return delivery_type;
     }
 
-    public void setDelivery_type_name(String delivery_type_name) {
-        this.delivery_type_name = delivery_type_name;
+    public void setDelivery_type(String delivery_type_name) {
+        this.delivery_type = delivery_type_name;
     }
 
     public String getReceiver_name() {
@@ -216,7 +216,7 @@ public class OrderListItemEntity implements Serializable {
                 ", totalprice=" + totalprice +
                 ", real_pay_money='" + real_pay_money + '\'' +
                 ", order_serial_num='" + order_serial_num + '\'' +
-                ", delivery_type_name='" + delivery_type_name + '\'' +
+                ", delivery_type='" + delivery_type + '\'' +
                 ", receiver_name='" + receiver_name + '\'' +
                 ", receiver_mobile='" + receiver_mobile + '\'' +
                 ", receiver_address='" + receiver_address + '\'' +

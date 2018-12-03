@@ -1,13 +1,17 @@
 package com.pokong.mwzl;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 
 import com.pokong.library.base.BaseActivity;
 import com.pokong.library.base.BasePresenter;
+import com.pokong.library.util.ToastUtils;
 import com.pokong.mwzl.order.OrderFragment;
 import com.pokong.mwzl.setting.SettingFragment;
 import com.pokong.mwzl.shop.ShopManageFragment;
@@ -37,6 +41,11 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
 
     @Override
     public void initToolbar() {
+        View decorView = getWindow().getDecorView();
+        int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(option);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -90,4 +99,5 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
             }
         }
     }
+
 }

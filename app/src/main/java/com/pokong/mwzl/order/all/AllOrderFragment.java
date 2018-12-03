@@ -64,6 +64,19 @@ public class AllOrderFragment extends LazyLoadFragment<AllOrderPresenter> implem
                 adapter.setData(position, currentItemEntity);
             }
         });
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            int vId = view.getId();
+            OrderListItemEntity currentItemEntity = (OrderListItemEntity) adapter.getData().get(position);
+            if (vId == R.id.ordercard_tv_print){
+                ToastUtils.showShortToast(getContext(), "点击了" + currentItemEntity.getId() + "订单的打印按钮");
+            }else if (vId == R.id.ordercard_tv_complete){
+                ToastUtils.showShortToast(getContext(), "点击了" + currentItemEntity.getId() + "订单的备货完成按钮");
+            }else if (vId == R.id.ordercard_tv_confirm){
+                ToastUtils.showShortToast(getContext(), "点击了" + currentItemEntity.getId() + "订单的已收货按钮");
+            }else {
+                ToastUtils.showShortToast(getContext(), "点击了" + currentItemEntity.getId() + "订单的未知按钮");
+            }
+        });
         recyclerView.setAdapter(adapter);
         adapter.setOnLoadMoreListener(this, recyclerView);
         adapter.setEnableLoadMore(false);

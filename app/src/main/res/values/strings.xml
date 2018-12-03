@@ -14,11 +14,29 @@
         completions."
     </string>
 
-    <string name="update_title">版本更新</string>
-    <string name="update_default_info">有新的版本可升级</string>
+    <!--更新弹窗-->
+    <string name="dialog_update_title">版本更新</string>
+    <string name="dialog_update_default_info">有新的版本可升级</string>
+    <string name="dialog_update_update">更新</string>
+    <string name="dialog_update_cancel">取消</string>
 
-    <string name="dialog_update">更新</string>
-    <string name="dialog_cancel">取消</string>
+    <!--打印弹窗-->
+    <string name="dialog_print_title">打印小票</string>
+    <string name="dialog_print_default_info">确认要打印%1$s号订单的小票吗？</string>
+    <string name="dialog_print_confirm">打印</string>
+    <string name="dialog_print_cancel">取消</string>
+
+    <!--备货完成弹窗-->
+    <string name="dialog_ready_title">备货完成</string>
+    <string name="dialog_ready_default_info">确认%1$s号订单已备货完成吗？</string>
+    <string name="dialog_ready_confirm">确认</string>
+    <string name="dialog_ready_cancel">取消</string>
+
+    <!--确认收货弹窗-->
+    <string name="dialog_pick_confirm_title">已收货</string>
+    <string name="dialog_pick_confirm_default_info">确认%1$s号订单已收货吗？</string>
+    <string name="dialog_pick_confirm_confirm">确认</string>
+    <string name="dialog_pick_confirm_cancel">取消</string>
 
     <string name="ordercard_create_time">下单时间: %1$s</string>
 

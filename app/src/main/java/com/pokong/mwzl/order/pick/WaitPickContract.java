@@ -36,6 +36,13 @@ public interface WaitPickContract {
          */
         void loadMoreFailed(String failMsg);
 
+        /**
+         * 弹出确认已收货弹窗
+         * @param orderId
+         * @param orderSerial
+         */
+        void showConfirmDialog(long orderId, String orderSerial, int position);
+
     }
 
     interface Presenter{
@@ -58,6 +65,11 @@ public interface WaitPickContract {
          * 请求数据的实际方法
          */
         void requestData(DataRequestCallback<MultiPageListEntity<OrderListItemEntity>> callback);
+
+        /**
+         * 订单确认收货
+         */
+        void pickConfirm(long orderId, DataRequestCallback<String> callback);
 
     }
 }

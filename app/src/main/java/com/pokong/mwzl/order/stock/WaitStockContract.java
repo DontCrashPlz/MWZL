@@ -36,6 +36,20 @@ public interface WaitStockContract {
          */
         void loadMoreFailed(String failMsg);
 
+        /**
+         * 弹出确认打印弹窗
+         * @param orderId
+         * @param orderSerial
+         */
+        void showPrintDialog(long orderId, String orderSerial, int position);
+
+        /**
+         * 弹出确认备货完成弹窗
+         * @param orderId
+         * @param orderSerial
+         */
+        void showConfirmDialog(long orderId, String orderSerial, int position);
+
     }
 
     interface Presenter{
@@ -58,6 +72,11 @@ public interface WaitStockContract {
          * 请求数据的实际方法
          */
         void requestData(DataRequestCallback<MultiPageListEntity<OrderListItemEntity>> callback);
+
+        /**
+         * 订单备货完成
+         */
+        void orderReady(long orderId, DataRequestCallback<String> callback);
 
     }
 }

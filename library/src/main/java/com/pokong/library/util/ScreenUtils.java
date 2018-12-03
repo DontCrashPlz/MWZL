@@ -2,6 +2,7 @@ package com.pokong.library.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
@@ -93,6 +94,42 @@ public class ScreenUtils {
             e.printStackTrace();
         }
         return statusHeight;
+    }
+
+    /**
+     * 获得状态栏的高度
+     *
+     * @param activity
+     * @return
+     */
+    public static int getStatusBarHeight(Activity activity) {
+        Resources resources = activity.getResources();
+
+        int resourceId = resources.getIdentifier("status_bar_height","dimen","android");
+
+        int height = resources.getDimensionPixelSize(resourceId);
+
+        LogUtils.d("status bar>>>", "height:" + height);
+
+        return height;
+    }
+
+    /**
+     * 获得导航栏的高度
+     *
+     * @param activity
+     * @return
+     */
+    public static int getNavigationBarHeight(Activity activity) {
+        Resources resources = activity.getResources();
+
+        int resourceId=resources.getIdentifier("navigation_bar_height","dimen","android");
+
+        int height = resources.getDimensionPixelSize(resourceId);
+
+        LogUtils.d("navigation bar>>>", "height:" + height);
+
+        return height;
     }
 
     /**

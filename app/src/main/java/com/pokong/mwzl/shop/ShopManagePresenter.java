@@ -7,5 +7,5 @@ import com.pokong.library.base.BasePresenter;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class ShopManagePresenter extends BasePresenter<ShopManageFragment> {
+public class ShopManagePresenter extends BasePresenter<ShopManageFragment> implements ShopManageContract.Presenter {
 }

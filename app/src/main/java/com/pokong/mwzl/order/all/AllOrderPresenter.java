@@ -56,7 +56,6 @@ public class AllOrderPresenter extends BasePresenter<AllOrderFragment> implement
     public void loadMoreData() {
         if (paramsBean == null) initParamsBean();
         currentPageNumber += 1;
-        paramsBean.setPageNumber(currentPageNumber);
         requestData(new DataRequestCallback<MultiPageListEntity<OrderListItemEntity>>() {
             @Override
             public void onSuccessed(MultiPageListEntity<OrderListItemEntity> orderListItemEntityMultiPageListEntity) {
@@ -77,6 +76,7 @@ public class AllOrderPresenter extends BasePresenter<AllOrderFragment> implement
 
     @Override
     public void requestData(DataRequestCallback<MultiPageListEntity<OrderListItemEntity>> callback) {
+        paramsBean.setPageNumber(currentPageNumber);
         getView().addNetWork(MWZLHttpDataRepository.getInstance().getOrderList(paramsBean,callback));
     }
 

@@ -28,7 +28,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
     protected void convert(BaseViewHolder helper, OrderListItemEntity item) {
 
         int orderStatus = item.getOrder_status();
-        String orderStatusName = "";
+        String orderStatusName;
         int headColor;
         int expendIconRes;
         int closeIconRes;
@@ -38,20 +38,21 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_green);
                 expendIconRes = R.mipmap.expand_green;
                 closeIconRes = R.mipmap.close_green;
+                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_green);
+                handleGreenBtn(helper);
                 break;
             }
-            case OrderStatus.WAIT_PICK:{
-                orderStatusName = "待取货";
+            case OrderStatus.READY:{
+                if ("delivery".equals(item.getDelivery_type())){
+                    orderStatusName = "待配送";
+                }else {
+                    orderStatusName = "待自提";
+                }
                 headColor = mContext.getColor(R.color.order_status_yellow);
                 expendIconRes = R.mipmap.expand_yellow;
                 closeIconRes = R.mipmap.close_yellow;
-                break;
-            }
-            case OrderStatus.WAIT_DELIVER:{
-                orderStatusName = "待配送";
-                headColor = mContext.getColor(R.color.order_status_yellow);
-                expendIconRes = R.mipmap.expand_yellow;
-                closeIconRes = R.mipmap.close_yellow;
+                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_yellow);
+                handleYellowBtn(helper);
                 break;
             }
             case OrderStatus.COMPLETED:{
@@ -59,6 +60,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_gary);
                 expendIconRes = R.mipmap.expand_gary;
                 closeIconRes = R.mipmap.close_gary;
+                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_gary);
+                handleGaryBtn(helper);
                 break;
             }
             default:{
@@ -66,6 +69,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_gary);
                 expendIconRes = R.mipmap.expand_gary;
                 closeIconRes = R.mipmap.close_gary;
+                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_gary);
+                handleGaryBtn(helper);
             }
         }
 
@@ -83,12 +88,11 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 .setText(R.id.ordercard_tv_goodsnum, Tools.formatNumStr(item.getGoods_count()))
                 .setText(R.id.ordercard_tv_orderprice, Tools.formatRmbStr(item.getTotalprice()));
 
-        String deliveryType = item.getDelivery_type_name();
-        helper.setText(R.id.ordercard_tv_style, deliveryType);
-        if ("送".equals(deliveryType)){
-            helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_orange);
+        String deliveryType = item.getDelivery_type();
+        if ("delivery".equals(deliveryType)){
+            helper.setText(R.id.ordercard_tv_style, "送");
         }else {
-            helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_green);
+            helper.setText(R.id.ordercard_tv_style, "提");
         }
 
         ArrayList<GoodsEntity> goodsList = item.getGoodlist();
@@ -117,4 +121,26 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                     .setImageResource(R.id.ordercard_iv_expand, expendIconRes);
         }
     }
+
+    private void handleGreenBtn(BaseViewHolder helper){
+        helper.setGone(R.id.ordercard_lly_button, true)
+                .setGone(R.id.ordercard_tv_print, true)
+                .setGone(R.id.ordercard_tv_complete, true)
+                .setGone(R.id.ordercard_tv_confirm, false)
+                .addOnClickListener(R.id.ordercard_tv_print)
+                .addOnClickListener(R.id.ordercard_tv_complete);
+    }
+
+    private void handleYellowBtn(BaseViewHolder helper){
+        helper.setGone(R.id.ordercard_lly_button, true)
+                .setGone(R.id.ordercard_tv_print, false)
+                .setGone(R.id.ordercard_tv_complete, false)
+                .setGone(R.id.ordercard_tv_confirm, true)
+                .addOnClickListener(R.id.ordercard_tv_confirm);
+    }
+
+    private void handleGaryBtn(BaseViewHolder helper){
+        helper.setGone(R.id.ordercard_lly_button, false);
+    }
+
 }

@@ -26,7 +26,7 @@ import com.pokong.mwzl.order.stock.WaitStockFragment;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class OrderFragment extends BaseFragment<OrderPresenter> {
+public class OrderFragment extends BaseFragment<OrderPresenter> implements OrderContract.View {
 
     private TextView mShopNameTv;
     private ImageView mScanIv;
@@ -102,27 +102,30 @@ public class OrderFragment extends BaseFragment<OrderPresenter> {
 
     @Override
     protected OrderPresenter getRealPresenter() {
-        return null;
+        return new OrderPresenter();
     }
 
     /**
      * 扫描二维码图标点击事件
      */
-    private void clickScanIcon(){
+    @Override
+    public void clickScanIcon(){
         //todo 跳转到扫码页面
     }
 
     /**
      * 系统消息图标点击事件
      */
-    private void clickNoticeIcon(){
+    @Override
+    public void clickNoticeIcon(){
         //todo 跳转到系统消息页面
     }
 
     /**
      * 蓝牙图标点击事件
      */
-    private void clickBluetoothIcon(){
+    @Override
+    public void clickBluetoothIcon(){
         //todo 跳转到蓝牙设置页面
     }
 

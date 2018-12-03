@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class OrderListRequestBean implements Serializable {
 
     private String appToken;//appToken
-    private String orderColunm = "o.addTime";//排序依据，默认根据订单生成时间排序
+    private String orderColunm = "o.create_time";//排序依据，默认根据订单生成时间排序
     private String orderMode = "asc";//排序方式，desc降序，asc升序
     private int pageSize = 5;//每页数据个数
     private int pageNumber = 1;//页码，固定请求第1页
