@@ -7,7 +7,15 @@ package com.pokong.mwzl.setting;
  */
 public interface SettingContract {
     interface View{
+        /**
+         * "蓝牙打印设置" 按钮点击事件
+         */
+        void clickBluetooth();
 
+        /**
+         * "关于我们" 按钮点击事件
+         */
+        void clickAboutUs();
     }
 
     interface Presenter{

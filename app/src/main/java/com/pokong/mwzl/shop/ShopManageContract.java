@@ -43,6 +43,16 @@ public interface ShopManageContract {
          */
         void clickComment();
 
+        /**
+         * 显示蓝牙连接Icon
+         */
+        void showBluetoothConnectedIcon();
+
+        /**
+         * 显示蓝牙断开Icon
+         */
+        void showBluetoothBreakIcon();
+
     }
 
     interface Presenter{

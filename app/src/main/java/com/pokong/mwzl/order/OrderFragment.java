@@ -13,13 +13,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.base.BaseFragment;
+import com.pokong.library.util.LogUtils;
 import com.pokong.mwzl.R;
 import com.pokong.mwzl.order.all.AllOrderFragment;
 import com.pokong.mwzl.order.complete.CompletedFragment;
 import com.pokong.mwzl.order.deliver.WaitDeliverFragment;
 import com.pokong.mwzl.order.pick.WaitPickFragment;
 import com.pokong.mwzl.order.stock.WaitStockFragment;
+import com.qs.helper.printer.PrintService;
+import com.qs.helper.printer.PrinterClass;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created on 2018/11/16 15:53
@@ -47,9 +53,27 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //EventBus.getDefault().register(this);
         View mView = inflater.inflate(R.layout.fragment_home_order, container, false);
         initView(mView);
         return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.e("OrderFragment", String.valueOf(MyBtPrintService.getInstance().getPrintState()));
+        if (MyBtPrintService.getInstance().getPrintState() == PrinterClass.STATE_CONNECTED){
+            mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth);
+        }else {
+            mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth_break);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //EventBus.getDefault().unregister(this);
     }
 
     private void initView(View view){
@@ -127,6 +151,16 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
     @Override
     public void clickBluetoothIcon(){
         //todo 跳转到蓝牙设置页面
+    }
+
+    @Override
+    public void showBluetoothConnectedIcon() {
+        mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth);
+    }
+
+    @Override
+    public void showBluetoothBreakIcon() {
+        mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth_break);
     }
 
 }

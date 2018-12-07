@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.base.BaseFragment;
+import com.pokong.library.util.LogUtils;
 import com.pokong.mwzl.R;
+import com.qs.helper.printer.PrinterClass;
 
 /**
  * Created on 2018/11/16 15:56
@@ -50,6 +53,17 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
         initUI(mView);
 
         return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.e("ShopManageFragment", String.valueOf(MyBtPrintService.getInstance().getPrintState()));
+        if (MyBtPrintService.getInstance().getPrintState() == PrinterClass.STATE_CONNECTED){
+            mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth);
+        }else {
+            mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth_break);
+        }
     }
 
     private void initUI(View view) {
@@ -115,5 +129,15 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
     @Override
     public void clickComment() {
 
+    }
+
+    @Override
+    public void showBluetoothConnectedIcon() {
+        mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth);
+    }
+
+    @Override
+    public void showBluetoothBreakIcon() {
+        mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth_break);
     }
 }

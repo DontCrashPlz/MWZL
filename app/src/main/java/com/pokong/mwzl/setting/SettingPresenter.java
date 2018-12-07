@@ -8,5 +8,5 @@ import com.pokong.mwzl.order.OrderFragment;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class SettingPresenter extends BasePresenter<SettingFragment> {
+public class SettingPresenter extends BasePresenter<SettingFragment> implements SettingContract.Presenter {
 }

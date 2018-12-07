@@ -40,4 +40,13 @@
 
     <string name="ordercard_create_time">下单时间: %1$s</string>
 
+    <!--蓝牙打印机相关字符串-->
+    <string name="str_printer_state">状态</string>
+    <string name="str_printer_printing">正在打印</string>
+    <string name="str_printer_lowpower">低电压</string>
+    <string name="str_printer_nopaper">缺纸</string>
+    <string name="str_printer_bufferfull">缓冲区满</string>
+    <string name="str_printer_buffernull">缓冲区空</string>
+    <string name="str_printer_hightemperature">温度过高</string>
+
 </resources>

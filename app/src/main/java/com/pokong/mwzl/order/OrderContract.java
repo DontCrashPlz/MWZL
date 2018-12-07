@@ -22,6 +22,16 @@ public interface OrderContract {
          * 点击蓝牙图标
          */
         void clickBluetoothIcon();
+
+        /**
+         * 显示蓝牙连接Icon
+         */
+        void showBluetoothConnectedIcon();
+
+        /**
+         * 显示蓝牙断开Icon
+         */
+        void showBluetoothBreakIcon();
     }
 
     interface Presenter{
