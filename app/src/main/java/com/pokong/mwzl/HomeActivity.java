@@ -16,6 +16,9 @@ import com.pokong.library.base.BaseActivity;
 import com.pokong.library.util.LogUtils;
 import com.pokong.library.util.SharedPrefUtils;
 import com.pokong.library.util.ToastUtils;
+import com.pokong.library.util.Tools;
+import com.pokong.mwzl.data.bean.GoodsEntity;
+import com.pokong.mwzl.data.bean.OrderListItemEntity;
 import com.pokong.mwzl.eventbus.BluetoothNewDeviceEvent;
 import com.pokong.mwzl.eventbus.BluetoothStateChangedEvent;
 import com.pokong.mwzl.order.OrderFragment;
@@ -30,6 +33,8 @@ import com.qs.helper.printer.bt.BtService;
 import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created on 2018/11/15 14:09
@@ -165,6 +170,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
                         case PrinterClass.STATE_CONNECTED:
                             break;
                         case PrinterClass.LOSE_CONNECT:
+                            ToastUtils.showShortToast(activityReference.getRealContext(), "蓝牙连接已断开");
                             break;
                         case PrinterClass.FAILED_CONNECT:
                             ToastUtils.showShortToast(activityReference.getRealContext(), "蓝牙连接失败");
@@ -180,8 +186,6 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
                             break;
                         case PrinterClass.SUCCESS_CONNECT:
                             ToastUtils.showShortToast(activityReference.getRealContext(), "蓝牙连接成功");
-                            //PrintService.pl.write(new byte[] { 0x1b, 0x2b });
-                            PrintService.pl.write(new byte[] { 0x1d, 0x67,0x33 });
                             EventBus.getDefault()
                                     .post(new BluetoothStateChangedEvent(PrinterClass.SUCCESS_CONNECT,
                                             "蓝牙连接成功"));
@@ -196,9 +200,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
                     break;
                 case PrinterClass.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-                    String readMessage = new String(readBuf, 0, msg.arg1);
-                    LogUtils.d("BluetoothStatusHandler","readMessage="+readMessage);
-                    LogUtils.d("BluetoothStatusHandler", "readBuf:" + readBuf[0]);
+                    LogUtils.e("BluetoothStatusHandler", "readBuf:" + readBuf[0]);
                     if (readBuf[0] == 0x13) {
                         PrintService.isFUll = true;
                         ToastUtils.showShortToast(activityReference.getRealContext(),
@@ -220,6 +222,8 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
                         ToastUtils.showShortToast(activityReference.getRealContext(),
                                 activityReference.getResources().getString(R.string.str_printer_state) + ":" + activityReference.getResources().getString(R.string.str_printer_lowpower));
                     }else {
+                        String readMessage = new String(readBuf, 0, msg.arg1);
+                        LogUtils.e("BluetoothStatusHandler","readMessage="+readMessage);
                         if (readMessage.contains("800")){// 80mm paper
                             PrintService.imageWidth = 72;
                             ToastUtils.showShortToast(activityReference.getRealContext(), "80mm");
@@ -263,6 +267,119 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
                 case 2:
                     break;
             }
+        }
+    }
+
+    /**
+     * 打印订单
+     * @param order
+     */
+    public static void printOrder(OrderListItemEntity order){
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDivideLine();
+
+        MyBtPrintService.getInstance().nextLine();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+        String currentTimeStr = dateFormat.format(new Date());
+        MyBtPrintService.getInstance().printNormalTextLift("打印时间:" + currentTimeStr);
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDivideLine();
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printLargeTextCenter("#" + order.getOrder_serial_num());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextCenter(order.getStore_name());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printLargeTextCenter("在线支付(已支付)");
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextCenter("订单号:" + order.getOrder_id());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextCenter("下单时间:" + order.getCreate_time());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDevideLineWithText("商品");
+
+        for (GoodsEntity entity : order.getGoodlist()){
+            printGoodsInfo(entity);
+        }
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDivideLine();
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printLargeTextLift("总计:" + Tools.formatRmbStr(order.getTotalprice()));
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printLargeTextLift("备注:" + order.getMsg());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printEndDivideLine(order.getOrder_serial_num());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printWorkArea();
+    }
+
+    static void printGoodsInfo(GoodsEntity goods){
+        String goodsName = goods.getGoods_name();
+        if (goodsName.length() <= 5){//todo 打印一行
+            int nameSpaceNum = 10 - (goodsName.length() * 2);
+            while (nameSpaceNum > 0){
+                goodsName = goodsName + " ";
+                nameSpaceNum--;
+            }
+
+            String specStr = goods.getSpec_info();
+            if ("".equals(specStr) || "null".equals(specStr)){
+                specStr = "    ";
+            }else {
+                if (specStr.length() == 2){
+                    specStr = specStr + " ";
+                }
+            }
+
+            String countStr = Tools.formatNumStr(goods.getCount());
+            if (countStr.length() == 2){
+                countStr = countStr + " ";
+            }
+
+            String priceStr = Tools.formatRmbStr(goods.getTotal_price());
+
+            String goodsStr = goodsName + "  " + specStr + "  " + countStr + "  " + priceStr;
+
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift(goodsStr);
+        }else {//todo 打印两行
+            String specStr = goods.getSpec_info();
+            if ("".equals(specStr) || "null".equals(specStr)){
+                specStr = "    ";
+            }else {
+                if (specStr.length() == 2){
+                    specStr = specStr + " ";
+                }
+            }
+
+            String countStr = Tools.formatNumStr(goods.getCount());
+            if (countStr.length() == 2){
+                countStr = countStr + " ";
+            }
+
+            String priceStr = Tools.formatRmbStr(goods.getTotal_price());
+
+            String secondLineStr = "            " + specStr + "  " + countStr + "  " + priceStr;
+
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift(goodsName);
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift(secondLineStr);
         }
     }
 

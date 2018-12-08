@@ -22,10 +22,7 @@ import com.pokong.mwzl.order.complete.CompletedFragment;
 import com.pokong.mwzl.order.deliver.WaitDeliverFragment;
 import com.pokong.mwzl.order.pick.WaitPickFragment;
 import com.pokong.mwzl.order.stock.WaitStockFragment;
-import com.qs.helper.printer.PrintService;
 import com.qs.helper.printer.PrinterClass;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created on 2018/11/16 15:53
@@ -53,7 +50,6 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //EventBus.getDefault().register(this);
         View mView = inflater.inflate(R.layout.fragment_home_order, container, false);
         initView(mView);
         return mView;
@@ -68,12 +64,6 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
         }else {
             mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth_break);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //EventBus.getDefault().unregister(this);
     }
 
     private void initView(View view){

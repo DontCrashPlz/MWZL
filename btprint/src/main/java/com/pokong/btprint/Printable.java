@@ -1,4 +1,4 @@
-package com.pokong.bluetooth;
+package com.pokong.btprint;
 
 /**
  * Created on 2018/12/7 17:17
@@ -7,12 +7,6 @@ package com.pokong.bluetooth;
  * 打印相关的行为
  */
 public interface Printable {
-
-    /**
-     * 打印暂存区内容
-     */
-    void printWorkArea();
-
     /**
      * 换行
      * \br

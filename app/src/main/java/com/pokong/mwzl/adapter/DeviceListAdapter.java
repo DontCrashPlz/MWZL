@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.pokong.library.util.LogUtils;
+import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.util.SharedPrefUtils;
 import com.pokong.library.util.Tools;
 import com.pokong.mwzl.R;
 import com.pokong.mwzl.setting.bluetooth.BluetoothActivity;
 import com.pokong.mwzl.setting.bluetooth.BluetoothPresenter;
 import com.qs.helper.printer.Device;
-import com.qs.helper.printer.PrintService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -68,7 +67,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
             mActivity.showConnectingDialog();
             SharedPrefUtils.put(mContext, BluetoothPresenter.SP_KEY_BLUETOOTH_DEVICE_NAME, finalDeviceName);
             SharedPrefUtils.put(mContext, BluetoothPresenter.SP_KEY_BLUETOOTH_DEVICE_PORT, finalDevicePort);
-            PrintService.pl.connect(finalDevicePort);
+            MyBtPrintService.getInstance().connect(finalDevicePort);
         });
     }
 

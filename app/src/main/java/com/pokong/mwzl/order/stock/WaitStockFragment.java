@@ -19,14 +19,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.base.LazyLoadFragment;
 import com.pokong.library.util.DialogFactory;
 import com.pokong.library.util.LogUtils;
+import com.pokong.library.util.SharedPrefUtils;
 import com.pokong.library.util.ToastUtils;
+import com.pokong.mwzl.HomeActivity;
 import com.pokong.mwzl.R;
 import com.pokong.mwzl.adapter.OrderListAdapter;
 import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
+import com.pokong.mwzl.setting.bluetooth.BluetoothPresenter;
+import com.qs.helper.printer.PrinterClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +87,7 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
             int vId = view.getId();
             OrderListItemEntity currentItemEntity = (OrderListItemEntity) adapter.getData().get(position);
             if (vId == R.id.ordercard_tv_print){
-                showPrintDialog(currentItemEntity.getId(), currentItemEntity.getOrder_serial_num(), position);
+                showPrintDialog(currentItemEntity);
             }else if (vId == R.id.ordercard_tv_complete){
                 showConfirmDialog(currentItemEntity.getId(), currentItemEntity.getOrder_serial_num(), position);
             }else {
@@ -153,14 +158,14 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
     }
 
     @Override
-    public void showPrintDialog(long orderId, String orderSerial, int position) {
+    public void showPrintDialog(OrderListItemEntity currentItemEntity) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_dialog_print_confirm, null);
         AlertDialog dialog = DialogFactory.createDialog(getContext(), view);
         TextView contentTv = view.findViewById(R.id.dialog_print_text_description);
         TextView printBtn = view.findViewById(R.id.dialog_print_button_confirm);
         TextView cancelBtn = view.findViewById(R.id.dialog_print_button_cancel);
 
-        String contentStr = String.format(getString(R.string.dialog_print_default_info), orderSerial);
+        String contentStr = String.format(getString(R.string.dialog_print_default_info), currentItemEntity.getOrder_serial_num());
 
         SpannableString spannableString = new SpannableString(contentStr);
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.RED);
@@ -172,7 +177,19 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
 
         printBtn.setOnClickListener(v -> {
             //todo 处理打印小票
-            ToastUtils.showShortToast(getContext(), "打印小票");
+            LogUtils.e("WaitStockFragment", "" + MyBtPrintService.getInstance().getPrintState());
+            if (MyBtPrintService.getInstance().getPrintState() != PrinterClass.STATE_CONNECTED){
+                ToastUtils.showShortToast(getContext(), "请先连接打印机");
+            }else {
+                boolean isDoublePrint = (boolean) SharedPrefUtils.get(getContext(),
+                        BluetoothPresenter.SP_KEY_IS_DOUBLE_PRINT,
+                        false);
+                if (isDoublePrint){
+                    HomeActivity.printOrder(currentItemEntity);
+                }
+                HomeActivity.printOrder(currentItemEntity);
+                ToastUtils.showShortToast(getContext(), "正在打印，若未正常打印请检测打印机");
+            }
             dialog.dismiss();
         });
         cancelBtn.setOnClickListener(v -> dialog.dismiss());
@@ -221,4 +238,9 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
 
         dialog.show();
     }
+
+    private void printOrder(OrderListItemEntity orderListItemEntity){
+
+    }
+
 }

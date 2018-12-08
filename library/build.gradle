@@ -19,21 +19,27 @@ android {
         }
     }
 
-    dependencies {
-        api fileTree(dir: 'libs', include: ['*.jar'])
-
-        api "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-        api "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
-        api "com.android.support:design:$rootProject.ext.supportLibraryVersion"
-        api "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
-        testImplementation "junit:junit:$rootProject.ext.junitVersion"
-        androidTestImplementation 'com.android.support.test:runner:1.0.2'
-        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-        api "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2Version"
-        //api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
-        //annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
-
-        api "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    api "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    api "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
+    api "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    api "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    api "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2Version"
+    //api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+    //annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+
+    api "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
 }

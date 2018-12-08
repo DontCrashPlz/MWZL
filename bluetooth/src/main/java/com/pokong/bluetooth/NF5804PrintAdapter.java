@@ -21,6 +21,11 @@ public class NF5804PrintAdapter extends MyBtPrintService.Adapter {
     }
 
     @Override
+    public void printWorkArea() {
+        PrintService.pl.write(new byte[] { 0x1d, 0x0c });
+    }
+
+    @Override
     public void nextLine() {
         PrintService.pl.write(PrinterClass.CMD_NEWLINE);
     }
@@ -29,14 +34,14 @@ public class NF5804PrintAdapter extends MyBtPrintService.Adapter {
     public void printNormalDivideLine() {
         PrintService.pl.write(PrinterClass.CMD_ALIGN_MIDDLE);
         PrintService.pl.write(PrinterClass.CMD_FONTSIZE_NORMAL);
-        PrintService.pl.printText("----------------");
+        PrintService.pl.printText("————————————————");
     }
 
     @Override
     public void printNormalDevideLineWithText(String text) {
         PrintService.pl.write(PrinterClass.CMD_ALIGN_MIDDLE);
         PrintService.pl.write(PrinterClass.CMD_FONTSIZE_NORMAL);
-        PrintService.pl.printText("-------" + text + "-------");
+        PrintService.pl.printText("———————" + text + "———————");
     }
 
     @Override
@@ -44,13 +49,13 @@ public class NF5804PrintAdapter extends MyBtPrintService.Adapter {
         PrintService.pl.write(PrinterClass.CMD_ALIGN_MIDDLE);
 
         PrintService.pl.write(PrinterClass.CMD_FONTSIZE_DOUBLE_HIGH);
-        PrintService.pl.printText("＊＊＊＊＊＊");
+        PrintService.pl.printText("＊＊＊＊");
 
         PrintService.pl.write(PrinterClass.CMD_FONTSIZE_DOUBLE);
         PrintService.pl.printText("#" + serialNum + "完");
 
         PrintService.pl.write(PrinterClass.CMD_FONTSIZE_DOUBLE_HIGH);
-        PrintService.pl.printText("＊＊＊＊＊＊");
+        PrintService.pl.printText("＊＊＊＊");
     }
 
     @Override
@@ -160,4 +165,5 @@ public class NF5804PrintAdapter extends MyBtPrintService.Adapter {
     public void closeBluetooth() {
         PrintService.pl.close(null);
     }
+
 }

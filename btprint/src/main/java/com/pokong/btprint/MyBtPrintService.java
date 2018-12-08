@@ -1,4 +1,4 @@
-package com.pokong.bluetooth;
+package com.pokong.btprint;
 
 import java.util.List;
 
@@ -94,13 +94,6 @@ public class MyBtPrintService implements Bluetoothable, Printable {
         if (mPrintAdapter == null)
             throw new NullPointerException("Class MyBtPrintService, Method closeBluetooth(), Lines 2");
         mPrintAdapter.closeBluetooth();
-    }
-
-    @Override
-    public void printWorkArea() {
-        if (mPrintAdapter == null)
-            throw new NullPointerException("Class MyBtPrintService, Method printWorkArea(), Lines 2");
-        mPrintAdapter.printWorkArea();
     }
 
     @Override

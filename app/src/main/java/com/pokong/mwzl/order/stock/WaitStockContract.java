@@ -38,10 +38,9 @@ public interface WaitStockContract {
 
         /**
          * 弹出确认打印弹窗
-         * @param orderId
-         * @param orderSerial
+         * @param currentItemEntity
          */
-        void showPrintDialog(long orderId, String orderSerial, int position);
+        void showPrintDialog(OrderListItemEntity currentItemEntity);
 
         /**
          * 弹出确认备货完成弹窗
