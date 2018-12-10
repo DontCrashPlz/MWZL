@@ -17,8 +17,9 @@ public interface WaitDeliverContract {
         /**
          * 给订单列表设置新数据(refresh successed)
          * @param newDataList
+         * @param isLast
          */
-        void setNewData(List<OrderListItemEntity> newDataList);
+        void setNewData(List<OrderListItemEntity> newDataList, boolean isLast);
 
         /**
          * 刷新失败(refresh failed)
@@ -28,8 +29,9 @@ public interface WaitDeliverContract {
         /**
          * 向订单列表添加数据(loadMore successed)
          * @param moreDataList
+         * @param isLast
          */
-        void addMoreData(List<OrderListItemEntity> moreDataList);
+        void addMoreData(List<OrderListItemEntity> moreDataList, boolean isLast);
 
         /**
          * 加载更多失败(loadMore failed)

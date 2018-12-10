@@ -1,4 +1,4 @@
-package com.pokong.mwzl.order.deliver;
+package com.pokong.mwzl.shop.query;
 
 import com.pokong.library.base.BasePresenter;
 import com.pokong.library.util.ToastUtils;
@@ -9,17 +9,18 @@ import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.MultiPageListEntity;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
 import com.pokong.mwzl.data.bean.business.OrderListRequestBean;
+import com.pokong.mwzl.data.bean.business.OrderReadyRequestBean;
 import com.pokong.mwzl.data.bean.mwzl.PickConfirmRequestBean;
 import com.pokong.mwzl.data.source.MWZLHttpDataRepository;
 
 import java.util.ArrayList;
 
 /**
- * Created on 2018/11/16 15:44
+ * Created on 2018/12/10 18:27
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public class WaitDeliverPresenter extends BasePresenter<WaitDeliverFragment> implements WaitDeliverContract.Presenter {
+public class OrderQueryPresenter extends BasePresenter<OrderQueryActivity> implements OrderQueryContract.Presenter {
 
     private OrderListRequestBean paramsBean;//请求参数
     private int currentPageNumber = 1;
@@ -28,10 +29,9 @@ public class WaitDeliverPresenter extends BasePresenter<WaitDeliverFragment> imp
     public void initParamsBean() {
         paramsBean = new OrderListRequestBean();
         paramsBean.setAppToken(MyApplication.getInstance().getAppToken());
-        paramsBean.setOrder_status(OrderStatus.WAIT_RECEIVE);
+        paramsBean.setOrder_status(OrderStatus.ALL);
         paramsBean.setPageNumber(1);
         paramsBean.setOrderMode("desc");
-        paramsBean.setDeliveryType("delivery");
     }
 
     @Override
@@ -93,19 +93,37 @@ public class WaitDeliverPresenter extends BasePresenter<WaitDeliverFragment> imp
     }
 
     @Override
-    public void pickConfirm(long orderId, DataRequestCallback<String> callback) {
-        PickConfirmRequestBean requestBean = new PickConfirmRequestBean();
+    public void orderReady(long orderId, DataRequestCallback<String> callback) {
+        OrderReadyRequestBean requestBean = new OrderReadyRequestBean();
         String appToken = MyApplication.getInstance().getAppToken();
         if (Tools.isBlank(appToken)) {
-            ToastUtils.showShortToast(getView().getContext(), "\"确认收货\"失败->登录令牌无效");
+            ToastUtils.showShortToast(getView().getRealContext(), "\"备货完成\"失败->登录令牌无效");
             return;
         }
         requestBean.setAppToken(appToken);
         if (orderId == 0){
-            ToastUtils.showShortToast(getView().getContext(), "\"确认收货\"失败->订单id无效");
+            ToastUtils.showShortToast(getView().getRealContext(), "\"备货完成\"失败->订单id无效");
+            return;
+        }
+        requestBean.setOrderId(String.valueOf(orderId));
+        getView().addNetWork(MWZLHttpDataRepository.getInstance().orderReady(requestBean, callback));
+    }
+
+    @Override
+    public void pickConfirm(long orderId, DataRequestCallback<String> callback) {
+        PickConfirmRequestBean requestBean = new PickConfirmRequestBean();
+        String appToken = MyApplication.getInstance().getAppToken();
+        if (Tools.isBlank(appToken)) {
+            ToastUtils.showShortToast(getView().getRealContext(), "\"确认收货\"失败->登录令牌无效");
+            return;
+        }
+        requestBean.setAppToken(appToken);
+        if (orderId == 0){
+            ToastUtils.showShortToast(getView().getRealContext(), "\"确认收货\"失败->订单id无效");
             return;
         }
         requestBean.setOrderId(String.valueOf(orderId));
         getView().addNetWork(MWZLHttpDataRepository.getInstance().pickConfirm(requestBean, callback));
     }
+
 }

@@ -32,6 +32,11 @@ public interface OrderContract {
          * 显示蓝牙断开Icon
          */
         void showBluetoothBreakIcon();
+
+        /**
+         * 刷新店铺信息显示
+         */
+        void refreshShopInfo();
     }
 
     interface Presenter{

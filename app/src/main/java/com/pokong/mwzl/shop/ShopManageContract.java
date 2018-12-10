@@ -53,6 +53,11 @@ public interface ShopManageContract {
          */
         void showBluetoothBreakIcon();
 
+        /**
+         * 刷新店铺信息显示
+         */
+        void refreshShopInfo();
+
     }
 
     interface Presenter{

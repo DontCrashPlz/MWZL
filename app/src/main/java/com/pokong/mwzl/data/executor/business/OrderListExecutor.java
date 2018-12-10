@@ -1,5 +1,6 @@
 package com.pokong.mwzl.data.executor.business;
 
+import com.pokong.library.util.TimeChecker;
 import com.pokong.library.util.Tools;
 import com.pokong.mwzl.data.DataResponseBean;
 import com.pokong.mwzl.data.MultiPageListEntity;
@@ -29,6 +30,9 @@ public class OrderListExecutor extends BaseExecutor<OrderListRequestBean, MultiP
     private final String PARAMKEY_STARTID = "_query.startId";
     private final String PARAMKEY_SPLITPAGE = "splitpage";
     private final String PARAMKEY_ORDERSTATUS = "_query.order_status";
+    private final String PARAMKET_DELIVERY_TYPT = "_query.deliveryType";
+    private final String PARAMKET_BEGINTIME = "_query.beginTime";
+    private final String PARAMKET_ENDTIME = "_query.endTime";
 
     private HashMap<String, String> paramsMap;
 
@@ -63,6 +67,20 @@ public class OrderListExecutor extends BaseExecutor<OrderListRequestBean, MultiP
         int orderStatus = paramsBean.getOrder_status();
         if (orderStatus > 0){
             paramsMap.put(PARAMKEY_ORDERSTATUS, String.valueOf(orderStatus));
+        }
+
+        String deliveryType = paramsBean.getDeliveryType();
+        if (!Tools.isBlank(deliveryType)){
+            paramsMap.put(PARAMKET_DELIVERY_TYPT, deliveryType);
+        }
+
+        String beginTime = paramsBean.getBeginTime();
+        if (TimeChecker.isTimeStrValid(beginTime)){
+            paramsMap.put(PARAMKET_BEGINTIME, beginTime);
+        }
+        String endTime = paramsBean.getEndTime();
+        if (TimeChecker.isTimeStrValid(endTime)){
+            paramsMap.put(PARAMKET_ENDTIME, endTime);
         }
 
         return apiService.getOrderList(paramsMap);

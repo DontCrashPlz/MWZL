@@ -1,4 +1,4 @@
-package com.pokong.mwzl.order.complete;
+package com.pokong.mwzl.order.comment;
 
 import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.MultiPageListEntity;
@@ -11,7 +11,7 @@ import java.util.List;
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public interface CompletedContract {
+public interface WaitCommentContract {
     interface View{
 
         /**

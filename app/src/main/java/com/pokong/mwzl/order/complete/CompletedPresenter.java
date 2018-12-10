@@ -39,7 +39,11 @@ public class CompletedPresenter extends BasePresenter<CompletedFragment> impleme
             public void onSuccessed(MultiPageListEntity<OrderListItemEntity> orderListItemEntityMultiPageListEntity) {
                 ArrayList<OrderListItemEntity> dataList = orderListItemEntityMultiPageListEntity.getList();
                 if (dataList != null && dataList.size() > 0){
-                    getView().setNewData(dataList);
+                    if (orderListItemEntityMultiPageListEntity.isLast()){
+                        getView().setNewData(dataList, true);
+                    }else {
+                        getView().setNewData(dataList, false);
+                    }
                 }else {
                     getView().refreshFailed("暂时没有数据了");
                 }
@@ -61,7 +65,11 @@ public class CompletedPresenter extends BasePresenter<CompletedFragment> impleme
             public void onSuccessed(MultiPageListEntity<OrderListItemEntity> orderListItemEntityMultiPageListEntity) {
                 ArrayList<OrderListItemEntity> dataList = orderListItemEntityMultiPageListEntity.getList();
                 if (dataList != null && dataList.size() > 0){
-                    getView().addMoreData(dataList);
+                    if (orderListItemEntityMultiPageListEntity.isLast()){
+                        getView().addMoreData(dataList, true);
+                    }else {
+                        getView().addMoreData(dataList, false);
+                    }
                 }else {
                     getView().loadMoreFailed("暂时没有数据了");
                 }

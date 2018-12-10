@@ -42,7 +42,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 handleGreenBtn(helper);
                 break;
             }
-            case OrderStatus.READY:{
+            case OrderStatus.WAIT_RECEIVE:{
                 if ("delivery".equals(item.getDelivery_type())){
                     orderStatusName = "待配送";
                 }else {
@@ -53,6 +53,15 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 closeIconRes = R.mipmap.close_yellow;
                 helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_yellow);
                 handleYellowBtn(helper);
+                break;
+            }
+            case OrderStatus.WAIT_COMMENT:{
+                orderStatusName = "待评价";
+                headColor = mContext.getColor(R.color.order_status_gary);
+                expendIconRes = R.mipmap.expand_gary;
+                closeIconRes = R.mipmap.close_gary;
+                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_gary);
+                handleGaryBtn(helper);
                 break;
             }
             case OrderStatus.COMPLETED:{

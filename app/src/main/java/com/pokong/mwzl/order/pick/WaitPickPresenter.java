@@ -27,9 +27,10 @@ public class WaitPickPresenter extends BasePresenter<WaitPickFragment> implement
     public void initParamsBean() {
         paramsBean = new OrderListRequestBean();
         paramsBean.setAppToken(MyApplication.getInstance().getAppToken());
-        paramsBean.setOrder_status(OrderStatus.READY);
+        paramsBean.setOrder_status(OrderStatus.WAIT_RECEIVE);
         paramsBean.setPageNumber(1);
         paramsBean.setOrderMode("desc");
+        paramsBean.setDeliveryType("self_mention");
     }
 
     @Override
@@ -41,7 +42,11 @@ public class WaitPickPresenter extends BasePresenter<WaitPickFragment> implement
             public void onSuccessed(MultiPageListEntity<OrderListItemEntity> orderListItemEntityMultiPageListEntity) {
                 ArrayList<OrderListItemEntity> dataList = orderListItemEntityMultiPageListEntity.getList();
                 if (dataList != null && dataList.size() > 0){
-                    getView().setNewData(dataList);
+                    if (orderListItemEntityMultiPageListEntity.isLast()){
+                        getView().setNewData(dataList, true);
+                    }else {
+                        getView().setNewData(dataList, false);
+                    }
                 }else {
                     getView().refreshFailed("暂时没有数据了");
                 }
@@ -63,7 +68,11 @@ public class WaitPickPresenter extends BasePresenter<WaitPickFragment> implement
             public void onSuccessed(MultiPageListEntity<OrderListItemEntity> orderListItemEntityMultiPageListEntity) {
                 ArrayList<OrderListItemEntity> dataList = orderListItemEntityMultiPageListEntity.getList();
                 if (dataList != null && dataList.size() > 0){
-                    getView().addMoreData(dataList);
+                    if (orderListItemEntityMultiPageListEntity.isLast()){
+                        getView().addMoreData(dataList, true);
+                    }else {
+                        getView().addMoreData(dataList, false);
+                    }
                 }else {
                     getView().loadMoreFailed("暂时没有数据了");
                 }

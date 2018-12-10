@@ -126,27 +126,38 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
     }
 
     @Override
-    public void setNewData(List<OrderListItemEntity> newDataList) {
+    public void setNewData(List<OrderListItemEntity> newDataList, boolean isLast) {
         if (progressBar != null && progressBar.isShown()){
             progressBar.setVisibility(View.GONE);
-            refreshLayout.setEnabled(true);
         }
         adapter.setNewData(newDataList);
+        refreshLayout.setEnabled(true);
         refreshLayout.setRefreshing(false);
-        adapter.setEnableLoadMore(true);
+        if (isLast){
+            adapter.loadMoreEnd();
+        }else {
+            adapter.setEnableLoadMore(true);
+        }
     }
 
     @Override
     public void refreshFailed(String failMsg) {
-        ToastUtils.showShortToast(getContext(), failMsg);
+        if (progressBar != null && progressBar.isShown()){
+            progressBar.setVisibility(View.GONE);
+        }
+        //ToastUtils.showShortToast(getContext(), failMsg);
+        refreshLayout.setEnabled(true);
         refreshLayout.setRefreshing(false);
-        adapter.setEnableLoadMore(true);
+        //adapter.setEnableLoadMore(false);
     }
 
     @Override
-    public void addMoreData(List<OrderListItemEntity> moreDataList) {
+    public void addMoreData(List<OrderListItemEntity> moreDataList, boolean isLast) {
         adapter.addData(moreDataList);
         adapter.loadMoreComplete();
+        if (isLast){
+            adapter.loadMoreEnd();
+        }
         refreshLayout.setEnabled(true);
     }
 
@@ -237,10 +248,6 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
         cancelBtn.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
-    }
-
-    private void printOrder(OrderListItemEntity orderListItemEntity){
-
     }
 
 }

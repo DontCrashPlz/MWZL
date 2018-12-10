@@ -17,8 +17,13 @@ import com.pokong.library.util.LogUtils;
 import com.pokong.library.util.SharedPrefUtils;
 import com.pokong.library.util.ToastUtils;
 import com.pokong.library.util.Tools;
+import com.pokong.mwzl.app.MyApplication;
+import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.bean.GoodsEntity;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
+import com.pokong.mwzl.data.bean.business.ShopInfoRequestBean;
+import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
+import com.pokong.mwzl.data.source.MWZLHttpDataRepository;
 import com.pokong.mwzl.eventbus.BluetoothNewDeviceEvent;
 import com.pokong.mwzl.eventbus.BluetoothStateChangedEvent;
 import com.pokong.mwzl.order.OrderFragment;
@@ -86,6 +91,28 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
         //默认选中订单管理页
         mOrderRbtn.setChecked(true);
 
+        //加载并通知页面刷新店铺信息
+        ShopInfoRequestBean paramsBean = new ShopInfoRequestBean();
+        paramsBean.setAppToken(MyApplication.getInstance().getAppToken());
+        addNetWork(MWZLHttpDataRepository.getInstance()
+                .getShopInfo(paramsBean, new DataRequestCallback<ShopInfoResponseBean>() {
+                    @Override
+                    public void onSuccessed(ShopInfoResponseBean shopInfoResponseBean) {
+                        MyApplication.getInstance().setShopInfo(shopInfoResponseBean);
+                        Fragment currentFragment = fragmentManager.findFragmentById(R.id.home_fly_fragment);
+                        if (currentFragment instanceof OrderFragment) {
+                            ((OrderFragment) currentFragment).refreshShopInfo();
+                        } else if (currentFragment instanceof ShopManageFragment) {
+                            ((ShopManageFragment) currentFragment).refreshShopInfo();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(String errorMsg) {
+                        ToastUtils.showShortToast(getRealContext(), "店铺信息获取失败");
+                    }
+                }));
+
         //初始化蓝牙打印机服务
         initBluetoothService();
     }
@@ -98,25 +125,25 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         int vId = buttonView.getId();
-        switch (vId){
-            case R.id.home_rbtn_order:{
-                if (isChecked){
+        switch (vId) {
+            case R.id.home_rbtn_order: {
+                if (isChecked) {
                     fragmentManager.beginTransaction()
                             .replace(R.id.home_fly_fragment, OrderFragment.newInstance(0))
                             .commit();
                 }
                 break;
             }
-            case R.id.home_rbtn_shop:{
-                if (isChecked){
+            case R.id.home_rbtn_shop: {
+                if (isChecked) {
                     fragmentManager.beginTransaction()
                             .replace(R.id.home_fly_fragment, ShopManageFragment.newInstance(0))
                             .commit();
                 }
                 break;
             }
-            case R.id.home_rbtn_setting:{
-                if (isChecked){
+            case R.id.home_rbtn_setting: {
+                if (isChecked) {
                     fragmentManager.beginTransaction()
                             .replace(R.id.home_fly_fragment, SettingFragment.newInstance(0))
                             .commit();
@@ -134,13 +161,12 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
         MyBtPrintService.Adapter adapter = new NF5804PrintAdapter(btService);
         MyBtPrintService.getInstance().setAdapter(adapter);
 
-        String savedDevicePort = (String) SharedPrefUtils.get(getRealContext(), BluetoothPresenter.SP_KEY_BLUETOOTH_DEVICE_PORT, "00:00:00:00:00:00");
-        if (!"00:00:00:00:00:00".equals(savedDevicePort)){
-            if (MyBtPrintService.getInstance().isOpened()){
+        if (MyBtPrintService.getInstance().isOpened()){
+            String savedDevicePort = (String) SharedPrefUtils.get(getRealContext(), BluetoothPresenter.SP_KEY_BLUETOOTH_DEVICE_PORT, "00:00:00:00:00:00");
+            if (!"00:00:00:00:00:00".equals(savedDevicePort))
                 MyBtPrintService.getInstance().connect(savedDevicePort);
-            }else {
-                ToastUtils.showLongToast(getRealContext(), "检测到蓝牙未开启，请开启蓝牙后到蓝牙设置页面连接设备");
-            }
+        }else {
+            ToastUtils.showLongToast(getRealContext(), "检测到蓝牙未开启，请开启蓝牙后到蓝牙设置页面连接设备");
         }
     }
 
@@ -178,9 +204,9 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
                                     .post(new BluetoothStateChangedEvent(PrinterClass.FAILED_CONNECT,
                                             "蓝牙连接失败"));
                             Fragment failedFragment = activityReference.fragmentManager.findFragmentById(R.id.home_fly_fragment);
-                            if (failedFragment instanceof OrderFragment){
+                            if (failedFragment instanceof OrderFragment) {
                                 ((OrderFragment) failedFragment).showBluetoothBreakIcon();
-                            }else if (failedFragment instanceof ShopManageFragment){
+                            } else if (failedFragment instanceof ShopManageFragment) {
                                 ((ShopManageFragment) failedFragment).showBluetoothBreakIcon();
                             }
                             break;
@@ -190,9 +216,9 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
                                     .post(new BluetoothStateChangedEvent(PrinterClass.SUCCESS_CONNECT,
                                             "蓝牙连接成功"));
                             Fragment succeedFragment = activityReference.fragmentManager.findFragmentById(R.id.home_fly_fragment);
-                            if (succeedFragment instanceof OrderFragment){
+                            if (succeedFragment instanceof OrderFragment) {
                                 ((OrderFragment) succeedFragment).showBluetoothConnectedIcon();
-                            }else if (succeedFragment instanceof ShopManageFragment){
+                            } else if (succeedFragment instanceof ShopManageFragment) {
                                 ((ShopManageFragment) succeedFragment).showBluetoothConnectedIcon();
                             }
                             break;
@@ -211,23 +237,23 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
                                 activityReference.getResources().getString(R.string.str_printer_state) + ":" + activityReference.getResources().getString(R.string.str_printer_buffernull));
                     } else if (readBuf[0] == 0x08) {
                         ToastUtils.showShortToast(activityReference.getRealContext(),
-                                activityReference.getResources().getString(R.string.str_printer_state)  + ":" + activityReference.getResources().getString(R.string.str_printer_nopaper));
+                                activityReference.getResources().getString(R.string.str_printer_state) + ":" + activityReference.getResources().getString(R.string.str_printer_nopaper));
                     } else if (readBuf[0] == 0x01) {
                         ToastUtils.showShortToast(activityReference.getRealContext(),
                                 activityReference.getResources().getString(R.string.str_printer_state) + ":" + activityReference.getResources().getString(R.string.str_printer_printing));
-                    }  else if (readBuf[0] == 0x04) {
+                    } else if (readBuf[0] == 0x04) {
                         ToastUtils.showShortToast(activityReference.getRealContext(),
                                 activityReference.getResources().getString(R.string.str_printer_state) + ":" + activityReference.getResources().getString(R.string.str_printer_hightemperature));
                     } else if (readBuf[0] == 0x02) {
                         ToastUtils.showShortToast(activityReference.getRealContext(),
                                 activityReference.getResources().getString(R.string.str_printer_state) + ":" + activityReference.getResources().getString(R.string.str_printer_lowpower));
-                    }else {
+                    } else {
                         String readMessage = new String(readBuf, 0, msg.arg1);
-                        LogUtils.e("BluetoothStatusHandler","readMessage="+readMessage);
-                        if (readMessage.contains("800")){// 80mm paper
+                        LogUtils.e("BluetoothStatusHandler", "readMessage=" + readMessage);
+                        if (readMessage.contains("800")) {// 80mm paper
                             PrintService.imageWidth = 72;
                             ToastUtils.showShortToast(activityReference.getRealContext(), "80mm");
-                        } else if (readMessage.contains("580")){// 58mm paper
+                        } else if (readMessage.contains("580")) {// 58mm paper
                             PrintService.imageWidth = 48;
                             ToastUtils.showShortToast(activityReference.getRealContext(), "58mm");
                         }
@@ -272,9 +298,10 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
 
     /**
      * 打印订单
+     *
      * @param order
      */
-    public static void printOrder(OrderListItemEntity order){
+    public static void printOrder(OrderListItemEntity order) {
         MyBtPrintService.getInstance().nextLine();
         MyBtPrintService.getInstance().printNormalDivideLine();
 
@@ -304,7 +331,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
         MyBtPrintService.getInstance().nextLine();
         MyBtPrintService.getInstance().printNormalDevideLineWithText("商品");
 
-        for (GoodsEntity entity : order.getGoodlist()){
+        for (GoodsEntity entity : order.getGoodlist()) {
             printGoodsInfo(entity);
         }
 
@@ -328,26 +355,26 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
         MyBtPrintService.getInstance().printWorkArea();
     }
 
-    static void printGoodsInfo(GoodsEntity goods){
+    static void printGoodsInfo(GoodsEntity goods) {
         String goodsName = goods.getGoods_name();
-        if (goodsName.length() <= 5){//todo 打印一行
+        if (goodsName.length() <= 5) {//todo 打印一行
             int nameSpaceNum = 10 - (goodsName.length() * 2);
-            while (nameSpaceNum > 0){
+            while (nameSpaceNum > 0) {
                 goodsName = goodsName + " ";
                 nameSpaceNum--;
             }
 
             String specStr = goods.getSpec_info();
-            if ("".equals(specStr) || "null".equals(specStr)){
+            if ("".equals(specStr) || "null".equals(specStr)) {
                 specStr = "    ";
-            }else {
-                if (specStr.length() == 2){
+            } else {
+                if (specStr.length() == 2) {
                     specStr = specStr + " ";
                 }
             }
 
             String countStr = Tools.formatNumStr(goods.getCount());
-            if (countStr.length() == 2){
+            if (countStr.length() == 2) {
                 countStr = countStr + " ";
             }
 
@@ -357,18 +384,18 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
 
             MyBtPrintService.getInstance().nextLine();
             MyBtPrintService.getInstance().printNormalTextLift(goodsStr);
-        }else {//todo 打印两行
+        } else {//todo 打印两行
             String specStr = goods.getSpec_info();
-            if ("".equals(specStr) || "null".equals(specStr)){
+            if ("".equals(specStr) || "null".equals(specStr)) {
                 specStr = "    ";
-            }else {
-                if (specStr.length() == 2){
+            } else {
+                if (specStr.length() == 2) {
                     specStr = specStr + " ";
                 }
             }
 
             String countStr = Tools.formatNumStr(goods.getCount());
-            if (countStr.length() == 2){
+            if (countStr.length() == 2) {
                 countStr = countStr + " ";
             }
 

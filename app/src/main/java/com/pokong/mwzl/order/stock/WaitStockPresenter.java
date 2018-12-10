@@ -41,7 +41,11 @@ public class WaitStockPresenter extends BasePresenter<WaitStockFragment> impleme
                 ArrayList<OrderListItemEntity> dataList = orderListItemEntityMultiPageListEntity.getList();
                 if (dataList != null && dataList.size() > 0){
                     lastOrderId = dataList.get(dataList.size() - 1).getId();
-                    getView().setNewData(dataList);
+                    if (orderListItemEntityMultiPageListEntity.isLast()){
+                        getView().setNewData(dataList, true);
+                    }else {
+                        getView().setNewData(dataList, false);
+                    }
                 }else {
                     getView().refreshFailed("暂时没有数据了");
                 }
@@ -64,7 +68,11 @@ public class WaitStockPresenter extends BasePresenter<WaitStockFragment> impleme
                 ArrayList<OrderListItemEntity> dataList = orderListItemEntityMultiPageListEntity.getList();
                 if (dataList != null && dataList.size() > 0){
                     lastOrderId = dataList.get(dataList.size() - 1).getId();
-                    getView().addMoreData(dataList);
+                    if (orderListItemEntityMultiPageListEntity.isLast()){
+                        getView().addMoreData(dataList, true);
+                    }else {
+                        getView().addMoreData(dataList, false);
+                    }
                 }else {
                     getView().loadMoreFailed("暂时没有数据了");
                 }

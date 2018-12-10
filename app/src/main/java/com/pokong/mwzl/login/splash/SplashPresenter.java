@@ -25,16 +25,32 @@ public class SplashPresenter extends BasePresenter<SplashActivity> implements Sp
         entity.setUrl("www.update.com");
         entity.setVersion("1.0");
         String remoteVersionName = entity.getVersion();
+        new Thread(() -> {
+            try {
+                Thread.sleep(1500);
+                if (Tools.isBlank(currentVersionName)//不需要更新
+                        || Tools.isBlank(remoteVersionName)
+                        || currentVersionName.equals(remoteVersionName)){
+                    //todo 程序继续执行，判断是否自动登录
+                    checkAutoLogin();
+                }else {//需要更新
+                    //todo 通知页面需要更新
+                    getView().showUpdateDialog(entity);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
 
-        if (Tools.isBlank(currentVersionName)//不需要更新
-                || Tools.isBlank(remoteVersionName)
-                || currentVersionName.equals(remoteVersionName)){
-            //todo 程序继续执行，判断是否自动登录
-            checkAutoLogin();
-        }else {//需要更新
-            //todo 通知页面需要更新
-            getView().showUpdateDialog(entity);
-        }
+//        if (Tools.isBlank(currentVersionName)//不需要更新
+//                || Tools.isBlank(remoteVersionName)
+//                || currentVersionName.equals(remoteVersionName)){
+//            //todo 程序继续执行，判断是否自动登录
+//            checkAutoLogin();
+//        }else {//需要更新
+//            //todo 通知页面需要更新
+//            getView().showUpdateDialog(entity);
+//        }
     }
 
     @Override

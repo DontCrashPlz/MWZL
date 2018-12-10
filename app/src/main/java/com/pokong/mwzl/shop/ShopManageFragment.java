@@ -1,5 +1,6 @@
 package com.pokong.mwzl.shop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,10 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.base.BaseFragment;
 import com.pokong.library.util.LogUtils;
+import com.pokong.library.util.ToastUtils;
 import com.pokong.mwzl.R;
+import com.pokong.mwzl.app.MyApplication;
+import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
+import com.pokong.mwzl.setting.bluetooth.BluetoothActivity;
 import com.qs.helper.printer.PrinterClass;
 
 /**
@@ -58,6 +65,9 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
     @Override
     public void onResume() {
         super.onResume();
+
+        refreshShopInfo();
+
         LogUtils.e("ShopManageFragment", String.valueOf(MyBtPrintService.getInstance().getPrintState()));
         if (MyBtPrintService.getInstance().getPrintState() == PrinterClass.STATE_CONNECTED){
             mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth);
@@ -98,37 +108,45 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
 
     @Override
     public void clickScanIcon() {
-
+        //todo 跳转到"扫码"页面
+        ToastUtils.showShortToast(getContext(), "扫码功能尚未开放");
     }
 
     @Override
     public void clickNoticeIcon() {
-
+        //todo 跳转到"系统消息"页面
+        ToastUtils.showShortToast(getContext(), "公告系统尚未开放");
     }
 
     @Override
     public void clickBluetoothIcon() {
-
+        //todo 跳转到"蓝牙设置"页面
+        Intent intent = new Intent(getContext(), BluetoothActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void clickStatistics() {
-
+        //todo 跳转到"统计"页面
+        ToastUtils.showShortToast(getContext(), "统计功能尚未开放");
     }
 
     @Override
     public void clickLocation() {
-
+        //todo 跳转到"地址校对"页面
+        ToastUtils.showShortToast(getContext(), "地址校对功能尚未开放");
     }
 
     @Override
     public void clickOrderQuery() {
-
+        //todo 跳转到"订单查询"页面
+        ToastUtils.showShortToast(getContext(), "订单查询功能尚未开放");
     }
 
     @Override
     public void clickComment() {
-
+        //todo 跳转到"商品评价"页面
+        ToastUtils.showShortToast(getContext(), "商品评价功能尚未开放");
     }
 
     @Override
@@ -140,4 +158,43 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
     public void showBluetoothBreakIcon() {
         mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth_break);
     }
+
+    @Override
+    public void refreshShopInfo() {
+        ShopInfoResponseBean shopInfo = MyApplication.getInstance().getShopInfo();
+        if (shopInfo != null){
+
+            String imgUrl = shopInfo.getImgurl();
+            if (imgUrl != null && !("null".equals(imgUrl)) && imgUrl.length() > 0){
+                RequestOptions options = new RequestOptions()
+                        .placeholder(R.mipmap.logo)
+                        .error(R.mipmap.logo);
+                Glide.with(getContext())
+                        .load(shopInfo.getImgurl())
+                        .apply(options)
+                        .into(mShopLogoIv);
+            }
+
+            String shopName = shopInfo.getStore_name();
+            if (shopName != null && !("null".equals(shopName)) && shopName.length() > 0){
+                mShopNameTv.setText(shopName);
+            }
+
+            String managerName = shopInfo.getContact();
+            if (shopName != null && !("null".equals(shopName)) && shopName.length() > 0){
+                mManagerTv.setText(shopName);
+            }
+
+            String telephoneStr = shopInfo.getStore_telephone();
+            if (telephoneStr != null && !("null".equals(telephoneStr)) && telephoneStr.length() > 0){
+                mTelephoneTv.setText(telephoneStr);
+            }
+
+            String addressStr = shopInfo.getStore_address();
+            if (addressStr != null && !("null".equals(addressStr)) && addressStr.length() > 0){
+                mAddressTv.setText(addressStr);
+            }
+        }
+    }
+
 }

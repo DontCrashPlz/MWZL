@@ -1,5 +1,6 @@
 package com.pokong.mwzl.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,12 +17,17 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.base.BaseFragment;
 import com.pokong.library.util.LogUtils;
+import com.pokong.library.util.ToastUtils;
 import com.pokong.mwzl.R;
+import com.pokong.mwzl.app.MyApplication;
+import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 import com.pokong.mwzl.order.all.AllOrderFragment;
+import com.pokong.mwzl.order.comment.WaitCommentFragment;
 import com.pokong.mwzl.order.complete.CompletedFragment;
 import com.pokong.mwzl.order.deliver.WaitDeliverFragment;
 import com.pokong.mwzl.order.pick.WaitPickFragment;
 import com.pokong.mwzl.order.stock.WaitStockFragment;
+import com.pokong.mwzl.setting.bluetooth.BluetoothActivity;
 import com.qs.helper.printer.PrinterClass;
 
 /**
@@ -58,6 +64,9 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
     @Override
     public void onResume() {
         super.onResume();
+
+        refreshShopInfo();
+
         LogUtils.e("OrderFragment", String.valueOf(MyBtPrintService.getInstance().getPrintState()));
         if (MyBtPrintService.getInstance().getPrintState() == PrinterClass.STATE_CONNECTED){
             mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth);
@@ -93,7 +102,7 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
                         return WaitDeliverFragment.newInstance(0);
                     }
                     case 3:{
-                        return CompletedFragment.newInstance(0);
+                        return WaitCommentFragment.newInstance(0);
                     }
                     case 4:{
                         return AllOrderFragment.newInstance(0);
@@ -110,7 +119,7 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
         });
 
         mTabLayout = view.findViewById(R.id.homeorder_tablayout);
-        mTabLayout.setViewPager(mOrderVp,new String[]{"待备货", "待取货", "待配送", "已完成", "全部订单"});
+        mTabLayout.setViewPager(mOrderVp,new String[]{"待备货", "待取货", "待配送", "待评价", "全部订单"});
 
     }
 
@@ -124,7 +133,8 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
      */
     @Override
     public void clickScanIcon(){
-        //todo 跳转到扫码页面
+        //todo 跳转到"扫码"页面
+        ToastUtils.showShortToast(getContext(), "扫码功能尚未开放");
     }
 
     /**
@@ -132,7 +142,8 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
      */
     @Override
     public void clickNoticeIcon(){
-        //todo 跳转到系统消息页面
+        //todo 跳转到"系统消息"页面
+        ToastUtils.showShortToast(getContext(), "公告系统尚未开放");
     }
 
     /**
@@ -140,7 +151,9 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
      */
     @Override
     public void clickBluetoothIcon(){
-        //todo 跳转到蓝牙设置页面
+        //todo 跳转到"蓝牙设置"页面
+        Intent intent = new Intent(getContext(), BluetoothActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -151,6 +164,14 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
     @Override
     public void showBluetoothBreakIcon() {
         mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth_break);
+    }
+
+    @Override
+    public void refreshShopInfo() {
+        ShopInfoResponseBean shopInfoBean = MyApplication.getInstance().getShopInfo();
+        if (shopInfoBean != null){
+            mShopNameTv.setText(shopInfoBean.getStore_name());
+        }
     }
 
 }

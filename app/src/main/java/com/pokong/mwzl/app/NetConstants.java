@@ -10,7 +10,8 @@ public class NetConstants {
      * 主机地址
      */
     //public static final String BASEURL = "http://www.base.com/";
-    public static final String BASEURL = "http://192.168.31.20:80/";
+    //public static final String BASEURL = "http://192.168.31.20:80/";
+    public static final String BASEURL = "http://mytestspace.51vip.biz/";
 
     /**
      * 登录接口

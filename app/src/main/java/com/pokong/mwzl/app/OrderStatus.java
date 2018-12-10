@@ -19,25 +19,25 @@ public class OrderStatus {
     public static final int ALL = 0;
 
     /**
+     * 已下单待付款订单
+     */
+    public static final int WAIT_PAY = 10;
+
+    /**
      * 待备货订单
      */
     public static final int WAIT_STOCK = 20;
 
 
     /**
-     * 订单备货完成
+     * 待收货订单(待自提、待配送)
      */
-    public static final int READY = 30;
+    public static final int WAIT_RECEIVE = 30;
 
-//    /**
-//     * 待自提订单
-//     */
-//    public static final int WAIT_PICK = 30;
-//
-//    /**
-//     * 待配送订单
-//     */
-//    public static final int WAIT_DELIVER = 40;
+    /**
+     * 待评价订单
+     */
+    public static final int WAIT_COMMENT = 40;
 
     /**
      * 已完成订单

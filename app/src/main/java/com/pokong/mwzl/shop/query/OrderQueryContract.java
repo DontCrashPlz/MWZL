@@ -1,4 +1,4 @@
-package com.pokong.mwzl.order.complete;
+package com.pokong.mwzl.shop.query;
 
 import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.MultiPageListEntity;
@@ -7,11 +7,11 @@ import com.pokong.mwzl.data.bean.OrderListItemEntity;
 import java.util.List;
 
 /**
- * Created on 2018/11/16 15:46
+ * Created on 2018/12/10 18:27
  * User: Zheng
  * E-mail: zhengCH12138@163.com
  */
-public interface CompletedContract {
+public interface OrderQueryContract {
     interface View{
 
         /**
@@ -38,6 +38,26 @@ public interface CompletedContract {
          */
         void loadMoreFailed(String failMsg);
 
+        /**
+         * 弹出确认打印弹窗
+         * @param currentItemEntity
+         */
+        void showPrintDialog(OrderListItemEntity currentItemEntity);
+
+        /**
+         * 弹出确认备货完成弹窗
+         * @param orderId
+         * @param orderSerial
+         */
+        void showStockReadyDialog(long orderId, String orderSerial, int position);
+
+        /**
+         * 弹出确认收货弹窗
+         * @param orderId
+         * @param orderSerial
+         */
+        void showConfirmDialog(long orderId, String orderSerial, int position);
+
     }
 
     interface Presenter{
@@ -60,6 +80,16 @@ public interface CompletedContract {
          * 请求数据的实际方法
          */
         void requestData(DataRequestCallback<MultiPageListEntity<OrderListItemEntity>> callback);
+
+        /**
+         * 订单备货完成
+         */
+        void orderReady(long orderId, DataRequestCallback<String> callback);
+
+        /**
+         * 订单确认收货
+         */
+        void pickConfirm(long orderId, DataRequestCallback<String> callback);
 
     }
 }

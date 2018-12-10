@@ -1,6 +1,7 @@
 package com.pokong.mwzl.app;
 
 import com.pokong.library.base.BaseApplication;
+import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 
 /**
  * Created on 2018/11/16 17:03
@@ -17,12 +18,22 @@ public class MyApplication extends BaseApplication {
 
     private String appToken;
 
+    private ShopInfoResponseBean shopInfo = null;
+
     public String getAppToken() {
         return appToken;
     }
 
     public void setAppToken(String appToken) {
         this.appToken = appToken;
+    }
+
+    public ShopInfoResponseBean getShopInfo() {
+        return shopInfo;
+    }
+
+    public void setShopInfo(ShopInfoResponseBean shopInfo) {
+        this.shopInfo = shopInfo;
     }
 
     @Override

@@ -14,9 +14,13 @@ public class OrderListRequestBean implements Serializable {
     private String orderMode = "asc";//排序方式，desc降序，asc升序
     private int pageSize = 5;//每页数据个数
     private int pageNumber = 1;//页码，固定请求第1页
-    private long startId;//其实订单ID，从这个订单ID开始往后查询
     private int splitpage = 1;//是否分页，默认值1
-    private int order_status;//订单状态，20=待备货，不传此值获得所有订单列表
+
+    private long startId;//条件查询 -> 起始订单ID，从这个订单ID开始往后查询
+    private int order_status;//条件查询 -> 订单状态，20=待备货，不传此值获得所有订单列表
+    private String deliveryType;//条件查询 -> 配送方式，自提:self_mention，配送:delivery
+    private String beginTime;//条件查询 -> 起始时间
+    private String endTime;//条件查询 -> 结束时间
 
     public String getAppToken() {
         return appToken;
@@ -82,6 +86,30 @@ public class OrderListRequestBean implements Serializable {
         this.order_status = order_status;
     }
 
+    public String getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(String deliveryType) {
+        this.deliveryType = deliveryType;
+    }
+
+    public String getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public String toString() {
         return "OrderListRequestBean{" +
@@ -90,9 +118,12 @@ public class OrderListRequestBean implements Serializable {
                 ", orderMode='" + orderMode + '\'' +
                 ", pageSize=" + pageSize +
                 ", pageNumber=" + pageNumber +
-                ", startId=" + startId +
                 ", splitpage=" + splitpage +
+                ", startId=" + startId +
                 ", order_status=" + order_status +
+                ", deliveryType='" + deliveryType + '\'' +
+                ", beginTime='" + beginTime + '\'' +
+                ", endTime='" + endTime + '\'' +
                 '}';
     }
 }
