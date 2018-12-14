@@ -3,7 +3,6 @@ package com.pokong.mwzl.order.stock;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +13,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,11 +28,17 @@ import com.pokong.mwzl.R;
 import com.pokong.mwzl.adapter.OrderListAdapter;
 import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
+import com.pokong.mwzl.order.OrderFragment;
 import com.pokong.mwzl.setting.bluetooth.BluetoothPresenter;
+import com.pokong.mwzl.widget.WaitStockLoadMoreView;
 import com.qs.helper.printer.PrinterClass;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created on 2018/11/16 15:24
@@ -47,6 +51,12 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
     private RecyclerView recyclerView;
     private OrderListAdapter adapter;
     private ProgressBar progressBar;
+
+    private Disposable mTimerDisposable;//定时器
+    private OrderFragment parentFragment;
+
+    //待备货数量Disposable，需要单独处理，不依赖父类的CompositeDisposable
+    public Disposable mStockNumDisposable;
 
     public static WaitStockFragment newInstance(int tag){
         WaitStockFragment instance = new WaitStockFragment();
@@ -72,6 +82,7 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
         recyclerView = rootView.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new OrderListAdapter(R.layout.layout_cardview_order_list);
+        adapter.setLoadMoreView(new WaitStockLoadMoreView());
         adapter.setOnItemClickListener((adapter, view, position) -> {
             OrderListItemEntity currentItemEntity = (OrderListItemEntity) adapter.getData().get(position);
             boolean isItemOpend = currentItemEntity.isOpend();
@@ -96,11 +107,15 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
         });
         recyclerView.setAdapter(adapter);
         adapter.setOnLoadMoreListener(this, recyclerView);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_recycler_empty, null);
+        adapter.setEmptyView(view);
         adapter.setEnableLoadMore(false);
 
         progressBar = rootView.findViewById(R.id.progressBar);
 
         mPresenter.initParamsBean();
+
+        parentFragment = (OrderFragment)getParentFragment();
     }
 
     @Override
@@ -111,6 +126,15 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
     @Override
     protected WaitStockPresenter getRealPresenter() {
         return new WaitStockPresenter();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mStockNumDisposable != null && !mStockNumDisposable.isDisposed()){
+            mStockNumDisposable.dispose();
+            mStockNumDisposable = null;
+        }
     }
 
     @Override
@@ -134,9 +158,27 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
         refreshLayout.setEnabled(true);
         refreshLayout.setRefreshing(false);
         if (isLast){
-            adapter.loadMoreEnd();
+            adapter.loadMoreFail();
         }else {
             adapter.setEnableLoadMore(true);
+        }
+
+        if (mTimerDisposable == null){
+            mTimerDisposable = Observable.interval(15, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe(aLong -> mPresenter.getStockNum(new DataRequestCallback<Long>() {
+                        @Override
+                        public void onSuccessed(Long successLong) {
+                            refreshStockNum(successLong);
+                        }
+
+                        @Override
+                        public void onFailed(String errorMsg) {
+                            refreshStockNum(0L);
+                        }
+                    }));
+            addNetWork(mTimerDisposable);
         }
     }
 
@@ -156,14 +198,14 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
         adapter.addData(moreDataList);
         adapter.loadMoreComplete();
         if (isLast){
-            adapter.loadMoreEnd();
+            adapter.loadMoreFail();
         }
         refreshLayout.setEnabled(true);
     }
 
     @Override
     public void loadMoreFailed(String failMsg) {
-        ToastUtils.showShortToast(getContext(), failMsg);
+        //ToastUtils.showShortToast(getContext(), failMsg);
         adapter.loadMoreFail();
         refreshLayout.setEnabled(true);
     }
@@ -249,5 +291,13 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
 
         dialog.show();
     }
+
+    @Override
+    public void refreshStockNum(Long stockNum) {
+        if (parentFragment != null){
+            parentFragment.refreshStockNum(stockNum);
+        }
+    }
+
 
 }

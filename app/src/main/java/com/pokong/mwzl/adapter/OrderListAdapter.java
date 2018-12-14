@@ -55,6 +55,15 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 handleYellowBtn(helper);
                 break;
             }
+            case OrderStatus.WAIT_PAY:{
+                orderStatusName = "待支付";
+                headColor = mContext.getColor(R.color.order_status_gary);
+                expendIconRes = R.mipmap.expand_gary;
+                closeIconRes = R.mipmap.close_gary;
+                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_gary);
+                handleGaryBtn(helper);
+                break;
+            }
             case OrderStatus.WAIT_COMMENT:{
                 orderStatusName = "待评价";
                 headColor = mContext.getColor(R.color.order_status_gary);
@@ -111,8 +120,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
             goodsListRecycler.setAdapter(new GoodsListAdapter(mContext, goodsList));
         }
 
-        String classStyle = item.getClass_type();
-        if (classStyle != null && "cake".equals(classStyle)){
+        String orderType = item.getOrder_type();
+        if (orderType != null && "cake".equals(orderType)){
             helper.setGone(R.id.ordercard_toolnum_panel, true)
                     .setText(R.id.ordercard_tv_toolnum, String.valueOf(item.getPerson_num()))
                     .setGone(R.id.ordercard_age_panel, false)

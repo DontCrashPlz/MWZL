@@ -96,6 +96,8 @@ public class AllOrderFragment extends LazyLoadFragment<AllOrderPresenter> implem
         });
         recyclerView.setAdapter(adapter);
         adapter.setOnLoadMoreListener(this, recyclerView);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_recycler_empty, null);
+        adapter.setEmptyView(view);
         adapter.setEnableLoadMore(false);
 
         progressBar = rootView.findViewById(R.id.progressBar);

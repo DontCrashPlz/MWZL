@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -67,6 +68,8 @@ public class CompletedFragment extends LazyLoadFragment<CompletedPresenter> impl
         });
         recyclerView.setAdapter(adapter);
         adapter.setOnLoadMoreListener(this, recyclerView);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_recycler_empty, null);
+        adapter.setEmptyView(view);
         adapter.setEnableLoadMore(false);
 
         progressBar = rootView.findViewById(R.id.progressBar);

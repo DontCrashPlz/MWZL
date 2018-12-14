@@ -1,5 +1,6 @@
 package com.pokong.mwzl.data.executor.business;
 
+import com.pokong.library.util.LogUtils;
 import com.pokong.library.util.TimeChecker;
 import com.pokong.library.util.Tools;
 import com.pokong.mwzl.data.DataResponseBean;
@@ -27,12 +28,14 @@ public class OrderListExecutor extends BaseExecutor<OrderListRequestBean, MultiP
     private final String PARAMKEY_ORDERMODE = "orderMode";
     private final String PARAMKEY_PAGESIZE = "pageSize";
     private final String PARAMKEY_PAGENUMBER = "pageNumber";
-    private final String PARAMKEY_STARTID = "_query.startId";
     private final String PARAMKEY_SPLITPAGE = "splitpage";
+
+    private final String PARAMKEY_STARTID = "_query.startId";
     private final String PARAMKEY_ORDERSTATUS = "_query.order_status";
     private final String PARAMKET_DELIVERY_TYPT = "_query.deliveryType";
     private final String PARAMKET_BEGINTIME = "_query.beginTime";
     private final String PARAMKET_ENDTIME = "_query.endTime";
+    private final String PARAMKET_ORDERNO = "_query.orderNo";
 
     private HashMap<String, String> paramsMap;
 
@@ -76,11 +79,19 @@ public class OrderListExecutor extends BaseExecutor<OrderListRequestBean, MultiP
 
         String beginTime = paramsBean.getBeginTime();
         if (TimeChecker.isTimeStrValid(beginTime)){
+            LogUtils.e("OrderListExecutor", "beginTime: " + beginTime);
             paramsMap.put(PARAMKET_BEGINTIME, beginTime);
         }
         String endTime = paramsBean.getEndTime();
         if (TimeChecker.isTimeStrValid(endTime)){
+            LogUtils.e("OrderListExecutor", "endTime: " + endTime);
             paramsMap.put(PARAMKET_ENDTIME, endTime);
+        }
+
+        String orderNo = paramsBean.getOrderNo();
+        if (!Tools.isBlank(orderNo)){
+            LogUtils.e("OrderListExecutor", "orderNo: " + orderNo);
+            paramsMap.put(PARAMKET_ORDERNO, orderNo);
         }
 
         return apiService.getOrderList(paramsMap);

@@ -20,6 +20,8 @@ import com.pokong.mwzl.R;
 import com.pokong.mwzl.app.MyApplication;
 import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 import com.pokong.mwzl.setting.bluetooth.BluetoothActivity;
+import com.pokong.mwzl.shop.query.OrderQueryActivity;
+import com.pokong.mwzl.shop.query.OrderQueryPresenter;
 import com.qs.helper.printer.PrinterClass;
 
 /**
@@ -140,7 +142,8 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
     @Override
     public void clickOrderQuery() {
         //todo 跳转到"订单查询"页面
-        ToastUtils.showShortToast(getContext(), "订单查询功能尚未开放");
+        Intent intent = new Intent(getContext(), OrderQueryActivity.class);
+        startActivity(intent);
     }
 
     @Override

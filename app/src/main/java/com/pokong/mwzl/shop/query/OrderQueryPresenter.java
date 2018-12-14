@@ -1,10 +1,10 @@
 package com.pokong.mwzl.shop.query;
 
 import com.pokong.library.base.BasePresenter;
+import com.pokong.library.util.LogUtils;
 import com.pokong.library.util.ToastUtils;
 import com.pokong.library.util.Tools;
 import com.pokong.mwzl.app.MyApplication;
-import com.pokong.mwzl.app.OrderStatus;
 import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.MultiPageListEntity;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
@@ -23,33 +23,57 @@ import java.util.ArrayList;
 public class OrderQueryPresenter extends BasePresenter<OrderQueryActivity> implements OrderQueryContract.Presenter {
 
     private OrderListRequestBean paramsBean;//请求参数
-    private int currentPageNumber = 1;
+    private long lastOrderId;//最后一条数据的ID值
 
     @Override
     public void initParamsBean() {
         paramsBean = new OrderListRequestBean();
         paramsBean.setAppToken(MyApplication.getInstance().getAppToken());
-        paramsBean.setOrder_status(OrderStatus.ALL);
-        paramsBean.setPageNumber(1);
         paramsBean.setOrderMode("desc");
+    }
+
+    @Override
+    public void updateStateParams(int stateParams) {
+        paramsBean.setOrder_status(stateParams);
+    }
+
+    @Override
+    public void updateTypeParams(String typeParams) {
+        paramsBean.setDeliveryType(typeParams);
+    }
+
+    @Override
+    public void updateBeginTimeParams(String beginTime) {
+        paramsBean.setBeginTime(beginTime);
+    }
+
+    @Override
+    public void updateEndTimeParams(String endTime) {
+        paramsBean.setEndTime(endTime);
+    }
+
+    @Override
+    public void updateOrderNoParams(String orderNo) {
+        paramsBean.setOrderNo(orderNo);
     }
 
     @Override
     public void refreshData() {
         if (paramsBean == null) initParamsBean();
-        currentPageNumber = 1;
+        lastOrderId = 0;
         requestData(new DataRequestCallback<MultiPageListEntity<OrderListItemEntity>>() {
             @Override
             public void onSuccessed(MultiPageListEntity<OrderListItemEntity> orderListItemEntityMultiPageListEntity) {
                 ArrayList<OrderListItemEntity> dataList = orderListItemEntityMultiPageListEntity.getList();
                 if (dataList != null && dataList.size() > 0){
+                    lastOrderId = dataList.get(dataList.size() - 1).getId();
                     if (orderListItemEntityMultiPageListEntity.isLast()){
                         getView().setNewData(dataList, true);
                     }else {
                         getView().setNewData(dataList, false);
                     }
                 }else {
-                    getView().refreshFailed("暂时没有数据了");
+                    getView().setNewData(new ArrayList<>(), true);
                 }
             }
 
@@ -63,12 +87,12 @@ public class OrderQueryPresenter extends BasePresenter<OrderQueryActivity> imple
     @Override
     public void loadMoreData() {
         if (paramsBean == null) initParamsBean();
-        currentPageNumber += 1;
         requestData(new DataRequestCallback<MultiPageListEntity<OrderListItemEntity>>() {
             @Override
             public void onSuccessed(MultiPageListEntity<OrderListItemEntity> orderListItemEntityMultiPageListEntity) {
                 ArrayList<OrderListItemEntity> dataList = orderListItemEntityMultiPageListEntity.getList();
                 if (dataList != null && dataList.size() > 0){
+                    lastOrderId = dataList.get(dataList.size() - 1).getId();
                     if (orderListItemEntityMultiPageListEntity.isLast()){
                         getView().addMoreData(dataList, true);
                     }else {
@@ -88,7 +112,8 @@ public class OrderQueryPresenter extends BasePresenter<OrderQueryActivity> imple
 
     @Override
     public void requestData(DataRequestCallback<MultiPageListEntity<OrderListItemEntity>> callback) {
-        paramsBean.setPageNumber(currentPageNumber);
+        paramsBean.setStartId(lastOrderId);
+        LogUtils.e("Order Query Params", paramsBean.toString());
         getView().addNetWork(MWZLHttpDataRepository.getInstance().getOrderList(paramsBean,callback));
     }
 

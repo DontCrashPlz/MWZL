@@ -21,6 +21,7 @@ public class OrderListRequestBean implements Serializable {
     private String deliveryType;//条件查询 -> 配送方式，自提:self_mention，配送:delivery
     private String beginTime;//条件查询 -> 起始时间
     private String endTime;//条件查询 -> 结束时间
+    private String orderNo;//条件查询 -> 订单编号
 
     public String getAppToken() {
         return appToken;
@@ -110,6 +111,14 @@ public class OrderListRequestBean implements Serializable {
         this.endTime = endTime;
     }
 
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
     @Override
     public String toString() {
         return "OrderListRequestBean{" +
@@ -124,6 +133,7 @@ public class OrderListRequestBean implements Serializable {
                 ", deliveryType='" + deliveryType + '\'' +
                 ", beginTime='" + beginTime + '\'' +
                 ", endTime='" + endTime + '\'' +
+                ", orderNo='" + orderNo + '\'' +
                 '}';
     }
 }

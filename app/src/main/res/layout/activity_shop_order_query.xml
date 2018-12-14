@@ -2,13 +2,338 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawerlayout">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/page_background_gary">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="?attr/colorPrimary">
+            <ImageView
+                android:id="@+id/orderquery_iv_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/select"
+                android:layout_gravity="center_vertical|end"
+                android:padding="15dp"
+                android:clickable="true"/>
+        </android.support.v7.widget.Toolbar>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:paddingBottom="13dp"
+            android:paddingTop="13dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:background="@android:color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/orderquery_et_ordernum"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edittext_background_gary"
+                android:gravity="center_vertical"
+                android:hint="请输入订单号"
+                android:textColorHint="#999999"
+                android:textSize="17sp"
+                android:paddingLeft="14dp"
+                android:maxEms="20"/>
+
+            <ImageView
+                android:id="@+id/orderquery_iv_query"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/search"
+                android:layout_gravity="center_vertical|end"
+                android:padding="13dp"/>
+
+        </FrameLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/orderquery_swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/orderquery_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
+                android:focusable="false"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="end"
         android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="筛选"
+            android:textSize="22sp"
+            android:textColor="@color/text_color_black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单状态"
+            android:textColor="#999999"
+            android:textSize="17sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"/>
+
+        <com.pokong.library.widget.AutoLineFeedRadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_status_all"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="全部"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_status_pay"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="待付款"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center" />
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_status_stock"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="待备货"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_status_receive"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="待收货"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_status_comment"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="待评价"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_status_complete"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="已完成"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center"/>
+
+        </com.pokong.library.widget.AutoLineFeedRadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_margin="20dp"
+            android:background="#E5E5E5"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="配送方式"
+            android:textColor="#999999"
+            android:textSize="17sp"
+            android:layout_marginLeft="20dp"/>
+
+        <com.pokong.library.widget.AutoLineFeedRadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_type_all"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="不限"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_type_self"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="自提"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center"/>
+
+            <RadioButton
+                android:id="@+id/orderquery_rbtn_type_delivery"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow_selector"
+                android:button="@null"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="配送"
+                android:textSize="17sp"
+                android:textColor="@color/radiobutton_order_search_text_color"
+                android:gravity="center"/>
+
+        </com.pokong.library.widget.AutoLineFeedRadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_margin="20dp"
+            android:background="#E5E5E5"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时间范围"
+            android:textColor="#999999"
+            android:textSize="17sp"
+            android:layout_marginLeft="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/orderquery_tv_starttime"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="起始时间"
+                android:textSize="17sp"
+                android:textColor="@color/text_color_black"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:layout_marginTop="40dp"
+                android:background="@color/text_color_black"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:id="@+id/orderquery_tv_endtime"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:background="@drawable/radiobutton_background_orange_hollow"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:text="结束时间"
+                android:textSize="17sp"
+                android:textColor="@color/text_color_black"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" 
+            android:layout_weight="1"/>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/orderquery_tv_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#F5F5F5"
+                android:text="取消"
+                android:textColor="@color/text_color_black"
+                android:textSize="19sp"
+                android:gravity="center"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/orderquery_tv_comfirm"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#ED6216"
+                android:text="确定"
+                android:textColor="@android:color/white"
+                android:textSize="19sp"
+                android:gravity="center"
+                android:clickable="true"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

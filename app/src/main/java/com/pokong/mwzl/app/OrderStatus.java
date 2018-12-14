@@ -28,7 +28,6 @@ public class OrderStatus {
      */
     public static final int WAIT_STOCK = 20;
 
-
     /**
      * 待收货订单(待自提、待配送)
      */
@@ -37,7 +36,7 @@ public class OrderStatus {
     /**
      * 待评价订单
      */
-    public static final int WAIT_COMMENT = 40;
+    public static final int WAIT_COMMENT = 80;
 
     /**
      * 已完成订单

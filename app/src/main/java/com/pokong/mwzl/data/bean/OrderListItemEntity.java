@@ -29,7 +29,7 @@ public class OrderListItemEntity implements Serializable {
     private String receiver_address;//收货人地址
     private int person_num;//用餐人数(餐具数量)
     private int person_age;//顾客年龄(蜡烛数量)
-    private String class_type;//商品类型("cake"表示蛋糕，其它不是蛋糕)
+    private String order_type;//商品类型("cake"表示蛋糕，其它不是蛋糕)
 
     private boolean isOpend = false;//当前订单条目是否已经展开
 
@@ -185,12 +185,12 @@ public class OrderListItemEntity implements Serializable {
         this.person_age = person_age;
     }
 
-    public String getClass_type() {
-        return class_type;
+    public String getOrder_type() {
+        return order_type;
     }
 
-    public void setClass_type(String class_type) {
-        this.class_type = class_type;
+    public void setOrder_type(String order_type) {
+        this.order_type = order_type;
     }
 
     public boolean isOpend() {
@@ -222,7 +222,7 @@ public class OrderListItemEntity implements Serializable {
                 ", receiver_address='" + receiver_address + '\'' +
                 ", person_num=" + person_num +
                 ", person_age=" + person_age +
-                ", class_type='" + class_type + '\'' +
+                ", order_type='" + order_type + '\'' +
                 ", isOpend=" + isOpend +
                 '}';
     }

@@ -49,7 +49,7 @@ public class WaitDeliverPresenter extends BasePresenter<WaitDeliverFragment> imp
                         getView().setNewData(dataList, false);
                     }
                 }else {
-                    getView().refreshFailed("暂时没有数据了");
+                    getView().setNewData(new ArrayList<>(), true);
                 }
             }
 

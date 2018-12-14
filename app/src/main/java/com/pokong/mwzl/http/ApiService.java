@@ -30,6 +30,9 @@ public interface ApiService {
     @GET(NetConstants.ORDER_LIST)
     Observable<DataResponseBean<MultiPageListEntity<OrderListItemEntity>>> getOrderList(@QueryMap Map<String, String> params);
 
+    @GET(NetConstants.ORDER_WAIT_STOCK_NUM)
+    Observable<DataResponseBean<Long>> getWaitStockNum(@Query("appToken") String appToken, @Query("maxOrderId") String maxOrderId);
+
     @GET(NetConstants.ORDER_DETAIL)
     Observable<DataResponseBean<OrderDetailResponseBean>> getOrderDetail(@Query("appToken") String appToken, @Query("orderId") String orderId);
 

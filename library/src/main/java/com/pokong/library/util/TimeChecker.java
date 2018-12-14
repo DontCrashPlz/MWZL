@@ -18,7 +18,7 @@ public class TimeChecker {
      */
     public static boolean isTimeStrValid(String timeStr){
         if (timeStr == null) return false;
-        if (timeStr.length() != 19) return false;
+        //if (timeStr.length() != 19) return false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setLenient(false);
         try {

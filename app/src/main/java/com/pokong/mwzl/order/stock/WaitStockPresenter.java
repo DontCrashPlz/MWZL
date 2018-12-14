@@ -10,9 +10,15 @@ import com.pokong.mwzl.data.MultiPageListEntity;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
 import com.pokong.mwzl.data.bean.business.OrderListRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderReadyRequestBean;
+import com.pokong.mwzl.data.bean.mwzl.WaitStockNumRequestBean;
 import com.pokong.mwzl.data.source.MWZLHttpDataRepository;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created on 2018/11/16 15:24
@@ -22,6 +28,7 @@ import java.util.ArrayList;
 public class WaitStockPresenter extends BasePresenter<WaitStockFragment> implements WaitStockContract.Presenter {
 
     private OrderListRequestBean paramsBean;//请求参数
+    private WaitStockNumRequestBean  waitStockNumRequestBean;//待备货数量请求参数
     private long lastOrderId;//最后一条数据的ID值
 
     @Override
@@ -47,8 +54,19 @@ public class WaitStockPresenter extends BasePresenter<WaitStockFragment> impleme
                         getView().setNewData(dataList, false);
                     }
                 }else {
-                    getView().refreshFailed("暂时没有数据了");
+                    getView().setNewData(new ArrayList<>(), true);
                 }
+                getStockNum(new DataRequestCallback<Long>() {
+                    @Override
+                    public void onSuccessed(Long aLong) {
+                        getView().refreshStockNum(aLong);
+                    }
+
+                    @Override
+                    public void onFailed(String errorMsg) {
+                        getView().refreshStockNum(0L);
+                    }
+                });
             }
 
             @Override
@@ -61,7 +79,6 @@ public class WaitStockPresenter extends BasePresenter<WaitStockFragment> impleme
     @Override
     public void loadMoreData() {
         if (paramsBean == null) initParamsBean();
-
         requestData(new DataRequestCallback<MultiPageListEntity<OrderListItemEntity>>() {
             @Override
             public void onSuccessed(MultiPageListEntity<OrderListItemEntity> orderListItemEntityMultiPageListEntity) {
@@ -76,6 +93,17 @@ public class WaitStockPresenter extends BasePresenter<WaitStockFragment> impleme
                 }else {
                     getView().loadMoreFailed("暂时没有数据了");
                 }
+                getStockNum(new DataRequestCallback<Long>() {
+                    @Override
+                    public void onSuccessed(Long aLong) {
+                        getView().refreshStockNum(aLong);
+                    }
+
+                    @Override
+                    public void onFailed(String errorMsg) {
+                        getView().refreshStockNum(0L);
+                    }
+                });
             }
 
             @Override
@@ -107,5 +135,28 @@ public class WaitStockPresenter extends BasePresenter<WaitStockFragment> impleme
         requestBean.setOrderId(String.valueOf(orderId));
         getView().addNetWork(MWZLHttpDataRepository.getInstance().orderReady(requestBean, callback));
     }
+
+    @Override
+    public void getStockNum(DataRequestCallback<Long> callback) {
+        if (waitStockNumRequestBean == null)
+            waitStockNumRequestBean = new WaitStockNumRequestBean();
+
+        if (Tools.isBlank(waitStockNumRequestBean.getAppToken())){
+            String appToken = MyApplication.getInstance().getAppToken();
+            if (Tools.isBlank(appToken)) {
+                ToastUtils.showShortToast(getView().getContext(), "待备货订单数量获取失败->登录令牌无效");
+                return;
+            }
+            waitStockNumRequestBean.setAppToken(appToken);
+        }
+
+        waitStockNumRequestBean.setMaxOrderId(lastOrderId);
+
+        Disposable disposable = getView().mStockNumDisposable;
+        if (disposable != null && !disposable.isDisposed())
+            disposable.dispose();
+        getView().mStockNumDisposable = MWZLHttpDataRepository.getInstance().getWaitStockNum(waitStockNumRequestBean, callback);
+    }
+
 
 }

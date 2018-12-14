@@ -15,6 +15,7 @@ import com.pokong.mwzl.data.bean.mwzl.LocationRequestBean;
 import com.pokong.mwzl.data.bean.mwzl.LocationResponseBean;
 import com.pokong.mwzl.data.bean.mwzl.PickConfirmRequestBean;
 import com.pokong.mwzl.data.bean.mwzl.PickConfirmResponseBean;
+import com.pokong.mwzl.data.bean.mwzl.WaitStockNumRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginResponseBean;
 
@@ -42,6 +43,10 @@ public interface MWZLDataSource {
     /** 获取订单列表 */
     Disposable getOrderList(OrderListRequestBean paramsBean,
                             DataRequestCallback<MultiPageListEntity<OrderListItemEntity>> callback);
+
+    /** 获取未备货订单数量 */
+    Disposable getWaitStockNum(WaitStockNumRequestBean paramsBean,
+                            DataRequestCallback<Long> callback);
 
     /** 获取订单详情 */
     Disposable getOrderDetail(OrderDetailRequestBean paramsBean,

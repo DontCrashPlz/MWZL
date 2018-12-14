@@ -10,13 +10,11 @@ import com.pokong.mwzl.data.bean.business.OrderDetailRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderDetailResponseBean;
 import com.pokong.mwzl.data.bean.business.OrderListRequestBean;
 import com.pokong.mwzl.data.bean.business.OrderReadyRequestBean;
-import com.pokong.mwzl.data.bean.business.OrderReadyResponseBean;
 import com.pokong.mwzl.data.bean.business.ShopInfoRequestBean;
 import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 import com.pokong.mwzl.data.bean.mwzl.LocationRequestBean;
-import com.pokong.mwzl.data.bean.mwzl.LocationResponseBean;
 import com.pokong.mwzl.data.bean.mwzl.PickConfirmRequestBean;
-import com.pokong.mwzl.data.bean.mwzl.PickConfirmResponseBean;
+import com.pokong.mwzl.data.bean.mwzl.WaitStockNumRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginResponseBean;
 import com.pokong.mwzl.data.executor.business.OrderDetailExecutor;
@@ -25,6 +23,7 @@ import com.pokong.mwzl.data.executor.business.OrderReadyExecutor;
 import com.pokong.mwzl.data.executor.business.ShopInfoExecutor;
 import com.pokong.mwzl.data.executor.mwzl.LocationExecutor;
 import com.pokong.mwzl.data.executor.mwzl.PickConfirmExecutor;
+import com.pokong.mwzl.data.executor.mwzl.WaitStockNumExecutor;
 import com.pokong.mwzl.data.executor.personal.LoginExecutor;
 import com.pokong.mwzl.http.ApiService;
 import com.pokong.mwzl.http.ResponseTransformer;
@@ -146,6 +145,21 @@ public class MWZLHttpDataRepository implements MWZLDataSource {
                         callback.onSuccessed(orderListResponseBeanDataResponseBean.getData());
                     }else {
                         callback.onFailed(orderListResponseBeanDataResponseBean.getDescription());
+                    }
+                },throwable -> callback.onFailed(throwable.getMessage()));
+    }
+
+    @Override
+    public Disposable getWaitStockNum(WaitStockNumRequestBean paramsBean, DataRequestCallback<Long> callback) {
+        DataExecutor<Long> executor = new WaitStockNumExecutor(apiService, paramsBean);
+        Observable<DataResponseBean<Long>> observable = executor.execute();
+        return observable.compose(ResponseTransformer.changeThread())
+                .compose(ResponseTransformer.handleResult())
+                .subscribe(longDataResponseBean -> {
+                    if (longDataResponseBean.isSuccess()){
+                        callback.onSuccessed(longDataResponseBean.getData());
+                    }else {
+                        callback.onFailed(longDataResponseBean.getDescription());
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }

@@ -40,6 +40,9 @@
         <activity android:name=".setting.bluetooth.BluetoothActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".shop.query.OrderQueryActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

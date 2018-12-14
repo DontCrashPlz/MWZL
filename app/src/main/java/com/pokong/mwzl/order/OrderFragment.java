@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.widget.MsgView;
 import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.base.BaseFragment;
 import com.pokong.library.util.LogUtils;
@@ -172,6 +174,23 @@ public class OrderFragment extends BaseFragment<OrderPresenter> implements Order
         if (shopInfoBean != null){
             mShopNameTv.setText(shopInfoBean.getStore_name());
         }
+    }
+
+    @Override
+    public void refreshStockNum(Long stockNum) {
+        LogUtils.e("stockNum", String.valueOf(stockNum));
+        if (mTabLayout != null){
+            if (stockNum > 0 && stockNum < 100){
+                mTabLayout.showMsg(0, stockNum.intValue());
+                mTabLayout.setMsgMargin(0, 10, 10);
+            }else if (stockNum >= 100){
+                mTabLayout.showMsg(0, 100);
+                mTabLayout.setMsgMargin(0, 10, 10);
+            }else {
+                mTabLayout.hideMsg(0);
+            }
+        }
+
     }
 
 }

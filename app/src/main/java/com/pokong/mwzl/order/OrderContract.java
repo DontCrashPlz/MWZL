@@ -37,6 +37,12 @@ public interface OrderContract {
          * 刷新店铺信息显示
          */
         void refreshShopInfo();
+
+        /**
+         * 刷新待备货数量
+         * @param stockNum
+         */
+        void refreshStockNum(Long stockNum);
     }
 
     interface Presenter{

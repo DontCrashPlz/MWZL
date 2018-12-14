@@ -10,8 +10,9 @@ public class NetConstants {
      * 主机地址
      */
     //public static final String BASEURL = "http://www.base.com/";
-    //public static final String BASEURL = "http://192.168.31.20:80/";
-    public static final String BASEURL = "http://mytestspace.51vip.biz/";
+    public static final String BASEURL = "http://192.168.31.20:80/";
+    //public static final String BASEURL = "http://mytestspace.51vip.biz/";
+    //public static final String BASEURL = "http://www.dcherish.com/";
 
     /**
      * 登录接口
@@ -27,6 +28,11 @@ public class NetConstants {
      * 订单列表接口
      */
     public static final String ORDER_LIST = "/api/store/order/query";
+
+    /**
+     * 未加载的待备货订单数量
+     */
+    public static final String ORDER_WAIT_STOCK_NUM = "/api/store/order/lastestOrder";
 
     /**
      * 订单详情接口
@@ -47,5 +53,7 @@ public class NetConstants {
      * 地址校对接口
      */
     public static final String UPLOAD_LOCATION = "/api/storesetLocaltion";
+
+
 
 }

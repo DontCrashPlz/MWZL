@@ -29,13 +29,13 @@ task clean(type: Delete) {
 ext{
     // Sdk and tools
     // Support library and architecture components support minSdk 14 and above.
-    compileSdkVersion = 28
+    compileSdkVersion = 27
     buildToolsVersion = '26.0.2'
     minSdkVersion = 23
-    targetSdkVersion = 28
+    targetSdkVersion = 27
 
     // App dependencies
-    supportLibraryVersion = '28.0.0'
+    supportLibraryVersion = '27.1.1'
     junitVersion = '4.12'
     cymChadVersion = '2.9.34'// https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     glideVersion = '4.8.0'// https://github.com/bumptech/glide

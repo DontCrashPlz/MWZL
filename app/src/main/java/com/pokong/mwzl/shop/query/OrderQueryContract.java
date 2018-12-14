@@ -67,6 +67,36 @@ public interface OrderQueryContract {
         void initParamsBean();
 
         /**
+         * 更换筛选条件参数 -> 订单状态
+         * @param stateParams
+         */
+        void updateStateParams(int stateParams);
+
+        /**
+         * 更换筛选条件参数 -> 配送方式
+         * @param typeParams
+         */
+        void updateTypeParams(String typeParams);
+
+        /**
+         * 更换筛选条件参数 -> 起始时间
+         * @param beginTime
+         */
+        void updateBeginTimeParams(String beginTime);
+
+        /**
+         * 更换筛选条件参数 -> 结束时间
+         * @param endTime
+         */
+        void updateEndTimeParams(String endTime);
+
+        /**
+         * 更换筛选条件参数 -> 订单编号
+         * @param orderNo
+         */
+        void updateOrderNoParams(String orderNo);
+
+        /**
          * 刷新数据
          */
         void refreshData();

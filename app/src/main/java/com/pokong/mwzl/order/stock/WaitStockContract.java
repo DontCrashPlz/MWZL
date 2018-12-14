@@ -51,6 +51,12 @@ public interface WaitStockContract {
          */
         void showConfirmDialog(long orderId, String orderSerial, int position);
 
+        /**
+         * 刷新待备货订单数量
+         * @param stockNum
+         */
+        void refreshStockNum(Long stockNum);
+
     }
 
     interface Presenter{
@@ -78,6 +84,12 @@ public interface WaitStockContract {
          * 订单备货完成
          */
         void orderReady(long orderId, DataRequestCallback<String> callback);
+
+        /**
+         * 获取待备货订单数量
+         * @param callback
+         */
+        void getStockNum(DataRequestCallback<Long> callback);
 
     }
 }
