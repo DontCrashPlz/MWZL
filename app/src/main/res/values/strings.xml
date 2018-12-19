@@ -38,6 +38,18 @@
     <string name="dialog_pick_confirm_confirm">确认</string>
     <string name="dialog_pick_confirm_cancel">取消</string>
 
+    <!--支付金额编辑弹窗-->
+    <string name="dialog_pay_edit_title">会员消费</string>
+    <string name="dialog_pay_edit_hint">请输入消费金额</string>
+    <string name="dialog_pay_edit_confirm">支付</string>
+    <string name="dialog_pay_edit_cancel">取消</string>
+
+    <!--支付确认弹窗-->
+    <string name="dialog_pay_confirm_title">支付确认</string>
+    <string name="dialog_pay_confirm_default_info">确认支付%1$s元吗？</string>
+    <string name="dialog_pay_confirm_confirm">确认</string>
+    <string name="dialog_pay_confirm_cancel">取消</string>
+
     <string name="ordercard_create_time">下单时间: %1$s</string>
 
     <!--蓝牙打印机相关字符串-->

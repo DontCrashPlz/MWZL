@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
@@ -120,6 +121,27 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
     @Override
     protected HomePresenter getRealPresenter() {
         return null;
+    }
+
+    //声明一个long类型变量：用于存放上一点击“返回键”的时刻
+    private long mExitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //判断用户是否点击了“返回键”
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //与上次点击返回键时刻作差
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                //大于2000ms则认为是误操作，使用Toast进行提示
+                ToastUtils.showShortToast(getRealContext(), "再按一次退出程序");
+                //并记录下本次点击“返回键”的时刻，以便下次进行判断
+                mExitTime = System.currentTimeMillis();
+            } else {
+                //小于2000ms则认为是用户确实希望退出程序-调用System.exit()方法进行退出
+                MyApplication.getInstance().AppExit();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -298,7 +320,6 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
 
     /**
      * 打印订单
-     *
      * @param order
      */
     public static void printOrder(OrderListItemEntity order) {
@@ -407,6 +428,153 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
             MyBtPrintService.getInstance().printNormalTextLift(goodsName);
             MyBtPrintService.getInstance().nextLine();
             MyBtPrintService.getInstance().printNormalTextLift(secondLineStr);
+        }
+    }
+
+    /**
+     * 打印订单
+     * @param order
+     */
+    public static void printOrder2(OrderListItemEntity order) {
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextCenter("出货单");
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDivideLine();
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("打印店铺:" + order.getStore_name());
+
+        MyBtPrintService.getInstance().nextLine();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+        String currentTimeStr = dateFormat.format(new Date());
+        MyBtPrintService.getInstance().printNormalTextLift("打印时间:" + currentTimeStr);
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDevideLineWithText("订单");
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("序号:#" + order.getOrder_serial_num());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("单号:" + order.getOrder_id());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("下单时间:" + order.getCreate_time());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDevideLineWithText("商品");
+
+        MyBtPrintService.getInstance().nextLine();
+        String goodsTitle = "品名      数量    单价      小计";
+        MyBtPrintService.getInstance().printNormalTextRight(goodsTitle);
+
+        for (GoodsEntity entity : order.getGoodlist()) {
+            printGoodsInfo2(entity);
+        }
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDevideLineWithText("合计");
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("总件数:" + order.getGoods_count());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("总金额:" + order.getTotalprice() + " 元");
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDivideLine();
+
+        if ("delivery".equals(order.getDelivery_type())){
+
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift("收货人姓名:" + order.getReceiver_name());
+
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift("收货人电话:" + order.getReceiver_mobile());
+
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift("收货地址:" + order.getReceiver_address());
+
+        }
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("备注:" + (Tools.isBlank(order.getMsg()) ? "无" : order.getMsg()));
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printEndDivideLine(order.getOrder_serial_num());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printWorkArea();
+    }
+
+    static void printGoodsInfo2(GoodsEntity goods) {
+        String goodsName = Tools.isBlank(goods.getSpec_info()) ? goods.getGoods_name() : goods.getGoods_name() + "(" + goods.getSpec_info() + ")";
+        int goodsNameLength = goodsName.length();
+        for (char c : goodsName.toCharArray()){
+            if (Tools.isChineseChar(c))
+                goodsNameLength += 1;
+        }
+
+        if (goodsNameLength > 8) {//todo 打印两行
+
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift(goodsName);
+
+            String totalPrice = String.valueOf(goods.getTotal_price());
+            int totalPriceLength = totalPrice.length();
+            for (int i = 0; i < 10 - totalPriceLength; i++){
+                totalPrice = " " + totalPrice;
+            }
+
+            String price = String.valueOf(goods.getPrice());
+            int priceLength = price.length();
+            for (int i = 0; i < 8 - priceLength; i++){
+                price = " " + price;
+            }
+
+            String totalNum = String.valueOf(goods.getCount());
+            int totalNumLength = totalNum.length();
+            for (int i = 0; i < 6 - totalNumLength; i++){
+                totalNum = " " + totalNum;
+            }
+
+            String goodsStr = totalNum + price + totalPrice;
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextRight(goodsStr);
+
+        } else {//todo 打印一行
+
+            String totalPrice = String.valueOf(goods.getTotal_price());
+            int totalPriceLength = totalPrice.length();
+            for (int i = 0; i < 10 - totalPriceLength; i++){
+                totalPrice = " " + totalPrice;
+            }
+
+            String price = String.valueOf(goods.getPrice());
+            int priceLength = price.length();
+            for (int i = 0; i < 8 - priceLength; i++){
+                price = " " + price;
+            }
+
+            String totalNum = String.valueOf(goods.getCount());
+            int totalNumLength = totalNum.length();
+            for (int i = 0; i < 6 - totalNumLength; i++){
+                totalNum = " " + totalNum;
+            }
+
+            for (int i = 0; i < 8 - goodsNameLength; i++){
+                goodsName = goodsName + " ";
+            }
+
+            String goodsStr = goodsName + totalNum + price + totalPrice;
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextRight(goodsStr);
+
         }
     }
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.pokong.library.base.BaseActivity;
 import com.pokong.library.util.DialogFactory;
 import com.pokong.library.util.Tools;
+import com.pokong.library.widget.ClearableEditText;
 import com.pokong.mwzl.HomeActivity;
 import com.pokong.mwzl.R;
 
@@ -24,9 +25,9 @@ import com.pokong.mwzl.R;
  */
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
-    private EditText mUserNameEt;
+    private ClearableEditText mUserNameEt;
 
-    private EditText mPasswordEt;
+    private ClearableEditText mPasswordEt;
 
     private CheckBox mRememberCb;
 

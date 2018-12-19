@@ -43,6 +43,9 @@
         <activity android:name=".shop.query.OrderQueryActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".shop.member.MemberServiceActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

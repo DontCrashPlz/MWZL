@@ -44,6 +44,11 @@ public interface ShopManageContract {
         void clickComment();
 
         /**
+         * 点击会员服务
+         */
+        void clickMember();
+
+        /**
          * 显示蓝牙连接Icon
          */
         void showBluetoothConnectedIcon();

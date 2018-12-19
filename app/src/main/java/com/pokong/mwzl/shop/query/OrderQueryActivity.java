@@ -28,6 +28,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.base.BaseActivity;
 import com.pokong.library.util.DialogFactory;
+import com.pokong.library.util.KeyBoardUtils;
 import com.pokong.library.util.LogUtils;
 import com.pokong.library.util.SharedPrefUtils;
 import com.pokong.library.util.ToastUtils;
@@ -103,7 +104,10 @@ public class OrderQueryActivity extends BaseActivity<OrderQueryPresenter> implem
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         mSelectIv = findViewById(R.id.orderquery_iv_select);
-        mSelectIv.setOnClickListener(v -> mDrawerLayout.openDrawer(Gravity.END));
+        mSelectIv.setOnClickListener(v -> {
+            KeyBoardUtils.hideKeyboard(mOrderNumEt);
+            mDrawerLayout.openDrawer(Gravity.END);
+        });
     }
 
     @Override

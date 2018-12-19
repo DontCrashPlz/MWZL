@@ -238,9 +238,11 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
                         BluetoothPresenter.SP_KEY_IS_DOUBLE_PRINT,
                         false);
                 if (isDoublePrint){
-                    HomeActivity.printOrder(currentItemEntity);
+                    //HomeActivity.printOrder(currentItemEntity);
+                    HomeActivity.printOrder2(currentItemEntity);
                 }
-                HomeActivity.printOrder(currentItemEntity);
+                //HomeActivity.printOrder(currentItemEntity);
+                HomeActivity.printOrder2(currentItemEntity);
                 ToastUtils.showShortToast(getContext(), "正在打印，若未正常打印请检测打印机");
             }
             dialog.dismiss();
@@ -272,6 +274,7 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
             //todo 处理备货完成
             dialog.dismiss();
             AlertDialog loadingDialog = DialogFactory.createLoadingDialog(getContext());
+            loadingDialog.show();
             mPresenter.orderReady(orderId, new DataRequestCallback<String>() {
                 @Override
                 public void onSuccessed(String s) {

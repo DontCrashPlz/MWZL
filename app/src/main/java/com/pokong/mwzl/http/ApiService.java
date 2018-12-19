@@ -6,6 +6,7 @@ import com.pokong.mwzl.data.MultiPageListEntity;
 import com.pokong.mwzl.data.bean.OrderListItemEntity;
 import com.pokong.mwzl.data.bean.business.OrderDetailResponseBean;
 import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
+import com.pokong.mwzl.data.bean.mwzl.MemberInfoResponseBean;
 import com.pokong.mwzl.data.bean.personal.LoginResponseBean;
 
 import java.util.Map;
@@ -44,5 +45,11 @@ public interface ApiService {
 
     @GET(NetConstants.UPLOAD_LOCATION)
     Observable<DataResponseBean<String>> uploadLocation(@QueryMap Map<String, String> params);
+
+    @GET(NetConstants.SHOP_MEMBER_INFO)
+    Observable<DataResponseBean<MemberInfoResponseBean>> getMemberInfo(@Query("appToken") String appToken, @Query("mobile") String mobile);
+
+    @GET(NetConstants.SHOP_MEMBER_PAY)
+    Observable<DataResponseBean<String>> memberPay(@QueryMap Map<String, String> params);
 
 }

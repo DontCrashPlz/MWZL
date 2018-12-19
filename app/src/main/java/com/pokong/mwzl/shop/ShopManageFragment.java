@@ -20,6 +20,7 @@ import com.pokong.mwzl.R;
 import com.pokong.mwzl.app.MyApplication;
 import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 import com.pokong.mwzl.setting.bluetooth.BluetoothActivity;
+import com.pokong.mwzl.shop.member.MemberServiceActivity;
 import com.pokong.mwzl.shop.query.OrderQueryActivity;
 import com.pokong.mwzl.shop.query.OrderQueryPresenter;
 import com.qs.helper.printer.PrinterClass;
@@ -45,6 +46,7 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
     private TextView mLocationTv;
     private TextView mOrderQueryTv;
     private TextView mCommentTv;
+    private TextView mMemberTv;
 
     public static ShopManageFragment newInstance(int tag){
         ShopManageFragment instance = new ShopManageFragment();
@@ -100,6 +102,8 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
         mOrderQueryTv.setOnClickListener(v -> clickOrderQuery());
         mCommentTv = view.findViewById(R.id.homeshop_tv_comment);
         mCommentTv.setOnClickListener(v -> clickComment());
+        mMemberTv = view.findViewById(R.id.homeshop_tv_member);
+        mMemberTv.setOnClickListener(v -> clickMember());
     }
 
 
@@ -153,6 +157,13 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
     }
 
     @Override
+    public void clickMember() {
+        //todo 跳转到"会员服务"页面
+        Intent intent = new Intent(getContext(), MemberServiceActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void showBluetoothConnectedIcon() {
         mBluetoothIv.setImageResource(R.mipmap.toolbar_bluetooth);
     }
@@ -184,8 +195,8 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
             }
 
             String managerName = shopInfo.getContact();
-            if (shopName != null && !("null".equals(shopName)) && shopName.length() > 0){
-                mManagerTv.setText(shopName);
+            if (managerName != null && !("null".equals(managerName)) && managerName.length() > 0){
+                mManagerTv.setText(managerName);
             }
 
             String telephoneStr = shopInfo.getStore_telephone();

@@ -242,6 +242,66 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/homeshop_tv_member"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="会员消费"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:gravity="center_horizontal"
+                android:drawableTop="@mipmap/shop_member"
+                android:drawablePadding="6dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="地址校对"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:gravity="center_horizontal"
+                android:drawableTop="@mipmap/shop_location"
+                android:drawablePadding="6dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:visibility="invisible"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="订单查询"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:gravity="center_horizontal"
+                android:drawableTop="@mipmap/shop_order_query"
+                android:drawablePadding="6dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:visibility="invisible"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="商品评价"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:gravity="center_horizontal"
+                android:drawableTop="@mipmap/shop_goods_comment"
+                android:drawablePadding="6dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

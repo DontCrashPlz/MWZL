@@ -1,6 +1,7 @@
 package com.pokong.library.util;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.widget.Toast;
 
 /**
@@ -15,6 +16,7 @@ public class ToastUtils {
     public static void showShortToast(Context context, String content){
         if (toast== null){
             toast= Toast.makeText(context, content, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 200);
         }else {
             toast.setText(content);
             toast.setDuration(Toast.LENGTH_SHORT);
@@ -25,6 +27,7 @@ public class ToastUtils {
     public static void showLongToast(Context context, String content){
         if (toast== null){
             toast= Toast.makeText(context, content, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 200);
         }else {
             toast.setText(content);
             toast.setDuration(Toast.LENGTH_LONG);

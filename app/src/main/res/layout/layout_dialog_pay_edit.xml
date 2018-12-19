@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="0dp"
+    android:layout_marginLeft="50dp"
+    android:layout_marginRight="50dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="@string/dialog_pay_edit_title"
+            android:textColor="@color/text_color_black"
+            android:textSize="24sp"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/devide_color_gary"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:id="@+id/dialog_pay_edit_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="13dp"
+            android:hint="@string/dialog_pay_edit_hint"
+            android:textSize="20sp"
+            android:textColor="@color/text_color_black"
+            android:background="@drawable/edittext_background_pay_amount"
+            android:gravity="right"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:inputType="numberDecimal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/dialog_pay_edit_button_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/button_background_gary"
+                android:text="@string/dialog_ready_cancel"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:clickable="true"/>
+            <TextView
+                android:id="@+id/dialog_pay_edit_button_confirm"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/button_background_orange"
+                android:text="@string/dialog_ready_confirm"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:clickable="true"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

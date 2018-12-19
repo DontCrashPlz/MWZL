@@ -13,6 +13,9 @@ import com.pokong.mwzl.data.bean.business.OrderReadyRequestBean;
 import com.pokong.mwzl.data.bean.business.ShopInfoRequestBean;
 import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 import com.pokong.mwzl.data.bean.mwzl.LocationRequestBean;
+import com.pokong.mwzl.data.bean.mwzl.MemberInfoRequestBean;
+import com.pokong.mwzl.data.bean.mwzl.MemberInfoResponseBean;
+import com.pokong.mwzl.data.bean.mwzl.MemberPayRequestBean;
 import com.pokong.mwzl.data.bean.mwzl.PickConfirmRequestBean;
 import com.pokong.mwzl.data.bean.mwzl.WaitStockNumRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginRequestBean;
@@ -22,6 +25,8 @@ import com.pokong.mwzl.data.executor.business.OrderListExecutor;
 import com.pokong.mwzl.data.executor.business.OrderReadyExecutor;
 import com.pokong.mwzl.data.executor.business.ShopInfoExecutor;
 import com.pokong.mwzl.data.executor.mwzl.LocationExecutor;
+import com.pokong.mwzl.data.executor.mwzl.MemberInfoExecutor;
+import com.pokong.mwzl.data.executor.mwzl.MemberPayExecutor;
 import com.pokong.mwzl.data.executor.mwzl.PickConfirmExecutor;
 import com.pokong.mwzl.data.executor.mwzl.WaitStockNumExecutor;
 import com.pokong.mwzl.data.executor.personal.LoginExecutor;
@@ -208,4 +213,35 @@ public class MWZLHttpDataRepository implements MWZLDataSource {
                     }
                 },throwable -> callback.onFailed(throwable.getMessage()));
     }
+
+    @Override
+    public Disposable getMemberInfo(MemberInfoRequestBean paramsBean, DataRequestCallback<MemberInfoResponseBean> callback) {
+        DataExecutor<MemberInfoResponseBean> executor = new MemberInfoExecutor(apiService, paramsBean);
+        Observable<DataResponseBean<MemberInfoResponseBean>> observable = executor.execute();
+        return observable.compose(ResponseTransformer.changeThread())
+                .compose(ResponseTransformer.handleResult())
+                .subscribe(memberInfoResponseBeanDataResponseBean -> {
+                    if (memberInfoResponseBeanDataResponseBean.isSuccess()){
+                        callback.onSuccessed(memberInfoResponseBeanDataResponseBean.getData());
+                    }else {
+                        callback.onFailed(memberInfoResponseBeanDataResponseBean.getDescription());
+                    }
+                },throwable -> callback.onFailed(throwable.getMessage()));
+    }
+
+    @Override
+    public Disposable memberPay(MemberPayRequestBean paramsBean, DataRequestCallback<String> callback) {
+        DataExecutor<String> executor = new MemberPayExecutor(apiService, paramsBean);
+        Observable<DataResponseBean<String>> observable = executor.execute();
+        return observable.compose(ResponseTransformer.changeThread())
+                .compose(ResponseTransformer.handleResult())
+                .subscribe(stringDataResponseBean -> {
+                    if (stringDataResponseBean.isSuccess()){
+                        callback.onSuccessed("支付成功");
+                    }else {
+                        callback.onFailed(stringDataResponseBean.getDescription());
+                    }
+                },throwable -> callback.onFailed(throwable.getMessage()));
+    }
+
 }
