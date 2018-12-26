@@ -49,6 +49,11 @@ public interface ShopManageContract {
         void clickMember();
 
         /**
+         * 点击库存管理
+         */
+        void clickInventory();
+
+        /**
          * 显示蓝牙连接Icon
          */
         void showBluetoothConnectedIcon();

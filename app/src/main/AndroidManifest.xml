@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.pokong.mwzl">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,7 +21,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".login.splash.SplashActivity"
             android:screenOrientation="portrait"
@@ -45,6 +47,9 @@
 
         <activity android:name=".shop.member.MemberServiceActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".shop.inventory.InventoryManageActivity"
+            android:screenOrientation="landscape"/>
 
     </application>
 

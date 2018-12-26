@@ -173,11 +173,12 @@
 
             <ImageView
                 android:id="@+id/homeshop_iv_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:src="@mipmap/logo_square"
                 android:layout_marginLeft="57dp"
-                android:elevation="2dp"/>
+                android:elevation="2dp"
+                android:scaleType="fitXY"/>
 
         </FrameLayout>
 
@@ -261,10 +262,11 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"/>
             <TextView
+                android:id="@+id/homeshop_tv_inventory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="地址校对"
+                android:text="库存管理"
                 android:textSize="17sp"
                 android:textColor="@android:color/black"
                 android:gravity="center_horizontal"

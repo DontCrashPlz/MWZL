@@ -38,7 +38,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_green);
                 expendIconRes = R.mipmap.expand_green;
                 closeIconRes = R.mipmap.close_green;
-                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_green);
+                handleGreenDeliveryType(helper, item);
                 handleGreenBtn(helper);
                 break;
             }
@@ -51,7 +51,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_yellow);
                 expendIconRes = R.mipmap.expand_yellow;
                 closeIconRes = R.mipmap.close_yellow;
-                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_yellow);
+                handleYellowDeliveryType(helper, item);
                 handleYellowBtn(helper);
                 break;
             }
@@ -60,7 +60,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_gary);
                 expendIconRes = R.mipmap.expand_gary;
                 closeIconRes = R.mipmap.close_gary;
-                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_gary);
+                handleGaryDeliveryType(helper, item);
                 handleGaryBtn(helper);
                 break;
             }
@@ -69,7 +69,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_gary);
                 expendIconRes = R.mipmap.expand_gary;
                 closeIconRes = R.mipmap.close_gary;
-                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_gary);
+                handleGaryDeliveryType(helper, item);
                 handleGaryBtn(helper);
                 break;
             }
@@ -78,7 +78,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_gary);
                 expendIconRes = R.mipmap.expand_gary;
                 closeIconRes = R.mipmap.close_gary;
-                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_gary);
+                handleGaryDeliveryType(helper, item);
                 handleGaryBtn(helper);
                 break;
             }
@@ -87,7 +87,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 headColor = mContext.getColor(R.color.order_status_gary);
                 expendIconRes = R.mipmap.expand_gary;
                 closeIconRes = R.mipmap.close_gary;
-                helper.setBackgroundRes(R.id.ordercard_tv_style, R.drawable.shape_circle_gary);
+                handleGaryDeliveryType(helper, item);
                 handleGaryBtn(helper);
             }
         }
@@ -106,13 +106,6 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                 .setText(R.id.ordercard_tv_goodsnum, Tools.formatNumStr(item.getGoods_count()))
                 .setText(R.id.ordercard_tv_orderprice, Tools.formatRmbStr(item.getTotalprice()));
 
-        String deliveryType = item.getDelivery_type();
-        if ("delivery".equals(deliveryType)){
-            helper.setText(R.id.ordercard_tv_style, "送");
-        }else {
-            helper.setText(R.id.ordercard_tv_style, "提");
-        }
-
         ArrayList<GoodsEntity> goodsList = item.getGoodlist();
         if (goodsList != null && goodsList.size() > 0){
             RecyclerView goodsListRecycler = helper.getView(R.id.ordercard_recycler);
@@ -121,11 +114,12 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
         }
 
         String orderType = item.getOrder_type();
-        if (orderType != null && "cake".equals(orderType)){
+        String deliveryType = item.getDelivery_type();
+        if (!Tools.isBlank(orderType) && "cake".equals(orderType) && !Tools.isBlank(deliveryType) && "delivery".equals(deliveryType)){
             helper.setGone(R.id.ordercard_toolnum_panel, true)
-                    .setText(R.id.ordercard_tv_toolnum, String.valueOf(item.getPerson_num()))
-                    .setGone(R.id.ordercard_age_panel, false)
-                    .setText(R.id.ordercard_tv_customage, String.valueOf(item.getPerson_age()));
+                    .setText(R.id.ordercard_tv_toolnum, item.getPerson_num() >= 0 ? String.valueOf(item.getPerson_num()) + "套" : "未知")
+                    .setGone(R.id.ordercard_age_panel, true)
+                    .setText(R.id.ordercard_tv_customage, item.getPerson_age() >= 0 ? String.valueOf(item.getPerson_age()) + "岁" : "未知");
         }else {
             helper.setGone(R.id.ordercard_toolnum_panel, false)
                     .setGone(R.id.ordercard_age_panel, false);
@@ -159,6 +153,33 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
 
     private void handleGaryBtn(BaseViewHolder helper){
         helper.setGone(R.id.ordercard_lly_button, false);
+    }
+
+    private void handleGreenDeliveryType(BaseViewHolder helper, OrderListItemEntity entity){
+        String deliveryType = entity.getDelivery_type();
+        if (!Tools.isBlank(deliveryType) && "delivery".equals(deliveryType)){
+            helper.setImageResource(R.id.ordercard_iv_style, R.mipmap.delivery_green);
+        }else {
+            helper.setImageResource(R.id.ordercard_iv_style, R.mipmap.pick_green);
+        }
+    }
+
+    private void handleYellowDeliveryType(BaseViewHolder helper, OrderListItemEntity entity){
+        String deliveryType = entity.getDelivery_type();
+        if (!Tools.isBlank(deliveryType) && "delivery".equals(deliveryType)){
+            helper.setImageResource(R.id.ordercard_iv_style, R.mipmap.delivery_yellow);
+        }else {
+            helper.setImageResource(R.id.ordercard_iv_style, R.mipmap.pick_yellow);
+        }
+    }
+
+    private void handleGaryDeliveryType(BaseViewHolder helper, OrderListItemEntity entity){
+        String deliveryType = entity.getDelivery_type();
+        if (!Tools.isBlank(deliveryType) && "delivery".equals(deliveryType)){
+            helper.setImageResource(R.id.ordercard_iv_style, R.mipmap.delivery_gary);
+        }else {
+            helper.setImageResource(R.id.ordercard_iv_style, R.mipmap.pick_gary);
+        }
     }
 
 }

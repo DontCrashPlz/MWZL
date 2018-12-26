@@ -20,6 +20,7 @@ import com.pokong.mwzl.R;
 import com.pokong.mwzl.app.MyApplication;
 import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 import com.pokong.mwzl.setting.bluetooth.BluetoothActivity;
+import com.pokong.mwzl.shop.inventory.InventoryManageActivity;
 import com.pokong.mwzl.shop.member.MemberServiceActivity;
 import com.pokong.mwzl.shop.query.OrderQueryActivity;
 import com.pokong.mwzl.shop.query.OrderQueryPresenter;
@@ -47,6 +48,7 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
     private TextView mOrderQueryTv;
     private TextView mCommentTv;
     private TextView mMemberTv;
+    private TextView mInventoryTv;
 
     public static ShopManageFragment newInstance(int tag){
         ShopManageFragment instance = new ShopManageFragment();
@@ -104,6 +106,8 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
         mCommentTv.setOnClickListener(v -> clickComment());
         mMemberTv = view.findViewById(R.id.homeshop_tv_member);
         mMemberTv.setOnClickListener(v -> clickMember());
+        mInventoryTv = view.findViewById(R.id.homeshop_tv_inventory);
+        mInventoryTv.setOnClickListener(v -> clickInventory());
     }
 
 
@@ -161,6 +165,13 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
         //todo 跳转到"会员服务"页面
         Intent intent = new Intent(getContext(), MemberServiceActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void clickInventory() {
+        //todo 跳转到"库存管理"页面
+        //Intent intent = new Intent(getContext(), InventoryManageActivity.class);
+        //startActivity(intent);
     }
 
     @Override

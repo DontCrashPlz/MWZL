@@ -56,14 +56,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"/>
-            <TextView
-                android:id="@+id/ordercard_tv_style"
+            <ImageView
+                android:id="@+id/ordercard_iv_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_circle_green"
-                android:text="提"
-                android:textSize="22sp"
-                android:textColor="@android:color/white"
                 android:gravity="center"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/ordercard_iv_expand"/>
