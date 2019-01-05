@@ -21,6 +21,7 @@ import com.pokong.mwzl.data.bean.mwzl.PickConfirmResponseBean;
 import com.pokong.mwzl.data.bean.mwzl.WaitStockNumRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginRequestBean;
 import com.pokong.mwzl.data.bean.personal.LoginResponseBean;
+import com.pokong.mwzl.data.bean.personal.UpdateResponseBean;
 
 import io.reactivex.disposables.Disposable;
 
@@ -30,6 +31,11 @@ import io.reactivex.disposables.Disposable;
  * E-mail: zhengCH12138@163.com
  */
 public interface MWZLDataSource {
+
+    /**
+     * 更新
+     */
+    Disposable getUpdateInfo(DataRequestCallback<UpdateResponseBean> callback);
 
     /**
      * 登录

@@ -2,8 +2,12 @@ package com.pokong.mwzl.login.splash;
 
 import com.pokong.library.base.BasePresenter;
 import com.pokong.library.util.SharedPrefUtils;
+import com.pokong.library.util.ToastUtils;
 import com.pokong.library.util.Tools;
+import com.pokong.mwzl.data.DataRequestCallback;
 import com.pokong.mwzl.data.bean.UpdateInfoEntity;
+import com.pokong.mwzl.data.bean.personal.UpdateResponseBean;
+import com.pokong.mwzl.data.source.MWZLHttpDataRepository;
 
 /**
  * Created on 2018/11/15 16:51
@@ -21,13 +25,14 @@ public class SplashPresenter extends BasePresenter<SplashActivity> implements Sp
     public void checkUpdate() {
         String currentVersionName = Tools.getVersionName(getView().getRealContext());
         //todo 获取远程版本号
-        UpdateInfoEntity entity = new UpdateInfoEntity();
-        entity.setUrl("www.update.com");
-        entity.setVersion("1.0");
-        String remoteVersionName = entity.getVersion();
-        new Thread(() -> {
-            try {
-                Thread.sleep(1500);
+        getView().addNetWork(MWZLHttpDataRepository.getInstance().getUpdateInfo(new DataRequestCallback<UpdateResponseBean>() {
+            @Override
+            public void onSuccessed(UpdateResponseBean updateResponseBean) {
+                UpdateInfoEntity entity = new UpdateInfoEntity();
+                entity.setUrl(updateResponseBean.getDownload_url());
+                entity.setVersion(updateResponseBean.getVersion_no());
+                entity.setDescription(updateResponseBean.getDescription());
+                String remoteVersionName = entity.getVersion();
                 if (Tools.isBlank(currentVersionName)//不需要更新
                         || Tools.isBlank(remoteVersionName)
                         || currentVersionName.equals(remoteVersionName)){
@@ -37,10 +42,14 @@ public class SplashPresenter extends BasePresenter<SplashActivity> implements Sp
                     //todo 通知页面需要更新
                     getView().showUpdateDialog(entity);
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
-        }).start();
+
+            @Override
+            public void onFailed(String errorMsg) {
+                ToastUtils.showShortToast(getView().getRealContext(), errorMsg);
+                checkAutoLogin();
+            }
+        }));
 
 //        if (Tools.isBlank(currentVersionName)//不需要更新
 //                || Tools.isBlank(remoteVersionName)

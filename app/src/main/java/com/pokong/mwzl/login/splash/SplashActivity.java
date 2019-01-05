@@ -88,7 +88,6 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         if (requestCode == 100) {
             mPresenter.checkUpdate();
         }
-
     }
 
     @Override

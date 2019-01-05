@@ -8,6 +8,7 @@ import com.pokong.mwzl.data.bean.business.OrderDetailResponseBean;
 import com.pokong.mwzl.data.bean.business.ShopInfoResponseBean;
 import com.pokong.mwzl.data.bean.mwzl.MemberInfoResponseBean;
 import com.pokong.mwzl.data.bean.personal.LoginResponseBean;
+import com.pokong.mwzl.data.bean.personal.UpdateResponseBean;
 
 import java.util.Map;
 
@@ -21,6 +22,9 @@ import retrofit2.http.QueryMap;
  */
 
 public interface ApiService {
+
+    @GET(NetConstants.UPDATE)
+    Observable<DataResponseBean<UpdateResponseBean>> getUpdateInfo(@Query("appType") String appType, @Query("useType") String useType);
 
     @GET(NetConstants.LOGIN)
     Observable<DataResponseBean<LoginResponseBean>> doLogin(@QueryMap Map<String, String> params);

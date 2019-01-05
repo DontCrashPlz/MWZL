@@ -27,8 +27,7 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-
+    api fileTree(include: ['*.jar'], dir: 'libs')
     api "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
     api "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
     api "com.android.support:design:$rootProject.ext.supportLibraryVersion"
@@ -36,10 +35,9 @@ dependencies {
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     api "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2Version"
     //api "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     //annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
-
     api "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1371_43624_sharewithdownload_withoutGame_obfs_20181106_121046.jar')
 }

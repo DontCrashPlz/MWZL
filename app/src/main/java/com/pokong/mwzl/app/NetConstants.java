@@ -10,8 +10,13 @@ public class NetConstants {
      * 主机地址
      */
     //public static final String BASEURL = "http://192.168.31.20:80/";
-    //public static final String BASEURL = "http://mytestspace.51vip.biz/";
-    public static final String BASEURL = "http://www.dcherish.com/";
+    public static final String BASEURL = "http://mytestspace.51vip.biz/";
+    //public static final String BASEURL = "http://www.dcherish.com/";
+
+    /**
+     * 检查更新接口
+     */
+    public static final String UPDATE = "/api/app/getLastestVersion";
 
     /**
      * 登录接口
@@ -63,5 +68,9 @@ public class NetConstants {
      */
     public static final String SHOP_MEMBER_PAY = "/api/store/userPay";
 
+    /**
+     * 获取统计页面接口
+     */
+    public static final String STATISTICS = "api/store/stats";
 
 }

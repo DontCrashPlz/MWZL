@@ -24,6 +24,7 @@ import com.pokong.mwzl.shop.inventory.InventoryManageActivity;
 import com.pokong.mwzl.shop.member.MemberServiceActivity;
 import com.pokong.mwzl.shop.query.OrderQueryActivity;
 import com.pokong.mwzl.shop.query.OrderQueryPresenter;
+import com.pokong.mwzl.shop.statistics.ShopStatisticsActivity;
 import com.qs.helper.printer.PrinterClass;
 
 /**
@@ -138,7 +139,8 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
     @Override
     public void clickStatistics() {
         //todo 跳转到"统计"页面
-        ToastUtils.showShortToast(getContext(), "统计功能尚未开放");
+        Intent intent = new Intent(getContext(), ShopStatisticsActivity.class);
+        startActivity(intent);
     }
 
     @Override
