@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
@@ -21,11 +24,16 @@ import android.widget.TextView;
 import com.pokong.library.base.BaseActivity;
 import com.pokong.library.util.DialogFactory;
 import com.pokong.library.util.MobileChecker;
+import com.pokong.library.util.TimeUtils;
 import com.pokong.library.util.ToastUtils;
 import com.pokong.library.util.Tools;
 import com.pokong.mwzl.R;
+import com.pokong.mwzl.adapter.MemberHistoryListAdapter;
 import com.pokong.mwzl.data.DataRequestCallback;
+import com.pokong.mwzl.data.bean.MemberHistoryBean;
 import com.pokong.mwzl.data.bean.mwzl.MemberInfoResponseBean;
+
+import java.util.Date;
 
 /**
  * Created on 2018/12/18 14:17
@@ -43,6 +51,9 @@ public class MemberServiceActivity extends BaseActivity<MemberServicePresenter> 
     private TextView mIntegralTv;
 
     private Button mPayBtn;
+
+    private RecyclerView mHistoryRecycler;
+    private MemberHistoryListAdapter historyAdapter;
 
     @Override
     public Context getRealContext() {
@@ -86,6 +97,12 @@ public class MemberServiceActivity extends BaseActivity<MemberServicePresenter> 
 
         mPayBtn = findViewById(R.id.member_btn_pay);
         mPayBtn.setVisibility(View.GONE);
+
+        mHistoryRecycler = findViewById(R.id.member_recycler_history);
+        mHistoryRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
+        historyAdapter = new MemberHistoryListAdapter(R.layout.layout_item_member_history);
+        mHistoryRecycler.setAdapter(historyAdapter);
+
     }
 
     @Override
@@ -204,6 +221,11 @@ public class MemberServiceActivity extends BaseActivity<MemberServicePresenter> 
                     loadingDialog.dismiss();
                     ToastUtils.showShortToast(getRealContext(), "消费完成");
                     mPresenter.requestMemberInfo(mobileStr);
+                    MemberHistoryBean historyBean = new MemberHistoryBean();
+                    historyBean.setMemberName(mNicknameTv.getText().toString());
+                    historyBean.setCurrentTime(TimeUtils.getCurrentTimeStr(null));
+                    historyBean.setAmount("￥ " + payAmount);
+                    historyAdapter.addData(historyBean);
                 }
 
                 @Override

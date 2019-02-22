@@ -1,6 +1,8 @@
 package com.pokong.library.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 /**
@@ -37,5 +39,16 @@ public class TimeUtils {
             mWay ="六";
         }
         return mMonth + "/" + mDay +"/" + mYear + " 周"+mWay;
+    }
+
+    /**
+     * 获取String类型的当前时间
+     * @param pattern
+     * @return
+     */
+    public static String getCurrentTimeStr(String pattern){
+        Date date = new Date();
+        SimpleDateFormat dateFormat = pattern == null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") : new SimpleDateFormat(pattern);
+        return dateFormat.format(date);
     }
 }
