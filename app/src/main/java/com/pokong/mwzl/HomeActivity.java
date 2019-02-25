@@ -485,17 +485,25 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements Compoun
         MyBtPrintService.getInstance().nextLine();
         MyBtPrintService.getInstance().printNormalDivideLine();
 
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("收货人姓名:" + order.getReceiver_name());
+
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalTextLift("收货人电话:" + order.getReceiver_mobile());
+
         if ("delivery".equals(order.getDelivery_type())){
-
-            MyBtPrintService.getInstance().nextLine();
-            MyBtPrintService.getInstance().printNormalTextLift("收货人姓名:" + order.getReceiver_name());
-
-            MyBtPrintService.getInstance().nextLine();
-            MyBtPrintService.getInstance().printNormalTextLift("收货人电话:" + order.getReceiver_mobile());
-
             MyBtPrintService.getInstance().nextLine();
             MyBtPrintService.getInstance().printNormalTextLift("收货地址:" + order.getReceiver_address());
+        }
 
+        MyBtPrintService.getInstance().nextLine();
+        MyBtPrintService.getInstance().printNormalDivideLine();
+
+        if ("delivery".equals(order.getDelivery_type()) && "cake".equals(order.getOrder_type())){
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift("用户年龄:" + order.getPerson_age());
+            MyBtPrintService.getInstance().nextLine();
+            MyBtPrintService.getInstance().printNormalTextLift("餐具数量:" + order.getPerson_num());
         }
 
         MyBtPrintService.getInstance().nextLine();

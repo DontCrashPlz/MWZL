@@ -243,7 +243,7 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
                 }
                 //HomeActivity.printOrder(currentItemEntity);
                 HomeActivity.printOrder2(currentItemEntity);
-                ToastUtils.showShortToast(getContext(), "正在打印，若未正常打印请检测打印机");
+                ToastUtils.showLongToast(getContext(), "正在打印，若未正常打印请检测打印机");
             }
             dialog.dismiss();
         });
