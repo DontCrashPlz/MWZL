@@ -212,7 +212,7 @@ public class ShopManageFragment extends BaseFragment<ShopManagePresenter> implem
                 mManagerTv.setText(managerName);
             }
 
-            String telephoneStr = shopInfo.getStore_telephone();
+            String telephoneStr = shopInfo.getContact_mobile();
             if (telephoneStr != null && !("null".equals(telephoneStr)) && telephoneStr.length() > 0){
                 mTelephoneTv.setText(telephoneStr);
             }

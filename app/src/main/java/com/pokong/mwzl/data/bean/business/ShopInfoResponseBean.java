@@ -12,6 +12,7 @@ public class ShopInfoResponseBean implements Serializable {
     private String area_full_name;//店铺所在区域全名
     private int area_id;
     private String contact;//联系人
+    private String contact_mobile;//联系人电话
     private int favorite_count;//收藏数
     private int id;//ID
     private String imgurl;
@@ -45,6 +46,14 @@ public class ShopInfoResponseBean implements Serializable {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getContact_mobile() {
+        return contact_mobile;
+    }
+
+    public void setContact_mobile(String contact_mobile) {
+        this.contact_mobile = contact_mobile;
     }
 
     public int getFavorite_count() {
@@ -133,6 +142,7 @@ public class ShopInfoResponseBean implements Serializable {
                 "area_full_name='" + area_full_name + '\'' +
                 ", area_id=" + area_id +
                 ", contact='" + contact + '\'' +
+                ", contact_mobile='" + contact_mobile + '\'' +
                 ", favorite_count=" + favorite_count +
                 ", id=" + id +
                 ", imgurl='" + imgurl + '\'' +
@@ -145,7 +155,6 @@ public class ShopInfoResponseBean implements Serializable {
                 ", user_id=" + user_id +
                 '}';
     }
-
 }
 //        "area_full_name":"河南省郑州市",
 //        "area_id":4523656,

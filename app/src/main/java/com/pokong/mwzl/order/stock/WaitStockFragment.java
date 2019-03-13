@@ -198,7 +198,7 @@ public class WaitStockFragment extends LazyLoadFragment<WaitStockPresenter> impl
         adapter.addData(moreDataList);
         adapter.loadMoreComplete();
         if (isLast){
-            adapter.loadMoreFail();
+            adapter.loadMoreEnd();
         }
         refreshLayout.setEnabled(true);
     }

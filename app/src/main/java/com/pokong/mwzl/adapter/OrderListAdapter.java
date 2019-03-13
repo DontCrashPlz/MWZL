@@ -125,6 +125,13 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListItemEntity, Base
                     .setGone(R.id.ordercard_age_panel, false);
         }
 
+        String remarkStr = item.getMsg();
+        if (remarkStr == null || remarkStr.length() == 0){
+            helper.setText(R.id.ordercard_tv_remark, "无备注");
+        }else {
+            helper.setText(R.id.ordercard_tv_remark, item.getMsg());
+        }
+
         if (item.isOpend()){//如果当前Item为展开状态，显示内容区，并把图标切换为关闭图标
             helper.setGone(R.id.ordercard_lly_content, true)
                     .setImageResource(R.id.ordercard_iv_expand, closeIconRes);

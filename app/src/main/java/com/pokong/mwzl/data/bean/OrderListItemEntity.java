@@ -15,7 +15,7 @@ public class OrderListItemEntity implements Serializable {
     private ArrayList<GoodsEntity> goodlist;//订单商品列表
     private int goods_count;//订单的商品总数量
     private long id;//ID
-    private String msg = "无备注";//订单备注信息
+    private String msg = "";//订单备注信息
     private String order_id;//订单编号
     private int order_status;//订单状态
     private int store_id;//店铺id
