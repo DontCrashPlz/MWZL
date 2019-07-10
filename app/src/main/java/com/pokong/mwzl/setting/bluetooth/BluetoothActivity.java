@@ -15,15 +15,12 @@ import android.widget.TextView;
 import com.pokong.bluetooth.MyBtPrintService;
 import com.pokong.library.base.BaseActivity;
 import com.pokong.library.util.DialogFactory;
-import com.pokong.library.util.LogUtils;
 import com.pokong.library.util.SharedPrefUtils;
-import com.pokong.library.util.ToastUtils;
 import com.pokong.mwzl.R;
 import com.pokong.mwzl.adapter.DeviceListAdapter;
 import com.pokong.mwzl.eventbus.BluetoothNewDeviceEvent;
 import com.pokong.mwzl.eventbus.BluetoothStateChangedEvent;
 import com.qs.helper.printer.Device;
-import com.qs.helper.printer.PrintService;
 import com.qs.helper.printer.PrinterClass;
 
 import org.greenrobot.eventbus.EventBus;
